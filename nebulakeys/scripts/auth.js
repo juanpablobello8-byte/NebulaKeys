@@ -1,49 +1,48 @@
-// Inicializa Supabase y gestiona UI básica de auth + portal link
-(function () {
-  if (!window.NEBULA_PUBLIC) {
-    console.error('Falta /scripts/config.js con SUPABASE_URL y ANON_KEY');
+// /scripts/auth.js
+document.addEventListener('DOMContentLoaded', () => {
+  const cfg = window.NEBULA_PUBLIC;
+  const setText = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
+  if (!cfg?.SUPABASE_URL || !cfg?.SUPABASE_ANON_KEY) {
+    setText('signup-msg', 'Error de configuración (config.js).');
+    console.error('NEBULA_PUBLIC no está definido');
     return;
   }
-  const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.NEBULA_PUBLIC;
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  window.supabaseClient = supabaseClient;
 
-  // Toggle header links si existen
-  (async () => {
-    const loginLink = document.getElementById('loginLink');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const dashboardLink = document.getElementById('dashboardLink');
-    const portalLink = document.getElementById('portalLink');
+  const supa = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+  const $ = (id) => document.getElementById(id);
 
-    const { data: { user } } = await supabaseClient.auth.getUser();
+  // Si ya hay sesión, ir al dashboard
+  supa.auth.getSession().then(({ data }) => {
+    if (data?.session) window.location.href = '/dashboard.html';
+  });
 
-    if (user) {
-      loginLink && (loginLink.style.display = 'none');
-      logoutBtn && (logoutBtn.style.display = 'inline-flex');
-      dashboardLink && (dashboardLink.style.display = 'inline-flex');
-      portalLink && (portalLink.style.display = 'inline');
-      portalLink && portalLink.addEventListener('click', async (e) => {
-        e.preventDefault();
-        // Abrir portal del cliente
-        const res = await fetch('/api/create-portal-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: user.id })
-        });
-        if (!res.ok) return alert('No se pudo abrir el portal');
-        const data = await res.json();
-        if (data.url) window.location = data.url;
-      });
+  // Crear cuenta
+  $('signup-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setText('signup-msg', 'Creando cuenta…');
+    const { error } = await supa.auth.signUp({
+      email: $('signup-email').value.trim(),
+      password: $('signup-password').value
+    });
+    if (error) return setText('signup-msg', '❌ ' + error.message);
+    setText('signup-msg', '✅ Cuenta creada. Revisa tu correo para confirmar.');
+    // Si desactivas confirmación por email:
+    // const { error: e2 } = await supa.auth.signInWithPassword({
+    //   email: $('signup-email').value.trim(),
+    //   password: $('signup-password').value
+    // });
+    // if (!e2) window.location.href = '/dashboard.html';
+  });
 
-      logoutBtn && (logoutBtn.onclick = async () => {
-        await supabaseClient.auth.signOut();
-        window.location = '/';
-      });
-    } else {
-      loginLink && (loginLink.style.display = 'inline-flex');
-      logoutBtn && (logoutBtn.style.display = 'none');
-      dashboardLink && (dashboardLink.style.display = 'none');
-      portalLink && (portalLink.style.display = 'none');
-    }
-  })();
-})();
+  // Iniciar sesión
+  $('signin-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setText('signin-msg', 'Iniciando sesión…');
+    const { data, error } = await supa.auth.signInWithPassword({
+      email: $('signin-email').value.trim(),
+      password: $('signin-password').value
+    });
+    if (error) return setText('signin-msg', '❌ ' + error.message);
+    if (data.session) window.location.href = '/dashboard.html';
+  });
+});

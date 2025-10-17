@@ -1,42 +1,26 @@
-// Abre el Portal del Cliente de Stripe para gestionar/cancelar/cambiar plan
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { createClient } = require('@supabase/supabase-js');
+// Runtime: Node.js 20 (Vercel Settings → Functions → Node.js 20.x)
+import Stripe from 'stripe';
 
-const supa = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE); // server key
+export const config = { runtime: 'edge' }; // si usas edge, quita node-specific libs
+// Si prefieres Node, usa: export const config = { runtime: 'nodejs20.x' };
 
-function getOrigin(req) {
-  const proto = req.headers['x-forwarded-proto'] || 'https';
-  const host = req.headers['x-forwarded-host'] || req.headers.host;
-  return `${proto}://${host}`;
-}
-
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') { res.status(405).send('Method Not Allowed'); return; }
+export default async function handler(req) {
   try {
-    const { userId } = req.body || {};
-    if (!userId) { res.status(400).send('Falta userId'); return; }
-
-    // Buscar stripe_customer_id en perfiles
-    const { data: profile, error } = await supa
-      .from('profiles')
-      .select('stripe_customer_id, email')
-      .eq('user_id', userId)
-      .maybeSingle();
-
-    if (error) throw error;
-    if (!profile || !profile.stripe_customer_id) {
-      res.status(400).send('No existe cliente de Stripe vinculado aún.');
-      return;
+    if (req.method !== 'POST') {
+      return new Response('Method not allowed', { status: 405 });
     }
+    const { customerId, returnUrl } = await req.json();
+    if (!customerId) return new Response('Missing customerId', { status: 400 });
 
-    const session = await stripe.billingPortal.sessions.create({
-      customer: profile.stripe_customer_id,
-      return_url: getOrigin(req) + '/dashboard.html',
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' });
+
+    const portal = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: returnUrl || (new URL('/dashboard.html', req.headers.get('origin'))).toString(),
     });
 
-    res.status(200).json({ url: session.url });
-  } catch (err) {
-    console.error('Portal error:', err);
-    res.status(500).send(err.message || 'Error creando portal de cliente');
+    return Response.json({ url: portal.url });
+  } catch (e) {
+    return new Response(`Error: ${e.message}`, { status: 500 });
   }
-};
+}

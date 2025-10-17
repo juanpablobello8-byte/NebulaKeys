@@ -4,12 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ingresar — NebulaKeys</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Supabase SDK v2 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <!-- Tu config pública (URL + anon key) -->
-  <script defer src="/scripts/config.js"></script>
+  <script defer src="/scripts/config.js?v=4"></script>
+
+  <!-- Lógica de login (debe ir DESPUÉS de config.js) -->
+  <script defer src="/scripts/auth.js?v=2"></script>
 </head>
+
 <body class="bg-gray-950 text-gray-100">
   <main class="max-w-md mx-auto px-4 py-16">
     <h1 class="text-3xl font-extrabold">NebulaKeys — Ingresar</h1>

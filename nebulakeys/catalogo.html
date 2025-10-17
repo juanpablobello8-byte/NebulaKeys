@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo — NebulaKeys</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="/scripts/config.js"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+  <main class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-extrabold">Catálogo</h1>
+    <input id="search" placeholder="Buscar..." class="mt-4 w-full md:w-80 px-4 py-3 rounded-xl bg-black/40 border border-white/10" />
+    <div id="grid" class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+  </main>
+
+  <script>
+    const supa = window.supabaseClient;
+    async function load() {{
+      const res = await fetch('/data/games.json');
+      const games = await res.json();
+      const q = (document.getElementById('search').value || '').toLowerCase();
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      for (const g of games.filter(x => x.title.toLowerCase().includes(q))) {{
+        const card = document.createElement('div');
+        card.className = 'border border-white/10 rounded-2xl overflow-hidden bg-white/5 flex flex-col';
+        card.innerHTML = `
+          <img src="${{g.cover}}" alt="${{g.title}}" class="w-full h-40 object-cover" />
+          <div class="p-4 flex-1 flex flex-col">
+            <h3 class="font-bold">${{g.title}}</h3>
+            <div class="text-xs text-gray-400 mt-1">${{g.platform}} • ${{g.genre}}</div>
+            <button data-id="${{g.id}}" class="add mt-auto bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-4 py-2 rounded-xl">Agregar</button>
+          </div>`;
+        grid.appendChild(card);
+      }}
+      document.querySelectorAll('.add').forEach(btn => {{
+        btn.onclick = async () => {{
+          const {{ data: {{ user }} }} = await supa.auth.getUser();
+          if (!user) {{ alert('Inicia sesión primero.'); window.location='/login.html'; return; }}
+          const {{ error }} = await supa.from('wishlists').insert({{ user_id: user.id, game_id: btn.getAttribute('data-id') }});
+          if (error) alert('Error: ' + error.message);
+          else alert('Agregado a tu lista');
+        }};
+      }});
+    }}
+    document.getElementById('search').addEventListener('input', load);
+    load();
+  </script>
+</body>
+</html>

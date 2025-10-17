@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NebulaKeys — Renta/Alquiler de videojuegos por membresía</title>
+  <meta name="description" content="Catálogo rotativo de videojuegos. Renta por membresía mensual y gestiona tu suscripción en el portal del cliente." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="/scripts/config.js"></script>
+  <script defer src="/scripts/auth.js"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+  <header class="border-b border-white/10 sticky top-0 bg-black/60 backdrop-blur z-40">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="/" class="text-xl font-bold tracking-tight">🎮 <span class="text-indigo-400">NebulaKeys</span></a>
+      <nav class="hidden md:flex gap-6 text-sm">
+        <a href="/catalogo.html" class="hover:text-indigo-300">Catálogo</a>
+        <a href="#planes" class="hover:text-indigo-300">Planes</a>
+        <a href="#faq" class="hover:text-indigo-300">FAQ</a>
+        <a id="portalLink" href="#" class="hover:text-indigo-300 hidden">Mi suscripción</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a id="dashboardLink" href="/dashboard.html" class="hidden text-sm px-4 py-2 rounded-xl border border-white/15 hover:border-white/40">Mi cuenta</a>
+        <a id="loginLink" href="/login.html" class="text-sm bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-4 py-2 rounded-xl">Ingresar</a>
+        <button id="logoutBtn" class="hidden text-sm px-4 py-2 rounded-xl border border-white/15 hover:border-white/40">Salir</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(99,102,241,0.25),transparent_60%),radial-gradient(circle_at_bottom_right,rgba(16,185,129,0.2),transparent_60%)]"></div>
+      <div class="max-w-6xl mx-auto px-4 py-20 relative">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+              NebulaKeys: Renta videojuegos <span class="text-indigo-400">ilimitados</span> por membresía.
+            </h1>
+            <p class="mt-5 text-gray-300 text-lg">Elige plan, paga con Stripe, gestiona tu suscripción en el portal del cliente y rota tus títulos cada mes.</p>
+            <div class="mt-8 flex gap-4">
+              <a href="#planes" class="inline-flex items-center bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-6 py-3 rounded-2xl">Ver planes</a>
+              <a href="/catalogo.html" class="inline-flex items-center border border-white/20 hover:border-white/40 px-6 py-3 rounded-2xl">Explorar catálogo</a>
+            </div>
+            <p class="mt-3 text-xs text-gray-400">*Disponibilidad y plataformas varían por región.</p>
+          </div>
+          <div class="md:justify-self-end">
+            <div class="rounded-3xl border border-white/10 p-4 md:p-6 bg-white/5 shadow-xl">
+              <div class="grid grid-cols-3 gap-3 text-center">
+                <div class="p-4 rounded-2xl bg-black/40"><div class="text-3xl font-bold">500+</div><div class="text-xs text-gray-400">Juegos</div></div>
+                <div class="p-4 rounded-2xl bg-black/40"><div class="text-3xl font-bold">24h</div><div class="text-xs text-gray-400">Envío/acceso</div></div>
+                <div class="p-4 rounded-2xl bg-black/40"><div class="text-3xl font-bold">MXN</div><div class="text-xs text-gray-400">Pagos seguros</div></div>
+              </div>
+              <img alt="Portadas de videojuegos" class="mt-6 rounded-2xl w-full object-cover" src="https://images.unsplash.com/photo-1616353071859-4c4bd2b28e64?q=80&w=1600&auto=format&fit=crop" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Planes -->
+    <section id="planes" class="max-w-6xl mx-auto px-4 py-16">
+      <h2 class="text-3xl md:text-4xl font-bold">Planes de membresía</h2>
+      <p class="mt-2 text-gray-300">Actualiza los Price IDs con los de Stripe.</p>
+
+      <div class="mt-8 grid md:grid-cols-3 gap-6">
+        <article class="rounded-3xl border border-white/10 bg-gradient-to-b from-white/10 to-transparent p-6 flex flex-col">
+          <h3 class="text-xl font-bold">Starter</h3>
+          <p class="text-sm text-gray-300">1 juego activo por mes</p>
+          <div class="mt-4 text-3xl font-extrabold">$149<span class="text-base font-medium text-gray-400">/mes</span></div>
+          <button data-price-id="price_12345_starter" class="subscribe mt-6 inline-flex justify-center items-center gap-2 bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-5 py-3 rounded-2xl">Suscribirme</button>
+        </article>
+        <article class="rounded-3xl border border-white/10 bg-gradient-to-b from-white/10 to-transparent p-6 flex flex-col">
+          <div class="self-start text-xs font-semibold px-2 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Popular</div>
+          <h3 class="text-xl font-bold mt-2">Pro</h3>
+          <p class="text-sm text-gray-300">2 juegos activos por mes</p>
+          <div class="mt-4 text-3xl font-extrabold">$299<span class="text-base font-medium text-gray-400">/mes</span></div>
+          <button data-price-id="price_12345_pro" class="subscribe mt-6 inline-flex justify-center items-center gap-2 bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-5 py-3 rounded-2xl">Suscribirme</button>
+        </article>
+        <article class="rounded-3xl border border-white/10 bg-gradient-to-b from-white/10 to-transparent p-6 flex flex-col">
+          <h3 class="text-xl font-bold">Ultimate</h3>
+          <p class="text-sm text-gray-300">3 juegos activos por mes</p>
+          <div class="mt-4 text-3xl font-extrabold">$449<span class="text-base font-medium text-gray-400">/mes</span></div>
+          <button data-price-id="price_12345_ultimate" class="subscribe mt-6 inline-flex justify-center items-center gap-2 bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-5 py-3 rounded-2xl">Suscribirme</button>
+        </article>
+      </div>
+      <p class="mt-6 text-xs text-gray-500">Los montos son referencia. Configura precios reales en Stripe.</p>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="max-w-6xl mx-auto px-4 pb-20">
+      <h2 class="text-3xl md:text-4xl font-bold">Preguntas frecuentes</h2>
+      <div class="mt-6 space-y-4">
+        <details class="group border border-white/10 rounded-2xl p-4 bg-white/5">
+          <summary class="cursor-pointer font-semibold">¿Cómo cancelo o cambio de plan?</summary>
+          <p class="mt-2 text-gray-300 text-sm">Inicia sesión → “Mi suscripción” → se abre el Portal del Cliente de Stripe para gestionar tu plan.</p>
+        </details>
+        <details class="group border border-white/10 rounded-2xl p-4 bg-white/5">
+          <summary class="cursor-pointer font-semibold">¿Qué plataformas manejan?</summary>
+          <p class="mt-2 text-gray-300 text-sm">PS, Xbox, Switch y PC. La disponibilidad varía por región.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/10 py-10">
+    <div class="max-w-6xl mx-auto px-4 text-sm text-gray-400">
+      © <span id="year"></span> NebulaKeys — Hecho con ♥️. Contacto: hola@nebulakeys.mx (ejemplo)
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    async function createCheckout(priceId) {{ 
+      // Requiere usuario logueado para vincular compra a su cuenta
+      const supa = window.supabaseClient;
+      const {{ data: userData }} = await supa.auth.getUser();
+      if (!userData.user) {{ alert('Inicia sesión para suscribirte.'); window.location='/login.html'; return; }}
+
+      const res = await fetch('/api/create-checkout-session', {{
+        method: 'POST',
+        headers: {{ 'Content-Type': 'application/json' }},
+        body: JSON.stringify({{ priceId, userId: userData.user.id, email: userData.user.email }})
+      }});
+      if (!res.ok) {{ const txt = await res.text(); alert('Error al iniciar el pago: ' + txt); return; }}
+      const data = await res.json();
+      if (data.url) window.location = data.url;
+    }}
+
+    document.querySelectorAll('.subscribe').forEach(btn => {{
+      btn.addEventListener('click', () => createCheckout(btn.getAttribute('data-price-id')));
+    }});
+  </script>
+</body>
+</html>

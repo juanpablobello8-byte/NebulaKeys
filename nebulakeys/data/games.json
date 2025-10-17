@@ -1,0 +1,30 @@
+[
+  {
+    "id": "zelda-totk",
+    "title": "The Legend of Zelda: Tears of the Kingdom",
+    "platform": "Switch",
+    "genre": "Aventura",
+    "cover": "https://images.unsplash.com/photo-1605901309584-818e25960a8b?q=80&w=1600&auto=format&fit=crop"
+  },
+  {
+    "id": "gow-ragnarok",
+    "title": "God of War: Ragnar\u00f6k",
+    "platform": "PlayStation",
+    "genre": "Acci\u00f3n",
+    "cover": "https://images.unsplash.com/photo-1605901309584-818e25960a8b?q=80&w=1600&auto=format&fit=crop"
+  },
+  {
+    "id": "forza-5",
+    "title": "Forza Horizon 5",
+    "platform": "Xbox",
+    "genre": "Conducci\u00f3n",
+    "cover": "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1600&auto=format&fit=crop"
+  },
+  {
+    "id": "elden-ring",
+    "title": "Elden Ring",
+    "platform": "PC",
+    "genre": "RPG",
+    "cover": "https://images.unsplash.com/photo-1605901309584-818e25960a8b?q=80&w=1600&auto=format&fit=crop"
+  }
+]

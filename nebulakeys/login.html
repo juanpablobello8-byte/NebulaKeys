@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ingresar — NebulaKeys</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="/scripts/config.js"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+  <main class="max-w-md mx-auto px-4 py-16">
+    <h1 class="text-3xl font-extrabold">NebulaKeys — Ingresar</h1>
+    <p class="mt-2 text-gray-300 text-sm">Crea tu cuenta o inicia sesión con email y contraseña.</p>
+
+    <form id="authForm" class="mt-8 space-y-4">
+      <input class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="email" id="email" placeholder="Correo" required />
+      <input class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="password" id="password" placeholder="Contraseña (min. 6)" required minlength="6" />
+      <div class="flex items-center gap-3">
+        <button id="signupBtn" type="button" class="flex-1 bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-4 py-3 rounded-xl">Crear cuenta</button>
+        <button id="signinBtn" type="button" class="flex-1 border border-white/15 hover:border-white/40 px-4 py-3 rounded-xl">Iniciar sesión</button>
+      </div>
+    </form>
+
+    <p id="msg" class="mt-4 text-sm text-gray-300"></p>
+
+    <a href="/" class="mt-8 inline-block text-indigo-300 hover:text-indigo-200">← Volver</a>
+  </main>
+
+  <script>
+    const supa = window.supabaseClient;
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const msg = document.getElementById('msg');
+
+    document.getElementById('signupBtn').onclick = async () => {{
+      msg.textContent = 'Creando cuenta...';
+      const {{ data, error }} = await supa.auth.signUp({{ email: email.value, password: password.value }});
+      if (error) {{ msg.textContent = 'Error: ' + error.message; return; }}
+      msg.textContent = 'Cuenta creada. Iniciando sesión...';
+      await supa.auth.signInWithPassword({{ email: email.value, password: password.value }});
+      window.location = '/dashboard.html';
+    }};
+
+    document.getElementById('signinBtn').onclick = async () => {{
+      msg.textContent = 'Iniciando sesión...';
+      const {{ data, error }} = await supa.auth.signInWithPassword({{ email: email.value, password: password.value }});
+      if (error) {{ msg.textContent = 'Error: ' + error.message; return; }}
+      window.location = '/dashboard.html';
+    }};
+  </script>
+</body>
+</html>

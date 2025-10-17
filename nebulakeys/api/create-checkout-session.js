@@ -1,36 +1,29 @@
-// Crea sesión de Stripe Checkout (suscripción) y vincula con el usuario de Supabase
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+import Stripe from 'stripe';
 
-/** Obtener origin detrás de Vercel */
-function getOrigin(req) {
-  const proto = req.headers['x-forwarded-proto'] || 'https';
-  const host = req.headers['x-forwarded-host'] || req.headers.host;
-  return `${proto}://${host}`;
-}
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).send('Method not allowed');
 
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') { res.status(405).send('Method Not Allowed'); return; }
   try {
     const { priceId, userId, email } = req.body || {};
-    if (!priceId || !userId) { res.status(400).send('Falta priceId o userId'); return; }
-    const origin = getOrigin(req);
+    if (!priceId || !userId || !email) {
+      return res.status(400).send('Missing params: priceId, userId, email');
+    }
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' });
 
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       line_items: [{ price: priceId, quantity: 1 }],
-      customer_email: email || undefined,
-      client_reference_id: userId, // para mapear en webhook
-      metadata: { supabase_user_id: userId },
-      success_url: `${origin}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/cancel.html`,
-      allow_promotion_codes: true,
-      billing_address_collection: 'required',
-      customer_update: { address: 'auto' },
+      success_url: `${req.headers.origin}/success.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin}/cancel.html`,
+      customer_email: email,
+      metadata: { user_id: userId, email }
+      // allow_promotion_codes: true, // si quieres cupones
     });
 
     res.status(200).json({ url: session.url });
-  } catch (err) {
-    console.error('Stripe error:', err);
-    res.status(500).send(err.message || 'Error creando sesión de pago');
+  } catch (e) {
+    console.error('create-checkout-session error:', e);
+    res.status(500).send(e.message);
   }
-};
+}

@@ -1,77 +1,31 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Mi cuenta — NebulaKeys</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script defer src="/scripts/config.js"></script>
-  <script defer src="/scripts/auth.js"></script>
+  <script defer src="/scripts/config.js?v=4"></script>
+  <script defer src="/scripts/dashboard.js?v=1"></script>
 </head>
 <body class="bg-gray-950 text-gray-100">
-  <main class="max-w-3xl mx-auto px-4 py-12">
-    <h1 class="text-3xl font-extrabold">Mi cuenta</h1>
-    <div id="userInfo" class="mt-4 text-gray-300"></div>
+  <main class="max-w-2xl mx-auto px-4 py-16">
+    <h1 class="text-4xl font-extrabold mb-8">Mi cuenta</h1>
 
-    <section class="mt-10">
-      <h2 class="text-xl font-bold">Estado de suscripción</h2>
-      <div id="subStatus" class="mt-2 text-sm text-gray-300">Cargando...</div>
-      <button id="portalBtn" class="mt-4 bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-4 py-2 rounded-xl">Gestionar suscripción</button>
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-2">Estado de suscripción</h2>
+      <p id="sub-status" class="mb-4 text-gray-300">Cargando...</p>
+      <button id="btn-portal"
+              class="hidden bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded-xl">
+        Gestionar suscripción
+      </button>
     </section>
 
-    <section class="mt-10">
-      <h2 class="text-xl font-bold">Mi lista de juegos</h2>
-      <div id="wishlist" class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-      <a href="/catalogo.html" class="mt-4 inline-block text-indigo-300 hover:text-indigo-200">+ Agregar más</a>
+    <section>
+      <h2 class="text-2xl font-bold mb-2">Mi lista de juegos</h2>
+      <a href="/catalogo.html" class="text-indigo-300 hover:text-indigo-200">+ Agregar más</a>
     </section>
   </main>
-
-  <script>
-    const supa = window.supabaseClient;
-    (async () => {{
-      const {{ data: {{ user }} }} = await supa.auth.getUser();
-      if (!user) {{ window.location='/login.html'; return; }}
-      document.getElementById('userInfo').textContent = user.email;
-
-      // Cargar suscripción
-      const {{ data: subs, error }} = await supa
-        .from('subscriptions')
-        .select('status, price_id, current_period_end')
-        .eq('user_id', user.id)
-        .order('current_period_end', {{ ascending: false }})
-        .limit(1)
-        .maybeSingle();
-      if (error) {{ document.getElementById('subStatus').textContent = 'Error: ' + error.message; }}
-      else if (!subs) {{ document.getElementById('subStatus').textContent = 'Sin suscripción activa.'; }}
-      else {{
-        const until = subs.current_period_end ? new Date(subs.current_period_end).toLocaleString() : '—';
-        document.getElementById('subStatus').textContent = `${{subs.status}} — vence: ${{until}}`;
-      }}
-
-      // Cargar wishlist
-      const r = await supa.from('wishlists').select('game_id, created_at').eq('user_id', user.id);
-      if (!r.error) {{
-        const cont = document.getElementById('wishlist');
-        for (const w of r.data) {{
-          const item = document.createElement('div');
-          item.className = 'p-3 rounded-xl border border-white/10 bg-white/5 flex justify-between items-center';
-          item.textContent = w.game_id;
-          cont.appendChild(item);
-        }}
-      }}
-
-      document.getElementById('portalBtn').onclick = async () => {{
-        const res = await fetch('/api/create-portal-session', {{
-          method: 'POST',
-          headers: {{ 'Content-Type': 'application/json' }},
-          body: JSON.stringify({{ userId: user.id }})
-        }});
-        if (!res.ok) {{ alert('No se pudo abrir el portal'); return; }}
-        const data = await res.json();
-        if (data.url) window.location = data.url;
-      }};
-    }})();
-  </script>
 </body>
 </html>

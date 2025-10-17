@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ingresar — NebulaKeys</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Supabase SDK v2 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Tu config pública (URL + anon key) -->
   <script defer src="/scripts/config.js"></script>
 </head>
 <body class="bg-gray-950 text-gray-100">
@@ -13,64 +15,75 @@
     <h1 class="text-3xl font-extrabold">NebulaKeys — Ingresar</h1>
     <p class="mt-2 text-gray-300 text-sm">Crea tu cuenta o inicia sesión con email y contraseña.</p>
 
-    <form id="authForm" class="mt-8 space-y-4">
-      <input class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="email" id="email" placeholder="Correo" required />
-      <input class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="password" id="password" placeholder="Contraseña (min. 6)" required minlength="6" />
-      <div class="flex items-center gap-3">
-        <button id="signupBtn" type="button" class="flex-1 bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-4 py-3 rounded-xl">Crear cuenta</button>
-        <button id="signinBtn" type="button" class="flex-1 border border-white/15 hover:border-white/40 px-4 py-3 rounded-xl">Iniciar sesión</button>
-      </div>
+    <!-- CREAR CUENTA -->
+    <form id="signup-form" class="mt-8 space-y-4">
+      <input class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="email" id="signup-email" placeholder="Correo" required />
+      <input class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="password" id="signup-password" placeholder="Contraseña (min. 6)" required minlength="6" />
+      <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-4 py-3 rounded-xl">Crear cuenta</button>
+      <p id="signup-msg" class="text-sm text-gray-300"></p>
     </form>
 
-    <p id="msg" class="mt-4 text-sm text-gray-300"></p>
+    <hr class="my-6 border-white/10" />
+
+    <!-- INICIAR SESIÓN -->
+    <form id="signin-form" class="space-y-4">
+      <input class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="email" id="signin-email" placeholder="Correo" required />
+      <input class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="password" id="signin-password" placeholder="Contraseña" required />
+      <button type="submit" class="w-full border border-white/15 hover:border-white/40 px-4 py-3 rounded-xl">Iniciar sesión</button>
+      <p id="signin-msg" class="text-sm text-gray-300"></p>
+    </form>
 
     <a href="/" class="mt-8 inline-block text-indigo-300 hover:text-indigo-200">← Volver</a>
   </main>
 
-<script>
-  // Espera a que el DOM esté listo y a que config.js ya haya cargado
-  document.addEventListener('DOMContentLoaded', () => {
-    if (!window.NEBULA_PUBLIC?.SUPABASE_URL || !window.NEBULA_PUBLIC?.SUPABASE_ANON_KEY) {
-      console.error('NEBULA_PUBLIC no está definido. Revisa /scripts/config.js');
-      const msg = document.getElementById('msg');
-      if (msg) msg.textContent = 'Error de configuración. Vuelve a intentarlo en unos segundos.';
-      return;
-    }
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1) Asegura que config.js se cargó
+      if (!window.NEBULA_PUBLIC?.SUPABASE_URL || !window.NEBULA_PUBLIC?.SUPABASE_ANON_KEY) {
+        console.error('NEBULA_PUBLIC no está definido. Revisa /scripts/config.js');
+        document.getElementById('signup-msg').textContent = 'Error de configuración (config.js).';
+        return;
+      }
 
-    // Crea el cliente de Supabase correctamente
-    const supa = window.supabase.createClient(
-      window.NEBULA_PUBLIC.SUPABASE_URL,
-      window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
-    );
+      // 2) Crea el cliente Supabase
+      const supa = window.supabase.createClient(
+        window.NEBULA_PUBLIC.SUPABASE_URL,
+        window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
+      );
 
-    const email    = document.getElementById('email');
-    const password = document.getElementById('password');
-    const msg      = document.getElementById('msg');
-
-    // Crear cuenta
-    document.getElementById('signupBtn').onclick = async () => {
-      msg.textContent = 'Creando cuenta...';
-      const { error } = await supa.auth.signUp({ email: email.value, password: password.value });
-      if (error) { msg.textContent = 'Error: ' + error.message; return; }
-
-      // Si tienes confirmación por email activada en Supabase, avisa al usuario:
-      msg.textContent = '✅ Cuenta creada. Revisa tu correo para confirmar.';
-      // Si NO usas confirmación por email, puedes iniciar sesión directa:
-      // const { error: e2 } = await supa.auth.signInWithPassword({ email: email.value, password: password.value });
-      // if (!e2) window.location = '/dashboard.html';
-    };
-
-    // Iniciar sesión
-    document.getElementById('signinBtn').onclick = async () => {
-      msg.textContent = 'Iniciando sesión...';
-      const { data, error } = await supa.auth.signInWithPassword({
-        email: email.value,
-        password: password.value
+      // Si ya hay sesión, ve al dashboard
+      supa.auth.getSession().then(({ data }) => {
+        if (data?.session) window.location.href = '/dashboard.html';
       });
-      if (error) { msg.textContent = 'Error: ' + error.message; return; }
-      if (data.session) window.location = '/dashboard.html';
-    };
-  });
-</script>
+
+      // --- CREAR CUENTA ---
+      const el = (id) => document.getElementById(id);
+      el('signup-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        el('signup-msg').textContent = 'Creando cuenta…';
+        const { error } = await supa.auth.signUp({
+          email: el('signup-email').value.trim(),
+          password: el('signup-password').value
+        });
+        if (error) { el('signup-msg').textContent = '❌ ' + error.message; return; }
+        el('signup-msg').textContent = '✅ Cuenta creada. Revisa tu correo para confirmar.';
+        // Si en Supabase tienes desactivada la confirmación por email, puedes loguear directo:
+        // const { error: e2 } = await supa.auth.signInWithPassword({ email: el('signup-email').value.trim(), password: el('signup-password').value });
+        // if (!e2) window.location.href = '/dashboard.html';
+      });
+
+      // --- INICIAR SESIÓN ---
+      el('signin-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        el('signin-msg').textContent = 'Iniciando sesión…';
+        const { data, error } = await supa.auth.signInWithPassword({
+          email: el('signin-email').value.trim(),
+          password: el('signin-password').value
+        });
+        if (error) { el('signin-msg').textContent = '❌ ' + error.message; return; }
+        if (data.session) window.location.href = '/dashboard.html';
+      });
+    });
+  </script>
 </body>
 </html>

@@ -101,4 +101,34 @@ export default async function handler(req, res) {
 
         const { error } = await supa
           .from('subscriptions')
-          .upsert(row, { onConflict:
+          .upsert(row, { onConflict: 'id' });
+        if (error) throw error;
+        break;
+      }
+
+      case 'customer.subscription.deleted': {
+        const sub = event.data.object;
+        const { error } = await supa
+          .from('subscriptions')
+          .delete()
+          .eq('id', sub.id);
+        if (error) throw error;
+        break;
+      }
+
+      default:
+        // Ignorar otros eventos
+        break;
+    }
+
+    return res.json({ received: true });
+  } catch (e) {
+    console.error('❌ Error DB/Webhook:', {
+      message: e.message,
+      code: e.code,
+      details: e.details,
+      hint: e.hint,
+    });
+    return res.status(500).json({ ok: false, error: e.message });
+  }
+}

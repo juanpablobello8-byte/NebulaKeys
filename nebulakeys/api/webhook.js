@@ -3,16 +3,42 @@ import Stripe from 'stripe';
 import getRawBody from 'raw-body';
 import { createClient } from '@supabase/supabase-js';
 
+export const config = { api: { bodyParser: false } };
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2023-10-16',
 });
 
-// Importante para poder leer el raw body y verificar la firma
-export const config = { api: { bodyParser: false } };
+const supa = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE,
+  { auth: { persistSession: false } }
+);
 
-// Conversor seguro de timestamp UNIX (segundos) → ISO
-const unixToISO = (v) =>
-  typeof v === 'number' && Number.isFinite(v) ? new Date(v * 1000).toISOString() : null;
+// Asegura que exista el customer en Supabase; si no, lo crea.
+async function ensureCustomerExists(customerId) {
+  if (!customerId) return null;
+
+  const { data: existing, error: selErr } = await supa
+    .from('customers')
+    .select('id')
+    .eq('id', customerId)
+    .maybeSingle();
+  if (selErr) throw selErr;
+
+  if (existing) return existing.id;
+
+  // Si no existe, pedimos el email al API de Stripe (sub.* no lo trae)
+  const cust = await stripe.customers.retrieve(customerId);
+  const email = cust.email ?? null;
+
+  const { error: upErr } = await supa
+    .from('customers')
+    .upsert({ id: customerId, email }, { onConflict: 'id' });
+
+  if (upErr) throw upErr;
+  return customerId;
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -20,108 +46,59 @@ export default async function handler(req, res) {
     return res.status(405).send('Method Not Allowed');
   }
 
-  // 1) Verificar firma
   let event;
-  const sig = req.headers['stripe-signature'];
-
   try {
-    const raw = (await getRawBody(req)).toString('utf8');
-    event = stripe.webhooks.constructEvent(raw, sig, process.env.STRIPE_WEBHOOK_SECRET);
-  } catch (err) {
-    console.error('❌ Firma inválida:', err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    const raw = await getRawBody(req);
+    const sig = req.headers['stripe-signature'];
+    event = stripe.webhooks.constructEvent(
+      raw,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (e) {
+    console.error('❌ Firma inválida:', e);
+    return res.status(400).send(`Webhook Error: ${e.message}`);
   }
-
-  // 2) Cliente Supabase con service role
-  const supa = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE);
 
   try {
     switch (event.type) {
-      // ===============================================
-      // CUANDO EL CHECKOUT TERMINA, GUARDAMOS EL CLIENTE
-      // ===============================================
       case 'checkout.session.completed': {
         const s = event.data.object;
-        const customerId =
-          typeof s.customer === 'string' ? s.customer : s.customer?.id || null;
-
+        const customer_id = s.customer;
         const email =
-          s.customer_details?.email || s.customer_email || null;
-        const name =
-          s.customer_details?.name || null;
+          s.customer_details?.email ?? s.customer_email ?? null;
 
-        if (customerId) {
+        if (customer_id) {
           const { error } = await supa
             .from('customers')
-            .upsert(
-              {
-                id: customerId,
-                email,
-                name,
-                updated_at: new Date().toISOString(),
-              },
-              { onConflict: 'id' }
-            );
+            .upsert({ id: customer_id, email }, { onConflict: 'id' });
           if (error) throw error;
         }
         break;
       }
 
-      // ===============================================
-      // SUSCRIPCIONES (create/update/delete)
-      // ===============================================
       case 'customer.subscription.created':
       case 'customer.subscription.updated': {
         const sub = event.data.object;
 
-        // customer puede venir como string u objeto
-        const customerId =
-          typeof sub.customer === 'string' ? sub.customer : sub.customer?.id || null;
+        const customer_id = sub.customer;
+        // 🔒 Asegura que exista el customer para que no falle el FK
+        await ensureCustomerExists(customer_id);
+
+        const price_id = sub.items?.data?.[0]?.price?.id ?? null;
+        const endSec = sub.current_period_end;
+        const current_period_end = endSec
+          ? new Date(endSec * 1000).toISOString()
+          : null;
 
         const row = {
-          id: sub.id,                               // "sub_..."
-          customer_id: customerId,                  // "cus_..."
-          status: sub.status,                       // active, past_due, canceled...
-          price_id: sub.items?.data?.[0]?.price?.id ?? null,
-
-          // TODOS los timestamps convertidos de forma segura
-          current_period_start: unixToISO(sub.current_period_start),
-          current_period_end: unixToISO(sub.current_period_end),
-          start_date: unixToISO(sub.start_date),
-          trial_end: unixToISO(sub.trial_end),
-          cancel_at: unixToISO(sub.cancel_at),
-          canceled_at: unixToISO(sub.canceled_at),
-          ended_at: unixToISO(sub.ended_at),
-
-          updated_at: new Date().toISOString(),
+          id: sub.id,
+          customer_id,
+          status: sub.status,
+          price_id,
+          current_period_end,
         };
 
         const { error } = await supa
           .from('subscriptions')
-          .upsert(row, { onConflict: 'id' });
-        if (error) throw error;
-
-        break;
-      }
-
-      case 'customer.subscription.deleted': {
-        const sub = event.data.object;
-        const { error } = await supa
-          .from('subscriptions')
-          .delete()
-          .eq('id', sub.id);
-        if (error) throw error;
-        break;
-      }
-
-      default:
-        // Otros eventos no los necesitamos
-        break;
-    }
-
-    return res.json({ ok: true, received: true });
-  } catch (e) {
-    console.error('❌ Error en webhook:', e);
-    return res.status(500).json({ ok: false, error: e.message });
-  }
-}
+          .upsert(row, { onConflict:

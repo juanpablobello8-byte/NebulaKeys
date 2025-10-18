@@ -1,104 +1,87 @@
 // /api/webhook.js
 import Stripe from 'stripe';
-import { buffer } from 'micro';
+import getRawBody from 'raw-body';
 import { createClient } from '@supabase/supabase-js';
 
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: '2023-10-16', // o la que esté configurada en tu dashboard
+});
+
+// Importante para poder leer el "raw body" y verificar la firma
 export const config = { api: { bodyParser: false } };
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' });
-
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE
-);
-
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
-
-  // ayuda extra por si faltara alguna ENV
-  ['STRIPE_WEBHOOK_SECRET','STRIPE_SECRET_KEY','SUPABASE_URL','SUPABASE_SERVICE_ROLE']
-    .forEach(k => { if (!process.env[k]) console.error(`ENV missing: ${k}`); });
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).send('Method Not Allowed');
+  }
 
   let event;
+  const sig = req.headers['stripe-signature'];
+
   try {
-    const sig = req.headers['stripe-signature'];
-    const rawBody = await buffer(req);
-    event = stripe.webhooks.constructEvent(rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    const raw = (await getRawBody(req)).toString('utf8');
+    event = stripe.webhooks.constructEvent(raw, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     console.error('❌ Firma inválida:', err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  console.log('✅ Evento recibido:', event.type);
+  // Cliente Supabase con service role
+  const supa = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE);
 
   try {
     switch (event.type) {
       case 'checkout.session.completed': {
-        const session = event.data.object;
-        const customerId = session.customer;
-        const email = session.customer_details?.email || session.customer_email || null;
-        const subId = session.subscription;
+        const s = event.data.object;
+        const customerId = s.customer; // "cus_..."
+        const email = s.customer_details?.email || s.customer_email || null;
 
         if (customerId) {
-          const { error } = await supabase
+          const { error } = await supa
             .from('customers')
             .upsert({ id: customerId, email }, { onConflict: 'id' });
-          if (error) console.error('❌ upsert customers', error);
-          else console.log('✅ customers ok');
-        }
-
-        if (subId) {
-          const sub = await stripe.subscriptions.retrieve(subId);
-          const priceId = sub.items?.data?.[0]?.price?.id || null;
-
-          const payload = {
-            id: sub.id,
-            customer_id: sub.customer,
-            status: sub.status,
-            price_id: priceId,
-            current_period_start: new Date(sub.current_period_start * 1000).toISOString(),
-            current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
-          };
-
-          const { error } = await supabase
-            .from('subscriptions')
-            .upsert(payload, { onConflict: 'id' });
-          if (error) console.error('❌ upsert subscriptions', error, payload);
-          else console.log('✅ subscriptions ok', payload);
+          if (error) throw error;
         }
         break;
       }
 
       case 'customer.subscription.created':
-      case 'customer.subscription.updated':
-      case 'customer.subscription.deleted': {
+      case 'customer.subscription.updated': {
         const sub = event.data.object;
-        const priceId = sub.items?.data?.[0]?.price?.id || null;
-
-        const payload = {
-          id: sub.id,
-          customer_id: sub.customer,
-          status: sub.status,
-          price_id: priceId,
-          current_period_start: new Date(sub.current_period_start * 1000).toISOString(),
+        const row = {
+          id: sub.id,                             // "sub_..."
+          customer_id: sub.customer,              // "cus_..."
+          status: sub.status,                     // active, past_due, canceled...
+          price_id: sub.items?.data?.[0]?.price?.id || null,
           current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
         };
 
-        const { error } = await supabase
+        const { error } = await supa
           .from('subscriptions')
-          .upsert(payload, { onConflict: 'id' });
-        if (error) console.error('❌ upsert subscriptions', error, payload);
-        else console.log('✅ subscriptions ok', payload);
+          .upsert(row, { onConflict: 'id' });
+        if (error) throw error;
+        break;
+      }
+
+      case 'customer.subscription.deleted': {
+        const sub = event.data.object;
+        const { error } = await supa
+          .from('subscriptions')
+          .delete()
+          .eq('id', sub.id);
+        if (error) throw error;
         break;
       }
 
       default:
-        console.log('ℹ️ Ignorado:', event.type);
+        // Omitimos otros eventos
+        break;
     }
-  } catch (e) {
-    console.error('❌ Handler error', e);
-    return res.status(500).send('Webhook handler error');
-  }
 
-  return res.status(200).json({ received: true });
+    return res.json({ received: true });
+  } catch (e) {
+    console.error('❌ Error DB:', e);
+    return res.status(500).json({ ok: false, error: e.message });
+  }
 }

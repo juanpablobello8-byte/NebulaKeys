@@ -1,136 +1,115 @@
-// pages/api/webhook.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+// /api/webhook.js
 import Stripe from 'stripe';
 import getRawBody from 'raw-body';
 import { createClient } from '@supabase/supabase-js';
 
-export const config = {
-  api: { bodyParser: false }, // ¡imprescindible para Stripe!
-};
+export const config = { api: { bodyParser: false } };
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: '2025-09-30.clover',
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  // usa la versión que tengas en tu Dashboard; esta funciona bien
+  apiVersion: '2023-10-16',
 });
 
-// Supabase ADMIN (service-role)
-const supabase = createClient(
-  process.env.SUPABASE_URL as string,
-  process.env.SUPABASE_SERVICE_ROLE as string,
-);
+// Supabase (service role)
+const supa = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE);
 
-// Convierte segundos UNIX (Stripe) a ISO; si no es número, devuelve null.
-const toIso = (v: any) => (typeof v === 'number' ? new Date(v * 1000).toISOString() : null);
+// Helper seguro: convierte segundos UNIX -> ISO o devuelve null
+const toIso = (v) => (typeof v === 'number' ? new Date(v * 1000).toISOString() : null);
 
-// --- Helpers de persistencia -----------------------------------------------
-async function upsertSubscription(sub: Stripe.Subscription) {
-  const item = sub.items?.data?.[0];
-  const priceId = item?.price?.id ?? null;
+// --- Persistencia -----------------------------------------------------------
+async function upsertCustomer({ id, email, name = null }) {
+  const { error } = await supa
+    .from('customers')
+    .upsert({ id, email, name, updated_at: new Date().toISOString() }, { onConflict: 'id' });
+  if (error) throw error;
+}
 
-  const payload = {
-    id: sub.id,
+async function upsertSubscription(sub) {
+  const priceId = sub?.items?.data?.[0]?.price?.id ?? null;
+
+  const row = {
+    id: sub.id,                                              // "sub_..."
     customer_id: typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null,
-    status: sub.status,
+    status: sub.status,                                      // active, past_due, canceled...
     price_id: priceId,
+
+    // Fechas SIEMPRE con helper seguro:
     current_period_start: toIso(sub.current_period_start),
-    current_period_end: toIso(sub.current_period_end),
-    start_date: toIso(sub.start_date),
-    trial_end: toIso(sub.trial_end),
-    cancel_at: toIso(sub.cancel_at),
-    canceled_at: toIso(sub.canceled_at),
-    ended_at: toIso(sub.ended_at),
+    current_period_end:   toIso(sub.current_period_end),
+    start_date:           toIso(sub.start_date),
+    trial_end:            toIso(sub.trial_end),
+    cancel_at:            toIso(sub.cancel_at),
+    canceled_at:          toIso(sub.canceled_at),
+    ended_at:             toIso(sub.ended_at),
+
     updated_at: new Date().toISOString(),
   };
 
-  const { error } = await supabase.from('subscriptions').upsert(payload, { onConflict: 'id' });
+  const { error } = await supa.from('subscriptions').upsert(row, { onConflict: 'id' });
   if (error) throw error;
 }
 
-async function upsertCustomerFromSession(session: Stripe.Checkout.Session) {
-  const customerId =
-    typeof session.customer === 'string' ? session.customer : session.customer?.id ?? null;
+// ---------------------------------------------------------------------------
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).send('Method Not Allowed');
+  }
 
-  if (!customerId) return;
-
-  // Recupera datos del cliente si los necesitas
-  const customer = await stripe.customers.retrieve(customerId);
-
-  const payload = {
-    id: customerId,
-    email:
-      typeof customer?.email === 'string'
-        ? customer.email
-        : (session.customer_details?.email ?? null),
-    name:
-      typeof (customer as any)?.name === 'string'
-        ? (customer as any).name
-        : session.customer_details?.name ?? null,
-    // created: toIso((customer as any)?.created), // solo si quieres guardarlo
-    updated_at: new Date().toISOString(),
-  };
-
-  const { error } = await supabase.from('customers').upsert(payload, { onConflict: 'id' });
-  if (error) throw error;
-}
-
-// --- Handler ---------------------------------------------------------------
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
-
-  let event: Stripe.Event;
-
+  let event;
   try {
-    const raw = await getRawBody(req);
-    const sig = req.headers['stripe-signature'] as string;
-    event = stripe.webhooks.constructEvent(
-      raw,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET as string,
-    );
-  } catch (err: any) {
-    console.error('Signature error:', err?.message);
-    return res.status(400).json({ ok: false, error: `Webhook signature verification failed` });
+    const raw = await getRawBody(req); // Buffer (no lo parses)
+    const sig = req.headers['stripe-signature'];
+    event = stripe.webhooks.constructEvent(raw, sig, process.env.STRIPE_WEBHOOK_SECRET);
+  } catch (err) {
+    console.error('❌ Firma inválida:', err?.message);
+    return res.status(400).send(`Webhook Error: ${err?.message}`);
   }
 
   try {
     switch (event.type) {
       case 'checkout.session.completed': {
-        const session = event.data.object as Stripe.Checkout.Session;
+        const s = event.data.object; // Stripe.Checkout.Session
 
-        // Guarda/actualiza el cliente
-        await upsertCustomerFromSession(session);
+        // 1) Cliente
+        const customerId =
+          typeof s.customer === 'string' ? s.customer : s.customer?.id ?? null;
+        const email = s.customer_details?.email || s.customer_email || null;
+        if (customerId) await upsertCustomer({ id: customerId, email });
 
-        // Si se generó suscripción via Checkout, recupérala y persístela
-        if (session.subscription) {
-          const subId =
-            typeof session.subscription === 'string'
-              ? session.subscription
-              : (session.subscription as any).id;
-
-          const subscription = await stripe.subscriptions.retrieve(subId);
-          await upsertSubscription(subscription);
+        // 2) Si la sesión creó suscripción, recuperarla y persistir
+        if (s.subscription) {
+          const subId = typeof s.subscription === 'string'
+            ? s.subscription
+            : s.subscription?.id;
+          const sub = await stripe.subscriptions.retrieve(subId);
+          await upsertSubscription(sub);
         }
-
         break;
       }
 
       case 'customer.subscription.created':
-      case 'customer.subscription.updated':
-      case 'customer.subscription.deleted': {
-        const subscription = event.data.object as Stripe.Subscription;
-        await upsertSubscription(subscription);
+      case 'customer.subscription.updated': {
+        const sub = event.data.object;
+        await upsertSubscription(sub);
         break;
       }
 
-      // Puedes añadir invoice.*, payment_intent.*, etc.
+      case 'customer.subscription.deleted': {
+        const sub = event.data.object;
+        const { error } = await supa.from('subscriptions').delete().eq('id', sub.id);
+        if (error) throw error;
+        break;
+      }
+
       default:
-        // No hacemos nada para otros eventos
+        // Otros eventos no los persistimos por ahora
         break;
     }
 
     return res.status(200).json({ received: true });
-  } catch (err: any) {
-    console.error('Handler error:', err?.message, err);
-    // Si la causa es de fechas, suéltala explícita en logs:
-    return res.status(500).json({ ok: false, error: err?.message ?? 'server_error' });
+  } catch (e) {
+    console.error('❌ Error en handler:', e?.message, e);
+    return res.status(500).json({ ok: false, error: e?.message ?? 'server_error' });
   }
 }

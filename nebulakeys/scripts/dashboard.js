@@ -1,68 +1,96 @@
-// /nebulakeys/scripts/dashboard.js
-document.addEventListener('DOMContentLoaded', async () => {
-  // 1) Supabase listo
-  if (!window.NEBULA_PUBLIC?.SUPABASE_URL || !window.NEBULA_PUBLIC?.SUPABASE_ANON_KEY) {
-    console.error('NEBULA_PUBLIC no está definido (config.js)');
-    return;
-  }
-  const supa = window.supabase.createClient(
-    window.NEBULA_PUBLIC.SUPABASE_URL,
-    window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
-  );
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-  const $ = (id) => document.getElementById(id);
-  const statusEl = $('sub-status');
-  const btnPortal = $('btn-portal');
+const supa = createClient(
+  window.NEBULA_PUBLIC.SUPABASE_URL,
+  window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
+);
 
-  // 2) Sesión
-  const { data: { session } } = await supa.auth.getSession();
-  if (!session) { window.location.href = '/login.html'; return; }
-  const userId = session.user.id;
+// Consideramos “activa” también ‘trialing’
+const ACTIVE_STATUSES = ['active', 'trialing'];
 
-  // 3) Lee perfil y suscripción (si existen)
-  const { data: profile } = await supa
-    .from('profiles')
-    .select('stripe_customer_id')
-    .eq('id', userId)
+// Reintentos: 10 veces cada 3s (~30s)
+const RETRIES = 10;
+const DELAY_MS = 3000;
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+async function getActiveSubscriptionByEmail(email) {
+  // Busca el customer por email
+  const { data: customer, error: cerr } = await supa
+    .from('customers')
+    .select('id,email')
+    .eq('email', email)
     .single();
 
-  const { data: subRow } = await supa
-    .from('subscriptions')
-    .select('status, price_id, current_period_end')
-    .eq('user_id', userId)
-    .order('created_at', { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  if (cerr || !customer) return { sub: null };
 
-  // 4) Pinta estado y muestra/oculta botón Portal
-  if (!subRow) {
-    statusEl.textContent = 'Sin suscripción activa';
-    btnPortal.classList.add('hidden');
-  } else {
-    const activo = ['active', 'trialing', 'past_due'].includes(subRow.status);
-    statusEl.textContent = activo
-      ? `Activa (${subRow.status})`
-      : `Inactiva (${subRow.status})`;
-    if (profile?.stripe_customer_id) btnPortal.classList.remove('hidden');
-    else btnPortal.classList.add('hidden');
+  // Busca la última suscripción con estado active/trialing
+  const { data: subs, error: serr } = await supa
+    .from('subscriptions')
+    .select('status,price_id,current_period_end')
+    .eq('customer_id', customer.id)
+    .in('status', ACTIVE_STATUSES)
+    .order('created_at', { ascending: false })
+    .limit(1);
+
+  if (serr || !subs?.length) return { sub: null };
+  return { sub: subs[0] };
+}
+
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+async function renderDashboard() {
+  // Debe haber sesión de Supabase
+  const { data: { user } } = await supa.auth.getUser();
+  if (!user) {
+    location.href = '/login.html';
+    return;
   }
 
-  // 5) Abrir Portal del cliente (Stripe)
-  btnPortal?.addEventListener('click', async () => {
-    if (!profile?.stripe_customer_id) {
-      alert('Aún no tienes una suscripción. Contrata un plan desde la página principal.');
+  const statusEl = document.getElementById('subStatus');
+  const infoEl = document.getElementById('subInfo');
+  const planEl = document.getElementById('plan');
+  const untilEl = document.getElementById('until');
+  const subscribeBtn = document.getElementById('subscribeBtn');
+
+  // Botón “Suscribirme”: llama a tu checkout o manda al pricing
+  subscribeBtn.addEventListener('click', async () => {
+    // Si ya tienes startCheckout(priceId) en /scripts/checkout.js, llama aquí:
+    if (window.startCheckout) {
+      // Sustituye por tu price por defecto si quieres
+      await window.startCheckout('price_XXXXXXXXXXXXXX');
       return;
     }
-    const res = await fetch('/api/create-portal-session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        customerId: profile.stripe_customer_id,
-        returnUrl: window.location.origin + '/dashboard.html'
-      })
-    });
-    if (!res.ok) { alert('No se pudo abrir el portal.'); return; }
-    const { url } = await res.json();
-    window.location.href = url;
+    // fallback a página de precios
+    location.href = '/pricing.html';
   });
-});
+
+  // Reintenta mientras el webhook termina
+  for (let i = 0; i < RETRIES; i++) {
+    const { sub } = await getActiveSubscriptionByEmail(user.email);
+
+    if (sub) {
+      // Suscripción encontrada
+      statusEl.textContent = 'Suscripción activa';
+      infoEl.classList.remove('hidden');
+      planEl.textContent = sub.price_id || '(plan no disponible)';
+      untilEl.textContent = sub.current_period_end
+        ? new Date(sub.current_period_end).toLocaleString()
+        : '—';
+
+      // Oculta el botón de suscribirse
+      subscribeBtn.style.display = 'none';
+      return;
+    }
+
+    statusEl.textContent = 'Sin suscripción activa (comprobando…)';
+    await sleep(DELAY_MS);
+  }
+
+  // Si tras reintentos no encontramos nada:
+  statusEl.textContent = 'Sin suscripción activa';
+}
+
+renderDashboard();

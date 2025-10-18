@@ -5,91 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pago exitoso — NebulaKeys</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script defer src="/scripts/config.js?v=4"></script>
+  <style>
+    body { background:#0b0f1a; color:#e5e7eb; }
+    .btn { display:inline-block; padding:.7rem 1.1rem; border-radius:.7rem; border:1px solid rgba(255,255,255,.12) }
+    .btn:hover { background:rgba(255,255,255,.06) }
+    .btn-primary { background:#5b61ff; border-color:#5b61ff; color:#fff; }
+  </style>
 </head>
-<body class="bg-gray-950 text-gray-100">
-  <main class="max-w-xl mx-auto px-6 py-16 text-center">
-    <h1 class="text-4xl font-extrabold">🎉 ¡Pago exitoso!</h1>
-    <p class="mt-3 text-gray-300">Estamos activando tu suscripción…</p>
+<body class="min-h-screen grid place-items-center">
+  <main class="max-w-xl w-full px-6 py-10">
+    <h1 class="text-4xl font-extrabold mb-2">¡Pago exitoso!</h1>
+    <p class="text-slate-300">Estamos activando tu suscripción…</p>
 
-    <div class="mt-8 grid place-items-center">
-      <svg class="w-10 h-10 animate-spin text-indigo-400" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-      </svg>
+    <p class="mt-6 text-amber-300">
+      Tardó más de lo usual. Entra a tu dashboard y verás el estado en cuanto llegue el webhook.
+    </p>
+
+    <div class="mt-8 flex gap-3">
+      <a href="/dashboard.html" class="btn btn-primary">Abrir dashboard</a>
+      <a href="/index.html" class="btn">← Volver a la página principal</a>
     </div>
-
-    <div id="ok" class="hidden mt-8">
-      <p class="text-green-300">Tu suscripción ya está activa. ¡Disfruta! 💫</p>
-      <a href="/dashboard.html" class="mt-4 inline-block px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold">Ir al dashboard</a>
-    </div>
-
-    <div id="warn" class="hidden mt-8">
-      <p class="text-yellow-300">Tardó más de lo usual. Actualiza en unos segundos o entra a tu dashboard.</p>
-      <a href="/dashboard.html" class="mt-4 inline-block px-5 py-3 rounded-xl border border-white/15 hover:border-white/40">Abrir dashboard</a>
-    </div>
-
-    <a href="/" class="mt-10 inline-block text-indigo-300 hover:text-indigo-200">← Volver a la página principal</a>
-
-    <p id="sid" class="mt-6 text-xs text-gray-500"></p>
   </main>
-
-  <script>
-    // Muestra el session_id (opcional, útil para soporte)
-    const params = new URLSearchParams(location.search);
-    const sessionId = params.get('session_id');
-    if (sessionId) document.getElementById('sid').textContent = 'ID de sesión: ' + sessionId;
-
-    // Espera a que el webhook de Stripe actualice Supabase.
-    document.addEventListener('DOMContentLoaded', async () => {
-      if (!window.NEBULA_PUBLIC) return;
-      const supa = window.supabase.createClient(
-        window.NEBULA_PUBLIC.SUPABASE_URL,
-        window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
-      );
-
-      const { data: { session } } = await supa.auth.getSession();
-      if (!session?.user) {
-        // si el usuario no está logueado, simplemente ofrece ir al login/dashboard
-        document.getElementById('warn').classList.remove('hidden');
-        return;
-      }
-
-      const userId = session.user.id;
-
-      // Poll cada 2s por hasta 60s para ver si la suscripción ya aparece activa
-      const t0 = Date.now();
-      const timeoutMs = 60000;
-
-      async function check() {
-        const { data: sub } = await supa
-          .from('subscriptions')
-          .select('status')
-          .eq('user_id', userId)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .maybeSingle();
-
-        if (sub && ['active', 'trialing', 'past_due'].includes(sub.status)) {
-          document.getElementById('ok').classList.remove('hidden');
-          return true;
-        }
-        return false;
-      }
-
-      // primer intento rápido
-      if (await check()) return;
-
-      const iv = setInterval(async () => {
-        if (Date.now() - t0 > timeoutMs) {
-          clearInterval(iv);
-          document.getElementById('warn').classList.remove('hidden');
-          return;
-        }
-        if (await check()) clearInterval(iv);
-      }, 2000);
-    });
-  </script>
 </body>
 </html>

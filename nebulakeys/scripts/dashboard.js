@@ -1,96 +1,110 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+// /public/scripts/dashboard.js
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const supa = createClient(
-  window.NEBULA_PUBLIC.SUPABASE_URL,
-  window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
-);
+// 1) Lee la config pública inyectada por /scripts/config.js
+const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.NEBULA_PUBLIC;
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Consideramos “activa” también ‘trialing’
-const ACTIVE_STATUSES = ['active', 'trialing'];
+// 2) Elementos de UI
+const subStatus    = document.getElementById('subStatus');
+const subInfoBox   = document.getElementById('subInfo');
+const planEl       = document.getElementById('plan');
+const untilEl      = document.getElementById('until');
+const subscribeBtn = document.getElementById('subscribeBtn');
 
-// Reintentos: 10 veces cada 3s (~30s)
-const RETRIES = 10;
-const DELAY_MS = 3000;
-const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+// 3) Price a vender (ajústalo al que quieras)
+const DEFAULT_PRICE_ID = 'price_1SJH1zKwqs0TzO3l23W3RIfE';
 
-async function getActiveSubscriptionByEmail(email) {
-  // Busca el customer por email
-  const { data: customer, error: cerr } = await supa
-    .from('customers')
-    .select('id,email')
-    .eq('email', email)
-    .single();
+// helper fecha
+const fmtDate = iso =>
+  new Date(iso).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'2-digit' });
 
-  if (cerr || !customer) return { sub: null };
+// 4) Refresca UI con el estado de suscripción
+async function refreshSubscriptionUI() {
+  subStatus.textContent = 'Comprobando…';
+  subInfoBox.classList.add('hidden');
+  subscribeBtn.disabled = true;
 
-  // Busca la última suscripción con estado active/trialing
-  const { data: subs, error: serr } = await supa
-    .from('subscriptions')
-    .select('status,price_id,current_period_end')
-    .eq('customer_id', customer.id)
-    .in('status', ACTIVE_STATUSES)
-    .order('created_at', { ascending: false })
-    .limit(1);
+  const { data: auth } = await supabase.auth.getUser();
+  const user = auth?.user;
 
-  if (serr || !subs?.length) return { sub: null };
-  return { sub: subs[0] };
-}
-
-function setText(id, text) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = text;
-}
-
-async function renderDashboard() {
-  // Debe haber sesión de Supabase
-  const { data: { user } } = await supa.auth.getUser();
   if (!user) {
-    location.href = '/login.html';
+    subStatus.textContent = 'Inicia sesión para ver tu suscripción';
+    subscribeBtn.disabled = false;
     return;
   }
 
-  const statusEl = document.getElementById('subStatus');
-  const infoEl = document.getElementById('subInfo');
-  const planEl = document.getElementById('plan');
-  const untilEl = document.getElementById('until');
-  const subscribeBtn = document.getElementById('subscribeBtn');
+  // Consulta customers por email y trae su(s) suscripción(es)
+  const { data, error } = await supabase
+    .from('customers')
+    .select(`
+      id,
+      email,
+      subscriptions (
+        status,
+        price_id,
+        current_period_start,
+        current_period_end
+      )
+    `)
+    .eq('email', user.email)
+    .maybeSingle();
 
-  // Botón “Suscribirme”: llama a tu checkout o manda al pricing
-  subscribeBtn.addEventListener('click', async () => {
-    // Si ya tienes startCheckout(priceId) en /scripts/checkout.js, llama aquí:
-    if (window.startCheckout) {
-      // Sustituye por tu price por defecto si quieres
-      await window.startCheckout('price_XXXXXXXXXXXXXX');
-      return;
-    }
-    // fallback a página de precios
-    location.href = '/pricing.html';
-  });
-
-  // Reintenta mientras el webhook termina
-  for (let i = 0; i < RETRIES; i++) {
-    const { sub } = await getActiveSubscriptionByEmail(user.email);
-
-    if (sub) {
-      // Suscripción encontrada
-      statusEl.textContent = 'Suscripción activa';
-      infoEl.classList.remove('hidden');
-      planEl.textContent = sub.price_id || '(plan no disponible)';
-      untilEl.textContent = sub.current_period_end
-        ? new Date(sub.current_period_end).toLocaleString()
-        : '—';
-
-      // Oculta el botón de suscribirse
-      subscribeBtn.style.display = 'none';
-      return;
-    }
-
-    statusEl.textContent = 'Sin suscripción activa (comprobando…)';
-    await sleep(DELAY_MS);
+  if (error) {
+    console.error(error);
+    subStatus.textContent = 'Error al consultar el estado';
+    subscribeBtn.disabled = false;
+    return;
   }
 
-  // Si tras reintentos no encontramos nada:
-  statusEl.textContent = 'Sin suscripción activa';
+  const sub = data?.subscriptions?.[0];
+
+  // Sin sub activa (o aún no creada)
+  if (!sub || !['active','trialing','past_due','unpaid'].includes(sub.status)) {
+    subStatus.textContent = 'Sin suscripción activa';
+    subscribeBtn.classList.remove('hidden');
+    subscribeBtn.disabled = false;
+    return;
+  }
+
+  // Con suscripción
+  subStatus.textContent = 'Suscripción activa';
+  planEl.textContent  = sub.price_id ?? '—';
+  untilEl.textContent = sub.current_period_end ? fmtDate(sub.current_period_end) : '—';
+  subInfoBox.classList.remove('hidden');
+
+  // Oculta CTA si ya está suscrito
+  subscribeBtn.classList.add('hidden');
+  subscribeBtn.disabled = false;
 }
 
-renderDashboard();
+// 5) Click en “Suscribirme”: crea checkout y redirige
+subscribeBtn.addEventListener('click', async () => {
+  subscribeBtn.disabled = true;
+  const original = subscribeBtn.textContent;
+  subscribeBtn.textContent = 'Redirigiendo…';
+
+  try {
+    // Si tu endpoint se llama distinto, cambia esta ruta
+    const res = await fetch(`/api/create-checkout?price=${encodeURIComponent(DEFAULT_PRICE_ID)}`);
+    if (!res.ok) throw new Error(await res.text());
+    const { url } = await res.json();
+    location.href = url;
+  } catch (err) {
+    console.error(err);
+    alert('No se pudo iniciar el checkout: ' + err.message);
+    subscribeBtn.textContent = original;
+    subscribeBtn.disabled = false;
+  }
+});
+
+// 6) Carga inicial
+await refreshSubscriptionUI();
+
+// 7) Polling cortito para reflejar activación tras pagar
+let tries = 0;
+const iv = setInterval(async () => {
+  tries += 1;
+  await refreshSubscriptionUI();
+  if (tries >= 8) clearInterval(iv); // ~1 minuto
+}, 8000);

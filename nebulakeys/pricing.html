@@ -1,0 +1,106 @@
+<!-- /pricing.html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planes — NebulaKeys</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#0b0f18; --card:#0f1522; --text:#e6edff; --muted:#a6b3d0; --brand:#6066f0; --brand-2:#7582ff; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial; background:var(--bg); color:var(--text); }
+    .wrap{ max-width:1100px; margin:0 auto; padding:32px 20px 64px; }
+    h1{ font-size:36px; margin:10px 0 24px; }
+    p.lead{ color:var(--muted); margin:0 0 24px; }
+    .grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+    @media (max-width:980px){ .grid{ grid-template-columns:1fr; } }
+    .card{ background:var(--card); border:1px solid #1c2437; border-radius:16px; padding:24px; display:flex; flex-direction:column; gap:14px; }
+    .price{ font-size:36px; font-weight:700; }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; border:0; border-radius:10px; padding:12px 18px;
+          font-weight:600; cursor:pointer; transition:transform .06s ease, opacity .2s ease; background:linear-gradient(180deg,var(--brand),var(--brand-2)); color:#fff; }
+    .btn[disabled]{ opacity:.7; cursor:not-allowed; }
+    .muted{ color:var(--muted); font-size:14px; }
+    .topbar{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:24px; }
+    .ghost{ background:transparent; border:1px solid #25314b; color:var(--text); padding:10px 14px; border-radius:10px; cursor:pointer; }
+    .err{ color:#ff7a7a; font-size:14px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <div class="muted">NebulaKeys</div>
+        <h1>Elige tu plan</h1>
+        <p class="lead">Suscripción semanal. Puedes cambiar o cancelar cuando quieras.</p>
+      </div>
+      <button class="ghost" onclick="location.href='/dashboard.html'">← Volver al dashboard</button>
+    </div>
+
+    <div id="error" class="err" style="display:none"></div>
+
+    <div class="grid">
+      <!-- Starter -->
+      <div class="card">
+        <h3>Starter</h3>
+        <div class="muted">1 semana de acceso a la biblioteca</div>
+        <div class="price">$150 MXN</div>
+        <button class="btn" id="btn-starter"
+                onclick="startCheckout('price_1SJH1zKwqs0TzO3l23W3RIfE','btn-starter')">
+          Suscribirme
+        </button>
+        <div class="muted">Ideal para probar el servicio.</div>
+      </div>
+
+      <!-- Pro -->
+      <div class="card">
+        <h3>Pro</h3>
+        <div class="muted">Funciones avanzadas + más slots</div>
+        <div class="price">$??? MXN</div>
+        <button class="btn" id="btn-pro"
+                onclick="startCheckout('price_1SJH4eKwqs0TzO3l1ODa7pRx','btn-pro')">
+          Suscribirme
+        </button>
+        <div class="muted">Recomendado para usuarios activos.</div>
+      </div>
+
+      <!-- Ultimate -->
+      <div class="card">
+        <h3>Ultimate</h3>
+        <div class="muted">Todo ilimitado</div>
+        <div class="price">$??? MXN</div>
+        <button class="btn" id="btn-ultimate"
+                onclick="startCheckout('price_1SJH9FKwqs0TzO3lxTTonf6H','btn-ultimate')">
+          Suscribirme
+        </button>
+        <div class="muted">Para los que lo quieren todo.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function startCheckout(priceId, btnId){
+      const err = document.getElementById('error');
+      const btn = document.getElementById(btnId);
+      err.style.display = 'none';
+      btn.disabled = true;
+      try{
+        const res = await fetch(`/api/create-checkout?price=${encodeURIComponent(priceId)}`);
+        if(!res.ok){
+          const text = await res.text();
+          throw new Error(`Fallo create-checkout (${res.status}): ${text}`);
+        }
+        const data = await res.json();
+        if(!data.url) throw new Error('No se recibió URL de Stripe');
+        location.href = data.url;                     // <- redirige a Stripe
+      }catch(e){
+        err.textContent = e.message || 'Error iniciando pago';
+        err.style.display = 'block';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>

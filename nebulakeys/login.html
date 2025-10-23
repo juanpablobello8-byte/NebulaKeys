@@ -20,6 +20,13 @@
     <form id="signup-form" class="mt-8 space-y-4">
       <input id="signup-email" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="email" placeholder="Correo" required />
       <input id="signup-password" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="password" placeholder="Contraseña (min. 6)" required minlength="6" />
+      <label class="block text-slate-300 mb-2" for="steam">
+  Usuario de Steam
+</label>
+<input id="steam" class="w-full input" placeholder="tu_usuario_de_steam" />
+<p class="text-amber-300 text-sm mt-1">
+  Asegúrate de que el usuario de Steam sea correcto. Lo usaremos para activar tu suscripción en la cuenta indicada.
+</p>
       <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-4 py-3 rounded-xl">Crear cuenta</button>
       <p id="signup-msg" class="text-sm text-gray-300"></p>
     </form>

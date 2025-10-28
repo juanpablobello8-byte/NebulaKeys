@@ -1,32 +1,51 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pago exitoso</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  body { background:#0b0f1a; color:#fff; }
-  .wrap { max-width:480px; margin:5rem auto; background:#0f1626;
-          border:1px solid rgba(255,255,255,.08); border-radius:1rem;
-          padding:2rem; text-align:center; }
-  .btn { display:block; background:#5b61ff; color:#fff; border-radius:.5rem;
-         padding:.75rem 1rem; margin-top:1.25rem; }
-  .alt { display:block; border:1px solid rgba(255,255,255,.2); border-radius:.5rem;
-         padding:.75rem 1rem; margin-top:1rem; color:#fff; text-decoration:none;
-         background:rgba(255,255,255,.05); }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>¡Pago exitoso!</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body { background:#0b0f1a; color:#e5e7eb; }
+    .card { background:#0f1626; border:1px solid rgba(255,255,255,.06); }
+    .btn { display:inline-block; padding:.6rem 1rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.12); }
+    .btn:hover { background:rgba(255,255,255,.06); }
+    .btn-primary { background:#5b61ff; border-color:#5b61ff; color:white; }
+    .btn-primary:hover { filter:brightness(1.05); }
+  </style>
 </head>
-<body>
-<div class="wrap">
-  <h1 class="text-2xl font-bold">¡Pago exitoso!</h1>
-  <p class="text-slate-300 mt-2 text-sm">
-    Estamos activando tu suscripción...<br/>
-    Si tarda unos segundos, entra a tu dashboard y se actualizará
-    automáticamente cuando llegue el webhook.
-  </p>
-  <a class="btn" href="/dashboard.html">Abrir dashboard</a>
-  <a class="alt" href="/index.html">← Volver a la página principal</a>
-</div>
+<body class="min-h-screen flex items-center justify-center px-4">
+
+  <main class="card rounded-2xl p-8 max-w-xl text-center space-y-6">
+    <h1 class="text-3xl font-extrabold text-white">¡Pago exitoso! 🎉</h1>
+
+    <p class="text-slate-300">
+      Estamos activando tu suscripción…
+    </p>
+
+    <p class="text-yellow-300 text-sm leading-relaxed">
+      A veces tarda un poquito más de lo normal.<br />
+      Abre tu dashboard y debería aparecer como activa en segundos <br />
+      (apenas llegue el webhook).
+    </p>
+
+    <div class="flex flex-col gap-3 sm:flex-row sm:justify-center">
+      <a href="/dashboard.html"
+         class="btn btn-primary text-center w-full sm:w-auto">
+         Abrir dashboard
+      </a>
+
+      <a href="/index.html"
+         class="btn text-center w-full sm:w-auto">
+         ← Volver a la página principal
+      </a>
+    </div>
+
+    <p class="text-xs text-slate-500">
+      Si no ves tu suscripción activa en 1 minuto, actualiza el dashboard.
+    </p>
+  </main>
 </body>
 </html>

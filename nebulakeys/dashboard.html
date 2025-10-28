@@ -1,25 +1,19 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mi cuenta — NebulaKeys</title>
-
-  <!-- Tailwind (si ya lo usas por CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Tu config pública (debe cargarse antes del módulo) -->
-  <script defer src="/scripts/config.js"></script>
-
-  <!-- Estilos mínimos opcionales -->
-  <style>
-    body { background:#0b0f1a; color:#e5e7eb; }
-    .card { background:#0f1626; border:1px solid rgba(255,255,255,.06); }
-    .btn { display:inline-block; padding:.6rem 1rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.12); }
-    .btn:hover { background:rgba(255,255,255,.06); }
-    .btn-primary { background:#5b61ff; border-color:#5b61ff; color:white; }
-    .btn-primary:hover { filter:brightness(1.05); }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mi cuenta — NebulaKeys</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="/scripts/config.js"></script>
+<style>
+  body { background:#0b0f1a; color:#e5e7eb; }
+  .card { background:#0f1626; border:1px solid rgba(255,255,255,.06); border-radius:1rem; padding:1.5rem; }
+  .btn { display:inline-block; padding:.6rem 1rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.12); color:#fff; }
+  .btn:hover { background:rgba(255,255,255,.06); }
+  .btn-primary { background:#5b61ff; border-color:#5b61ff; color:#fff; }
+  .btn-primary:hover { filter:brightness(1.05); }
+</style>
 </head>
 <body class="min-h-screen">
   <header class="max-w-4xl mx-auto px-4 py-8">
@@ -27,8 +21,7 @@
   </header>
 
   <main class="max-w-4xl mx-auto px-4 pb-24 space-y-10">
-    <!-- Estado de suscripción -->
-    <section class="card rounded-2xl p-6">
+    <section class="card">
       <h2 class="text-2xl font-bold mb-3">Estado de suscripción</h2>
       <p id="subStatus" class="text-slate-300">Comprobando…</p>
 
@@ -43,14 +36,12 @@
       </div>
     </section>
 
-    <!-- Lista de juegos (tu sección) -->
-    <section class="card rounded-2xl p-6">
+    <section class="card">
       <h2 class="text-2xl font-bold mb-3">Mi lista de juegos</h2>
       <a href="/library.html" class="text-indigo-300 hover:text-indigo-200">+ Agregar más</a>
     </section>
   </main>
 
-  <!-- Lógica del dashboard -->
   <script type="module" src="/scripts/dashboard.js"></script>
 </body>
 </html>

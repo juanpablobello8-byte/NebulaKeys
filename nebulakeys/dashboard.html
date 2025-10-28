@@ -1,47 +1,95 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Mi cuenta — NebulaKeys</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script defer src="/scripts/config.js"></script>
-<style>
-  body { background:#0b0f1a; color:#e5e7eb; }
-  .card { background:#0f1626; border:1px solid rgba(255,255,255,.06); border-radius:1rem; padding:1.5rem; }
-  .btn { display:inline-block; padding:.6rem 1rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.12); color:#fff; }
-  .btn:hover { background:rgba(255,255,255,.06); }
-  .btn-primary { background:#5b61ff; border-color:#5b61ff; color:#fff; }
-  .btn-primary:hover { filter:brightness(1.05); }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mi cuenta — NebulaKeys</title>
+
+  <!-- Tailwind CDN (si no usas build todavía) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tu config pública (define SUPABASE_URL / SUPABASE_ANON_KEY en window.NEBULA_PUBLIC) -->
+  <script defer src="/scripts/config.js"></script>
+
+  <style>
+    body { background:#0b0f1a; color:#e5e7eb; }
+    .card {
+      background:#0f1626;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:1rem;
+    }
+    .btn {
+      display:inline-block;
+      padding:.6rem 1rem;
+      border-radius:.6rem;
+      border:1px solid rgba(255,255,255,.12);
+      background:transparent;
+      color:#fff;
+    }
+    .btn:hover { background:rgba(255,255,255,.06); }
+    .btn-primary {
+      background:#5b61ff;
+      border-color:#5b61ff;
+      color:#fff;
+    }
+    .btn-primary:hover { filter:brightness(1.05); }
+  </style>
 </head>
 <body class="min-h-screen">
+
+  <!-- Cabecera -->
   <header class="max-w-4xl mx-auto px-4 py-8">
     <h1 class="text-4xl font-extrabold">Mi cuenta</h1>
   </header>
 
+  <!-- Contenido principal -->
   <main class="max-w-4xl mx-auto px-4 pb-24 space-y-10">
-    <section class="card">
+
+    <!-- Bloque: Estado de suscripción -->
+    <section class="card p-6">
       <h2 class="text-2xl font-bold mb-3">Estado de suscripción</h2>
+
+      <!-- Texto dinámico que actualizamos desde dashboard.js -->
       <p id="subStatus" class="text-slate-300">Comprobando…</p>
 
+      <!-- Info extra solo si hay suscripción activa -->
       <div id="subInfo" class="mt-4 hidden space-y-1">
-        <p><span class="text-slate-400">Plan:</span> <span id="plan"></span></p>
-        <p><span class="text-slate-400">Vence:</span> <span id="until"></span></p>
+        <p>
+          <span class="text-slate-400">Plan:</span>
+          <span id="plan"></span>
+        </p>
+        <p>
+          <span class="text-slate-400">Vence:</span>
+          <span id="until"></span>
+        </p>
       </div>
 
-      <div class="mt-6 flex gap-3">
-        <a href="/index.html" class="btn">← Volver al lobby</a>
-        <a id="subscribeBtn" class="btn btn-primary cursor-pointer">Suscribirme</a>
+      <!-- Botones -->
+      <div class="mt-6 flex flex-wrap gap-3">
+        <!-- Volver al lobby -->
+        <a href="/index.html" class="btn">
+          ← Volver al lobby
+        </a>
+
+        <!-- CTA de suscripción (lo ocultamos automáticamente si ya está activo) -->
+        <button id="subscribeBtn" class="btn btn-primary cursor-pointer">
+          Suscribirme
+        </button>
       </div>
     </section>
 
-    <section class="card">
+    <!-- Bloque: Lista de juegos (tu sección futura) -->
+    <section class="card p-6">
       <h2 class="text-2xl font-bold mb-3">Mi lista de juegos</h2>
-      <a href="/library.html" class="text-indigo-300 hover:text-indigo-200">+ Agregar más</a>
+      <a href="/library.html" class="text-indigo-300 hover:text-indigo-200">
+        + Agregar más
+      </a>
     </section>
+
   </main>
 
+  <!-- Lógica dinámica del dashboard -->
+  <!-- IMPORTANTE: este script DEBE ir DESPUÉS de config.js y DESPUÉS del HTML -->
   <script type="module" src="/scripts/dashboard.js"></script>
 </body>
 </html>

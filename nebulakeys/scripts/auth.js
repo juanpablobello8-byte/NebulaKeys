@@ -1,39 +1,51 @@
 // /scripts/auth.js
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
+// leemos la config pública
 const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.NEBULA_PUBLIC;
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const form = document.getElementById('authForm');
+// elementos del DOM
+const form       = document.getElementById('authForm');
 const emailInput = document.getElementById('email');
-const passInput = document.getElementById('password');
+const passInput  = document.getElementById('password');
 const steamInput = document.getElementById('steam');
-const errorBox = document.getElementById('authError');
-const isLoginToggle = document.getElementById('modeToggle');
+const modeToggle = document.getElementById('modeToggle');
+const submitBtn  = document.getElementById('submitBtn');
+const errorBox   = document.getElementById('authError');
 
-function setError(msg) {
-  errorBox.textContent = msg || '';
-  errorBox.classList.toggle('hidden', !msg);
+function showError(msg) {
+  if (!msg) {
+    errorBox.classList.remove('show');
+    errorBox.textContent = '';
+  } else {
+    errorBox.classList.add('show');
+    errorBox.textContent = msg;
+  }
 }
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  setError('');
+form.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+  showError('');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Procesando...';
 
   const email = emailInput.value.trim();
-  const pass = passInput.value.trim();
+  const pass  = passInput.value;
   const steam = steamInput.value.trim();
-  const mode = isLoginToggle.checked ? 'login' : 'signup';
+  const loginMode = modeToggle.checked; // true = login, false = signup
 
   try {
     let authRes;
-    if (mode === 'signup') {
-      authRes = await supabase.auth.signUp({
+    if (loginMode) {
+      // INICIAR SESIÓN
+      authRes = await supabase.auth.signInWithPassword({
         email,
         password: pass
       });
     } else {
-      authRes = await supabase.auth.signInWithPassword({
+      // CREAR CUENTA
+      authRes = await supabase.auth.signUp({
         email,
         password: pass
       });
@@ -45,25 +57,34 @@ form.addEventListener('submit', async (e) => {
 
     const user = authRes.data.user;
     if (!user) {
-      throw new Error('No user returned');
+      throw new Error(
+        'No se devolvió usuario. ¿Está habilitado sign-up sin confirmación de email en Supabase?'
+      );
     }
 
-    // Guardar/actualizar perfil con steam_username
-    await supabase
+    // Guardar / actualizar perfil en "profiles"
+    const { error: profileErr } = await supabase
       .from('profiles')
       .upsert(
         {
-          id: user.id,
+          id: user.id,              // mismo id que auth.users
           email: user.email,
           steam_username: steam || null
         },
         { onConflict: 'id' }
       );
 
-    // listo → redirige al dashboard
+    if (profileErr) {
+      console.warn('No se pudo guardar perfil en profiles:', profileErr.message);
+      // No rompo el flujo por esto
+    }
+
+    // OK → al dashboard
     window.location.href = '/dashboard.html';
   } catch (err) {
-    console.error(err);
-    setError('Error: ' + err.message);
+    console.error('[auth error]', err);
+    showError('Error: ' + err.message);
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Continuar';
   }
 });

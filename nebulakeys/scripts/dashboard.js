@@ -1,103 +1,88 @@
 // /scripts/dashboard.js
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.NEBULA_PUBLIC || {};
+const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.NEBULA_PUBLIC;
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// UI refs
-const subStatus    = document.getElementById('subStatus');
-const subInfoBox   = document.getElementById('subInfo');
-const planEl       = document.getElementById('plan');
-const untilEl      = document.getElementById('until');
+// UI
+const subStatus   = document.getElementById('subStatus');
+const subInfoBox  = document.getElementById('subInfo');
+const planEl      = document.getElementById('plan');
+const untilEl     = document.getElementById('until');
 const subscribeBtn = document.getElementById('subscribeBtn');
 
-// Mapea price_id → nombre humano
-const PRICE_NAMES = {
-  'price_1SJH1zKwqs0TzO3l23W3RIfE': 'Plan Semanal MXN $150',
-  // agrega más si tienes más prices
-};
+const fmtDate = iso =>
+  iso ? new Date(iso).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'2-digit' }) : '—';
 
-const ACTIVE_STATUSES = ['active','trialing','past_due','unpaid'];
+async function getActiveSubscription(email) {
+  // 1) customers.id (cus_...) por email
+  const { data: cust, error: e1 } = await supabase
+    .from('customers')
+    .select('id')
+    .eq('email', email)
+    .maybeSingle();
+  if (e1) throw e1;
+  if (!cust) return null;
 
-const fmtDate = (iso) =>
-  new Date(iso).toLocaleDateString(undefined, {
-    year:'numeric',
-    month:'short',
-    day:'2-digit'
-  });
+  // 2) suscripción activa más reciente
+  const { data: subs, error: e2 } = await supabase
+    .from('subscriptions')
+    .select('id,status,price_id,current_period_end')
+    .eq('customer_id', cust.id)
+    .in('status', ['active', 'trialing', 'past_due', 'unpaid'])
+    .order('current_period_end', { ascending: false, nullsLast: true })
+    .limit(1);
+  if (e2) throw e2;
+
+  return subs?.[0] || null;
+}
 
 async function refreshSubscriptionUI() {
-  subStatus.textContent = 'Comprobando…';
-  subInfoBox.classList.add('hidden');
-  subscribeBtn.classList.remove('hidden');
-  subscribeBtn.setAttribute('href', '/pricing.html');
-
-  // Usuario actual
-  const { data: auth } = await supabase.auth.getUser();
-  const user = auth?.user;
+  // Quién está logueado
+  const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
     subStatus.textContent = 'Inicia sesión para ver tu suscripción';
-    subscribeBtn.setAttribute('href', '/auth.html');
+    subscribeBtn.classList.remove('hidden');
     return;
   }
 
-  // Busca customer + subscriptions por email
-  const { data, error } = await supabase
-    .from('customers')
-    .select(`
-      id,
-      email,
-      subscriptions (
-        status,
-        price_id,
-        current_period_end
-      )
-    `)
-    .eq('email', user.email)
-    .maybeSingle();
+  subStatus.textContent = 'Comprobando...';
+  subInfoBox.classList.add('hidden');
+  subscribeBtn.classList.add('hidden'); // oculto por defecto mientras consulta
 
-  if (error) {
-    console.error('Error buscando suscripción:', error);
+  try {
+    const sub = await getActiveSubscription(user.email);
+
+    if (!sub) {
+      subStatus.textContent = 'Sin suscripción activa';
+      subInfoBox.classList.add('hidden');
+      subscribeBtn.classList.remove('hidden'); // mostrar CTA
+      return;
+    }
+
+    // Tiene suscripción
+    subStatus.textContent = 'Suscripción activa';
+    planEl.textContent  = sub.price_id || '—';
+    untilEl.textContent = fmtDate(sub.current_period_end);
+    subInfoBox.classList.remove('hidden');
+    // CTA oculto si ya hay suscripción
+  } catch (err) {
+    console.error(err);
     subStatus.textContent = 'Error al consultar el estado';
-    return;
+    subscribeBtn.classList.remove('hidden');
   }
-
-  const sub = data?.subscriptions?.[0];
-  if (!sub || !ACTIVE_STATUSES.includes(sub.status)) {
-    subStatus.textContent = 'Sin suscripción activa';
-    subscribeBtn.setAttribute('href', '/pricing.html');
-    return;
-  }
-
-  subStatus.textContent = 'Suscripción activa';
-  planEl.textContent    = PRICE_NAMES[sub.price_id] || sub.price_id || '—';
-  untilEl.textContent   = sub.current_period_end
-    ? fmtDate(sub.current_period_end)
-    : '—';
-
-  subInfoBox.classList.remove('hidden');
-  subscribeBtn.classList.add('hidden');
 }
 
-// Polling al volver de Stripe
-function startPolling() {
-  let tries = 0;
-  const iv = setInterval(async () => {
-    tries++;
-    await refreshSubscriptionUI();
-    if (tries >= 8) clearInterval(iv);
-  }, 8000);
-}
-
-// Enlazar botón (por si quieres que haga algo especial)
-subscribeBtn.addEventListener('click', (e) => {
-  // por defecto /pricing.html ya está en href
-  // dejamos que navegue
+// El CTA te lleva al catálogo de planes
+subscribeBtn?.addEventListener('click', () => {
+  window.location.href = '/pricing.html';
 });
 
-supabase.auth.onAuthStateChange(async () => {
-  await refreshSubscriptionUI();
-});
-
+// Carga inicial + pequeño polling por si vienes de success.html
 await refreshSubscriptionUI();
-startPolling();
+let tries = 0;
+const iv = setInterval(async () => {
+  tries += 1;
+  await refreshSubscriptionUI();
+  if (tries >= 8) clearInterval(iv); // ~1 min
+}, 8000);

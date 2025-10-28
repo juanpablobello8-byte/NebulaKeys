@@ -1,47 +1,75 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ingresar — NebulaKeys</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- tu config pública -->
-  <script defer src="/scripts/config.js?v=4"></script>
-  <!-- lógica de login: DEBE ir después de config.js -->
-  <script defer src="/scripts/auth.js?v=2"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NebulaKeys — Ingresar</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="/scripts/config.js"></script>
+<style>
+  body { background:#0b0f1a; color:#fff; }
+  .card { background:#0f1626; border:1px solid rgba(255,255,255,.08); max-width:400px; margin:4rem auto; padding:2rem; border-radius:1rem; }
+  label { display:block; font-size:.9rem; color:#cbd5e1; margin-bottom:.25rem; }
+  input { width:100%; background:#1e2538; border:1px solid #475569; border-radius:.5rem; padding:.75rem 1rem; color:#fff; }
+  .btn { background:#5b61ff; color:#fff; border-radius:.5rem; padding:.75rem 1rem; text-align:center; width:100%; font-weight:600; }
+</style>
 </head>
-<body class="bg-gray-950 text-gray-100">
-  <main class="max-w-md mx-auto px-4 py-16">
-    <h1 class="text-3xl font-extrabold">NebulaKeys — Ingresar</h1>
-    <p class="mt-2 text-gray-300 text-sm">Crea tu cuenta o inicia sesión con email y contraseña.</p>
+<body>
+  <div class="card">
+    <h1 class="text-xl font-bold mb-1">NebulaKeys — Ingresar</h1>
+    <p class="text-slate-400 text-sm mb-6">
+      Crea tu cuenta o inicia sesión con email y contraseña.
+    </p>
 
-    <!-- CREAR CUENTA -->
-    <form id="signup-form" class="mt-8 space-y-4">
-      <input id="signup-email" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="email" placeholder="Correo" required />
-      <input id="signup-password" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="password" placeholder="Contraseña (min. 6)" required minlength="6" />
-      <label class="block text-slate-300 mb-2" for="steam">
-  Usuario de Steam
-</label>
-<input id="steam" class="w-full input" placeholder="tu_usuario_de_steam" />
-<p class="text-amber-300 text-sm mt-1">
-  Asegúrate de que el usuario de Steam sea correcto. Lo usaremos para activar tu suscripción en la cuenta indicada.
-</p>
-      <button type="submit" class="w-full bg-indigo-500 hover:bg-indigo-400 text-black font-semibold px-4 py-3 rounded-xl">Crear cuenta</button>
-      <p id="signup-msg" class="text-sm text-gray-300"></p>
-    </form>
+    <label class="mb-2">
+      Email
+      <input id="email" type="email" required placeholder="tucorreo@example.com" />
+    </label>
 
-    <hr class="my-6 border-white/10" />
+    <label class="mb-2 mt-4">
+      Contraseña
+      <input id="password" type="password" required placeholder="********" />
+    </label>
 
-    <!-- INICIAR SESIÓN -->
-    <form id="signin-form" class="space-y-4">
-      <input id="signin-email" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="email" placeholder="Correo" required />
-      <input id="signin-password" class="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10" type="password" placeholder="Contraseña" required />
-      <button type="submit" class="w-full border border-white/15 hover:border-white/40 px-4 py-3 rounded-xl">Iniciar sesión</button>
-      <p id="signin-msg" class="text-sm text-gray-300"></p>
-    </form>
+    <label class="mb-2 mt-4">
+      Usuario de Steam
+      <input id="steam" type="text" placeholder="tuUsuarioDeSteam" />
+      <small class="text-slate-500 block mt-1 text-xs">
+        IMPORTANTE: Este usuario se usará para activar la suscripción en tu cuenta de Steam.
+      </small>
+    </label>
 
-    <a href="/" class="mt-8 inline-block text-indigo-300 hover:text-indigo-200">← Volver</a>
-  </main>
+    <div class="text-slate-400 text-xs flex items-center gap-2 my-4">
+      <input id="modeToggle" type="checkbox" class="cursor-pointer" />
+      <label for="modeToggle" class="cursor-pointer select-none">Ya tengo cuenta (Iniciar sesión)</label>
+    </div>
+
+    <button id="submitBtn" class="btn w-full">Continuar</button>
+
+    <p id="authError" class="text-red-400 text-sm mt-4 hidden"></p>
+
+    <p class="text-center text-slate-500 text-xs mt-6">
+      ¿Listo? <a href="/index.html" class="underline">Volver al inicio</a>
+    </p>
+  </div>
+
+  <script type="module" src="/scripts/auth.js"></script>
+  <script>
+    // reenvía el click del botón al form submit
+    const btn = document.getElementById('submitBtn');
+    const formProxy = document.createElement('form');
+    formProxy.id = 'authForm';
+    document.body.appendChild(formProxy);
+
+    btn.addEventListener('click', () => formProxy.requestSubmit());
+
+    // hack: montamos inputs en el "form virtual"
+    formProxy.append(
+      document.getElementById('email'),
+      document.getElementById('password'),
+      document.getElementById('steam'),
+      document.getElementById('modeToggle')
+    );
+  </script>
 </body>
 </html>

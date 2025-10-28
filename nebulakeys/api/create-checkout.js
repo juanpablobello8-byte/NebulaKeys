@@ -1,27 +1,50 @@
 // /api/create-checkout.js
 import Stripe from 'stripe';
+import { createClient } from '@supabase/supabase-js';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' });
+export const config = {
+  runtime: 'edge', // puedes quitar esto si Vercel se queja y usar default functions runtime
+};
 
-export default async function handler(req, res) {
-  if (req.method !== 'GET') return res.status(405).send('Method Not Allowed');
-
-  const price = req.query.price;
-  if (!price) return res.status(400).send('Missing price');
-
+export default async function handler(req) {
   try {
-    const origin = req.headers.origin ?? `https://${req.headers.host}`;
+    const url = new URL(req.url);
+    const priceId = url.searchParams.get('price'); // price_xxx de Stripe
+
+    if (!priceId) {
+      return new Response(JSON.stringify({ error: 'Missing price' }), { status: 400 });
+    }
+
+    // Supabase cliente ADMIN para leer usuario? no.
+    // Aquí NO tenemos sesión del user aún en serverless "edge" sin cookies.
+    // Plan sencillo: FRONTEND debe pasar el email autenticado.
+    // (en producción se hace con supabase auth via cookies; aquí vamos con "email" explícito)
+
+    const email = url.searchParams.get('email');
+    if (!email) {
+      return new Response(JSON.stringify({ error: 'Missing email' }), { status: 400 });
+    }
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2023-10-16',
+    });
+
+    // Creamos la sesión de checkout
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
-      line_items: [{ price, quantity: 1 }],
-      success_url: `${origin}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/dashboard.html`,
+      line_items: [{ price: priceId, quantity: 1 }],
+      customer_email: email,
+      success_url: `https://nebula-keys.vercel.app/success.html`,
+      cancel_url: `https://nebula-keys.vercel.app/cancel.html`,
       allow_promotion_codes: true,
-      billing_address_collection: 'auto'
     });
-    return res.json({ url: session.url });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).send(e.message);
+
+    return new Response(JSON.stringify({ url: session.url }), {
+      status: 200,
+      headers: { 'content-type': 'application/json' },
+    });
+  } catch (err) {
+    console.error('❌ Error create-checkout:', err);
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
 }

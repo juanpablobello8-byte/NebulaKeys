@@ -3,68 +3,38 @@ import Stripe from 'stripe';
 import getRawBody from 'raw-body';
 import { createClient } from '@supabase/supabase-js';
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+export const config = { api: { bodyParser: false } };
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' });
+const supa = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE);
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).send('Method not allowed');
-  }
+  if (req.method !== 'POST') return res.status(405).send('Method not allowed');
 
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2023-10-16',
-  });
-
+  const sig = req.headers['stripe-signature'];
   let event;
   try {
-    const raw = await getRawBody(req);
-    const sig = req.headers['stripe-signature'];
-    event = stripe.webhooks.constructEvent(
-      raw,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET
-    );
-  } catch (err) {
-    console.error('❌ Webhook signature error:', err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    const raw = (await getRawBody(req)).toString('utf8');
+    event = stripe.webhooks.constructEvent(raw, sig, process.env.STRIPE_WEBHOOK_SECRET);
+  } catch (e) {
+    return res.status(400).send(`Webhook error: ${e.message}`);
   }
-
-  const supaAdmin = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE
-  );
 
   try {
     switch (event.type) {
       case 'checkout.session.completed': {
-        // cuando se termina el checkout
         const s = event.data.object;
-        // s.customer_email, s.customer (id stripe), etc.
-
-        // upsert en customers
-        if (s.customer && s.customer_email) {
-          await supaAdmin
-            .from('customers')
-            .upsert(
-              {
-                id: s.customer,
-                email: s.customer_email,
-              },
-              { onConflict: 'id' }
-            );
+        const customer = s.customer; // cus_...
+        const email = s.customer_details?.email || s.customer_email || null;
+        if (customer && email) {
+          await supa.from('customers').upsert({ id: customer, email }, { onConflict: 'id' });
         }
         break;
       }
 
       case 'customer.subscription.created':
-      case 'customer.subscription.updated':
-      case 'customer.subscription.deleted': {
+      case 'customer.subscription.updated': {
         const sub = event.data.object;
-        // Campos relevantes
         const row = {
           id: sub.id,
           customer_id: sub.customer,
@@ -75,39 +45,22 @@ export default async function handler(req, res) {
             : null,
           current_period_end: sub.current_period_end
             ? new Date(sub.current_period_end * 1000).toISOString()
-            : null,
+            : null
         };
+        await supa.from('subscriptions').upsert(row, { onConflict: 'id' });
+        break;
+      }
 
-        if (event.type === 'customer.subscription.deleted') {
-          // borra sub si se cancela
-          await supaAdmin.from('subscriptions').delete().eq('id', sub.id);
-        } else {
-          // upsert sub
-          await supaAdmin
-            .from('subscriptions')
-            .upsert(row, { onConflict: 'id' });
-        }
-
-        // Asegurar que exista el customer
-        if (sub.customer && sub.customer_details?.email) {
-          await supaAdmin
-            .from('customers')
-            .upsert(
-              {
-                id: sub.customer,
-                email: sub.customer_details.email,
-              },
-              { onConflict: 'id' }
-            );
-        }
-
+      case 'customer.subscription.deleted': {
+        const sub = event.data.object;
+        await supa.from('subscriptions').update({ status: 'canceled' }).eq('id', sub.id);
         break;
       }
     }
 
-    res.json({ received: true });
-  } catch (err) {
-    console.error('❌ Error guardando en DB:', err);
-    res.status(500).json({ ok: false, error: err.message });
+    return res.json({ received: true });
+  } catch (e) {
+    console.error('webhook handler error:', e);
+    return res.status(500).json({ error: e.message });
   }
 }

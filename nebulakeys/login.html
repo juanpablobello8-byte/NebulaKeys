@@ -1,75 +1,197 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>NebulaKeys — Ingresar</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script defer src="/scripts/config.js"></script>
-<style>
-  body { background:#0b0f1a; color:#fff; }
-  .card { background:#0f1626; border:1px solid rgba(255,255,255,.08); max-width:400px; margin:4rem auto; padding:2rem; border-radius:1rem; }
-  label { display:block; font-size:.9rem; color:#cbd5e1; margin-bottom:.25rem; }
-  input { width:100%; background:#1e2538; border:1px solid #475569; border-radius:.5rem; padding:.75rem 1rem; color:#fff; }
-  .btn { background:#5b61ff; color:#fff; border-radius:.5rem; padding:.75rem 1rem; text-align:center; width:100%; font-weight:600; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NebulaKeys — Ingresar</title>
+
+  <!-- Tailwind para estilos rápidos -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Config pública de Supabase (debe existir /scripts/config.js) -->
+  <script defer src="/scripts/config.js"></script>
+
+  <style>
+    body {
+      background:#0b0f1a;
+      color:#fff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      min-height:100vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding-top:4rem;
+    }
+
+    .card {
+      width:100%;
+      max-width:440px;
+      background:#0f1626;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:1rem;
+      padding:2rem;
+    }
+
+    label {
+      display:block;
+      font-size:.8rem;
+      font-weight:500;
+      color:#cbd5e1;
+      margin-bottom:.4rem;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width:100%;
+      background:#1e2538;
+      border:1px solid #475569;
+      border-radius:.5rem;
+      padding:.75rem 1rem;
+      color:#fff;
+      font-size:.9rem;
+    }
+    input:focus {
+      outline:none;
+      border-color:#6366f1;
+    }
+
+    .btn-main {
+      background:#5b61ff;
+      border:1px solid #5b61ff;
+      color:#fff;
+      border-radius:.5rem;
+      padding:.75rem 1rem;
+      font-weight:600;
+      text-align:center;
+      width:100%;
+      font-size:.9rem;
+      cursor:pointer;
+    }
+    .btn-main:disabled {
+      opacity:.5;
+      cursor:not-allowed;
+    }
+
+    .toggle-row {
+      display:flex;
+      align-items:center;
+      gap:.5rem;
+      font-size:.75rem;
+      color:#94a3b8;
+      margin-top:.5rem;
+      user-select:none;
+    }
+
+    .foot-link {
+      color:#6b7280;
+      font-size:.75rem;
+      text-align:center;
+      margin-top:1.5rem;
+    }
+    .foot-link a {
+      color:#9ca3af;
+      text-decoration:underline;
+    }
+
+    .error-msg {
+      font-size:.8rem;
+      color:#f87171;
+      line-height:1.4;
+      margin-top:.75rem;
+      display:none;
+    }
+    .error-msg.show {
+      display:block;
+    }
+  </style>
 </head>
 <body>
-  <div class="card">
+
+  <main class="card">
     <h1 class="text-xl font-bold mb-1">NebulaKeys — Ingresar</h1>
     <p class="text-slate-400 text-sm mb-6">
       Crea tu cuenta o inicia sesión con email y contraseña.
     </p>
 
-    <label class="mb-2">
-      Email
-      <input id="email" type="email" required placeholder="tucorreo@example.com" />
-    </label>
+    <!-- FORM -->
+    <form id="authForm" class="space-y-5">
 
-    <label class="mb-2 mt-4">
-      Contraseña
-      <input id="password" type="password" required placeholder="********" />
-    </label>
+      <!-- Email -->
+      <div>
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          required
+          placeholder="tucorreo@example.com"
+        />
+      </div>
 
-    <label class="mb-2 mt-4">
-      Usuario de Steam
-      <input id="steam" type="text" placeholder="tuUsuarioDeSteam" />
-      <small class="text-slate-500 block mt-1 text-xs">
-        IMPORTANTE: Este usuario se usará para activar la suscripción en tu cuenta de Steam.
-      </small>
-    </label>
+      <!-- Password -->
+      <div>
+        <label for="password">Contraseña</label>
+        <input
+          id="password"
+          type="password"
+          required
+          minlength="6"
+          placeholder="********"
+        />
+      </div>
 
-    <div class="text-slate-400 text-xs flex items-center gap-2 my-4">
-      <input id="modeToggle" type="checkbox" class="cursor-pointer" />
-      <label for="modeToggle" class="cursor-pointer select-none">Ya tengo cuenta (Iniciar sesión)</label>
-    </div>
+      <!-- Steam user -->
+      <div>
+        <label for="steam">Usuario de Steam</label>
+        <input
+          id="steam"
+          type="text"
+          placeholder="UsuarioDeSteam"
+        />
+        <p class="text-amber-300 text-xs mt-1 leading-snug">
+          IMPORTANTE: Este usuario se usará para activar la suscripción
+          en tu cuenta de Steam.
+        </p>
+      </div>
 
-    <button id="submitBtn" class="btn w-full">Continuar</button>
+      <!-- Toggle login / signup -->
+      <div class="toggle-row">
+        <input
+          id="modeToggle"
+          type="checkbox"
+          class="cursor-pointer accent-indigo-500"
+        />
+        <label
+          for="modeToggle"
+          class="cursor-pointer select-none"
+        >
+          Ya tengo cuenta (Iniciar sesión)
+        </label>
+      </div>
 
-    <p id="authError" class="text-red-400 text-sm mt-4 hidden"></p>
+      <!-- Submit -->
+      <button
+        id="submitBtn"
+        type="submit"
+        class="btn-main"
+      >
+        Continuar
+      </button>
 
-    <p class="text-center text-slate-500 text-xs mt-6">
-      ¿Listo? <a href="/index.html" class="underline">Volver al inicio</a>
+      <!-- Mensaje de error -->
+      <p
+        id="authError"
+        class="error-msg"
+      ></p>
+
+    </form>
+
+    <p class="foot-link">
+      ¿Listo? <a href="/index.html">Volver al inicio</a>
     </p>
-  </div>
+  </main>
 
+  <!-- Lógica del login/registro -->
   <script type="module" src="/scripts/auth.js"></script>
-  <script>
-    // reenvía el click del botón al form submit
-    const btn = document.getElementById('submitBtn');
-    const formProxy = document.createElement('form');
-    formProxy.id = 'authForm';
-    document.body.appendChild(formProxy);
-
-    btn.addEventListener('click', () => formProxy.requestSubmit());
-
-    // hack: montamos inputs en el "form virtual"
-    formProxy.append(
-      document.getElementById('email'),
-      document.getElementById('password'),
-      document.getElementById('steam'),
-      document.getElementById('modeToggle')
-    );
-  </script>
 </body>
 </html>

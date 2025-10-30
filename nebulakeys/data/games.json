@@ -1,30 +1,74 @@
 [
   {
-    "id": "zelda-totk",
-    "title": "The Legend of Zelda: Tears of the Kingdom",
-    "platform": "Switch",
-    "genre": "Aventura",
-    "cover": "https://images.unsplash.com/photo-1605901309584-818e25960a8b?q=80&w=1600&auto=format&fit=crop"
-  },
-  {
-    "id": "gow-ragnarok",
-    "title": "God of War: Ragnar\u00f6k",
-    "platform": "PlayStation",
-    "genre": "Acci\u00f3n",
-    "cover": "https://images.unsplash.com/photo-1605901309584-818e25960a8b?q=80&w=1600&auto=format&fit=crop"
-  },
-  {
-    "id": "forza-5",
-    "title": "Forza Horizon 5",
-    "platform": "Xbox",
-    "genre": "Conducci\u00f3n",
-    "cover": "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1600&auto=format&fit=crop"
-  },
-  {
     "id": "elden-ring",
     "title": "Elden Ring",
-    "platform": "PC",
-    "genre": "RPG",
-    "cover": "https://images.unsplash.com/photo-1605901309584-818e25960a8b?q=80&w=1600&auto=format&fit=crop"
+    "cover": "/img/games/elden-ring.jpg",
+    "description": "Una colosal aventura de fantasía oscura diseñada por FromSoftware y George R. R. Martin.",
+    "tags": ["rpg", "mundo-abierto", "difícil"],
+    "platforms": ["PC", "Xbox", "PlayStation"]
+  },
+  {
+    "id": "gta-v",
+    "title": "Grand Theft Auto V",
+    "cover": "/img/games/gta-v.jpg",
+    "description": "Crimen, caos y humor en la ciudad de Los Santos. Campaña y GTA Online.",
+    "tags": ["acción", "sandbox"],
+    "platforms": ["PC", "Xbox", "PlayStation"]
+  },
+  {
+    "id": "minecraft",
+    "title": "Minecraft",
+    "cover": "/img/games/minecraft.jpg",
+    "description": "Explora, construye y sobrevive en mundos generados proceduralmente.",
+    "tags": ["creativo", "supervivencia", "familiar"],
+    "platforms": ["PC", "Xbox", "PlayStation", "Switch"]
+  },
+  {
+    "id": "forza-horizon-5",
+    "title": "Forza Horizon 5",
+    "cover": "/img/games/forza-horizon-5.jpg",
+    "description": "Festival de conducción en mundo abierto ambientado en México.",
+    "tags": ["coches", "mundo-abierto"],
+    "platforms": ["PC", "Xbox"]
+  },
+  {
+    "id": "rdr2",
+    "title": "Red Dead Redemption 2",
+    "cover": "/img/games/rdr2.jpg",
+    "description": "Épica historia de forajidos en el ocaso del Salvaje Oeste.",
+    "tags": ["historia", "mundo-abierto"],
+    "platforms": ["PC", "Xbox", "PlayStation"]
+  },
+  {
+    "id": "cyberpunk-2077",
+    "title": "Cyberpunk 2077",
+    "cover": "/img/games/cyberpunk-2077.jpg",
+    "description": "RPG futurista en Night City con narrativa ramificada y estética neon.",
+    "tags": ["rpg", "historia", "futurista"],
+    "platforms": ["PC", "Xbox", "PlayStation"]
+  },
+  {
+    "id": "fifa-24",
+    "title": "EA Sports FC 24",
+    "cover": "/img/games/fc24.jpg",
+    "description": "El fútbol que amas con clubes, ligas y modos competitivos.",
+    "tags": ["deportes", "multijugador"],
+    "platforms": ["PC", "Xbox", "PlayStation", "Switch"]
+  },
+  {
+    "id": "fortnite",
+    "title": "Fortnite",
+    "cover": "/img/games/fortnite.jpg",
+    "description": "Acción battle royale con eventos en vivo y construcción.",
+    "tags": ["battle-royale", "gratis", "multijugador"],
+    "platforms": ["PC", "Xbox", "PlayStation", "Switch", "Móvil"]
+  },
+  {
+    "id": "apex",
+    "title": "Apex Legends",
+    "cover": "/img/games/apex.jpg",
+    "description": "FPS battle royale con héroes, habilidades y movimiento fluido.",
+    "tags": ["battle-royale", "fps", "multijugador"],
+    "platforms": ["PC", "Xbox", "PlayStation", "Switch"]
   }
 ]

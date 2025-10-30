@@ -3,106 +3,145 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Planes — NebulaKeys</title>
+  <title>Elige tu plan — NebulaKeys</title>
 
+  <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Tu config pública con SUPABASE_URL y SUPABASE_ANON_KEY -->
+
+  <!-- (Opcional) Tu config pública si usas Supabase para leer el email del usuario -->
+  <!-- Si no usas Supabase, puedes borrar esta línea y el bloque "SUPABASE (opcional)" del script -->
   <script defer src="/scripts/config.js"></script>
 
   <style>
     body { background:#0b0f1a; color:#e5e7eb; }
     .card { background:#0f1626; border:1px solid rgba(255,255,255,.06); }
-    .btn  { display:inline-block; padding:.8rem 1.2rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.12); }
-    .btn-primary { background:#5b61ff; border-color:#5b61ff; color:#fff; }
-    .btn-primary:hover { filter:brightness(1.05); }
+    .btn  { display:inline-block; padding:.8rem 1.2rem; border-radius:.7rem; border:1px solid rgba(255,255,255,.12); }
+    .btn:hover { background:rgba(255,255,255,.06); }
+    .btn-primary { background:#5b61ff; border-color:#5b61ff; color:white; }
+    .btn-primary[disabled] { opacity:.6; cursor:not-allowed; }
   </style>
 </head>
+
 <body class="min-h-screen">
-  <header class="max-w-4xl mx-auto px-4 py-8">
+  <header class="max-w-4xl mx-auto px-4 py-10">
     <h1 class="text-4xl font-extrabold">Elige tu plan</h1>
+    <p class="text-slate-400 mt-2">Suscripción segura con Stripe. Puedes cancelar cuando quieras.</p>
   </header>
 
   <main class="max-w-4xl mx-auto px-4 pb-24 space-y-8">
 
-    <!-- PLAN SEMANAL -->
+    <!-- Plan semanal -->
     <section class="card rounded-2xl p-6">
-      <h2 class="text-2xl font-bold mb-2">Plan Semanal</h2>
-      <p class="text-slate-300 mb-4">MXN $150 / semana</p>
-      <button
-        type="button"
-        class="btn btn-primary subscribe"
-        data-price="price_1SJH1zKwqs0TzO3l23W3RIfE">
-        Suscribirme
-      </button>
+      <div class="flex items-center justify-between gap-6 flex-col md:flex-row">
+        <div>
+          <h2 class="text-2xl font-bold">Plan Semanal</h2>
+          <p class="text-slate-400 mt-1">MXN $150 / semana</p>
+        </div>
+        <button
+          class="subscribe btn btn-primary"
+          data-price="REPLACE_PRICE_WEEKLY"  <!-- TODO: reemplaza con tu Price ID -->
+        >
+          Suscribirme
+        </button>
+      </div>
     </section>
 
-    <!-- PLAN QUINCENAL -->
+    <!-- Plan quincenal -->
     <section class="card rounded-2xl p-6">
-      <h2 class="text-2xl font-bold mb-2">Plan Quincenal</h2>
-      <p class="text-slate-300 mb-4">MXN $250 / quincenal</p>
-      <button
-        type="button"
-        class="btn btn-primary subscribe"
-        data-price="price_1SJH4eKwqs0TzO3l1ODa7pRx ">
-        Suscribirme
-      </button>
+      <div class="flex items-center justify-between gap-6 flex-col md:flex-row">
+        <div>
+          <h2 class="text-2xl font-bold">Plan Quincenal</h2>
+          <p class="text-slate-400 mt-1">MXN $250 / quincenal</p>
+        </div>
+        <button
+          class="subscribe btn btn-primary"
+          data-price="REPLACE_PRICE_BIWEEKLY"  <!-- TODO: reemplaza con tu Price ID -->
+        >
+          Suscribirme
+        </button>
+      </div>
     </section>
 
-    <!-- PLAN MENSUAL -->
+    <!-- Plan mensual -->
     <section class="card rounded-2xl p-6">
-      <h2 class="text-2xl font-bold mb-2">Plan Mensual</h2>
-      <p class="text-slate-300 mb-4">MXN $350 / mensual</p>
-      <button
-        type="button"
-        class="btn btn-primary subscribe"
-        data-price="price_1SJH9FKwqs0TzO3lxTTonf6H">
-        Suscribirme
-      </button>
+      <div class="flex items-center justify-between gap-6 flex-col md:flex-row">
+        <div>
+          <h2 class="text-2xl font-bold">Plan Mensual</h2>
+          <p class="text-slate-400 mt-1">MXN $350 / mensual</p>
+        </div>
+        <button
+          class="subscribe btn btn-primary"
+          data-price="REPLACE_PRICE_MONTHLY"  <!-- TODO: reemplaza con tu Price ID -->
+        >
+          Suscribirme
+        </button>
+      </div>
     </section>
 
+    <div class="text-center">
+      <a href="/index.html" class="btn">← Volver al lobby</a>
+    </div>
   </main>
 
-  <!-- LÓGICA: POST a /api/create-checkout-session -->
+  <!-- Lógica de checkout -->
   <script type="module">
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    // ===== SUPABASE (opcional) =====
+    // Obtiene email/userId si tienes config pública en /scripts/config.js
+    let supabase = null;
+    let currentUserEmail = null;
+    let currentUserId = null;
 
-    // 1) Supabase (toma tu config pública)
-    const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.NEBULA_PUBLIC || {};
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    // 2) Listeners de los botones
-    document.querySelectorAll('.subscribe').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) {
-          // si no hay sesión, pide login
-          window.location.href = '/login.html?next=/pricing.html';
-          return;
+    try {
+      if (window.NEBULA_PUBLIC?.SUPABASE_URL && window.NEBULA_PUBLIC?.SUPABASE_ANON_KEY) {
+        const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+        supabase = createClient(
+          window.NEBULA_PUBLIC.SUPABASE_URL,
+          window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
+        );
+        const { data } = await supabase.auth.getUser();
+        if (data?.user) {
+          currentUserEmail = data.user.email || null;
+          currentUserId   = data.user.id || null;
         }
+      }
+    } catch (e) {
+      console.warn('Supabase no está configurado o falló la carga (opcional).', e);
+    }
+    // ===== FIN SUPABASE =====
 
-        const priceId = btn.dataset.price;
+    // Suscribir botones
+    const buttons = document.querySelectorAll('.subscribe[data-price]');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const priceId = btn.dataset.price?.trim();
+        if (!priceId) return alert('No se encontró el Price ID en el botón.');
+
+        // Deshabilita el botón mientras se crea la sesión
+        const originalText = btn.textContent;
+        btn.textContent = 'Redirigiendo…';
+        btn.disabled = true;
 
         try {
-          const resp = await fetch('/api/create-checkout-session', {
+          const r = await fetch('/api/create-checkout-session', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               priceId,
-              userId: user.id,
-              email: user.email
+              email: currentUserEmail || undefined,
+              userId: currentUserId || undefined
             })
           });
 
-          const data = await resp.json();
-          if (!resp.ok) {
-            alert('Error iniciando checkout: ' + (data.error || resp.statusText));
-            return;
-          }
+          const data = await r.json();
+          if (!r.ok) throw new Error(data?.error || 'No fue posible iniciar el checkout');
 
-          // Redirige a Stripe Checkout
-          window.location.href = data.url;
+          // Redirige a Stripe
+          location.href = data.url;
         } catch (err) {
           alert('Error iniciando checkout: ' + err.message);
+          btn.textContent = originalText;
+          btn.disabled = false;
         }
       });
     });

@@ -1,74 +1,128 @@
 [
   {
-    "id": "Dead-by-Daylight",
-    "title": "Dead By Daylight",
-    "cover": "https://cdn1.epicgames.com/spt-assets/2b2299be8ae84d679d4dc57c55af1510/dead-by-daylight-1hg3x.jpg",
-    "description": "Dead by Daylight es un videojuego de terror y supervivencia multijugador asimétrico en línea desarrollado y publicado por el estudio canadiense Behaviour Interactive. Es un juego de uno contra cuatro en el que un jugador asume el papel de un asesino y los otros cuatro juegan como supervivientes;​ el asesino debe cazar y empalar a cada superviviente en ganchos de sacrificio para apaciguar a una fuerza malévola conocida como la Entidad, mientras que los supervivientes tienen que evitar ser atrapados y encender las puertas de salida trabajando juntos para arreglar cinco generadores.",
-    "tags": ["Survival horror", "Videojuego de pelea", "Videojuego de acción y aventura"],
-    "platforms": ["PC", "Xbox", "PlayStation"]
+    "id": "dead-by-daylight",
+    "title": "Dead by Daylight",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/381210/header.jpg",
+    "url": "https://store.steampowered.com/app/381210/",
+    "description": "Multijugador de terror 4vs1: un asesino contra cuatro supervivientes.",
+    "tags": ["terror", "multijugador", "supervivencia"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "smite",
+    "title": "SMITE",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/386360/header.jpg",
+    "url": "https://store.steampowered.com/app/386360/",
+    "description": "MOBA en tercera persona con dioses y mitología.",
+    "tags": ["MOBA", "acción", "mitología"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "rainbow-six-siege",
+    "title": "Tom Clancy’s Rainbow Six Siege",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/359550/header.jpg",
+    "url": "https://store.steampowered.com/app/359550/",
+    "description": "FPS táctico 5v5 con operadores y destrucción estratégica.",
+    "tags": ["FPS", "táctico", "competitivo"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "asphalt-9-legends",
+    "title": "Asphalt 9: Legends",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1815780/header.jpg",
+    "url": "https://store.steampowered.com/app/1815780/",
+    "description": "Arcade de carreras con superdeportivos y circuitos espectaculares.",
+    "tags": ["carreras", "arcade"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "ark-survival-evolved",
+    "title": "ARK: Survival Evolved",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/346110/header.jpg",
+    "url": "https://store.steampowered.com/app/346110/",
+    "description": "Sobrevive, doma dinosaurios y construye bases en islas peligrosas.",
+    "tags": ["supervivencia", "mundo-abierto", "crafting"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "left-4-dead-2",
+    "title": "Left 4 Dead 2",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/550/header.jpg",
+    "url": "https://store.steampowered.com/app/550/",
+    "description": "Cooperativo frenético contra hordas de infectados.",
+    "tags": ["cooperativo", "zombies", "acción"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "overwatch-2",
+    "title": "Overwatch 2",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2357570/header.jpg",
+    "url": "https://store.steampowered.com/app/2357570/",
+    "description": "Shooter por equipos con héroes y habilidades únicas.",
+    "tags": ["FPS", "héroes", "competitivo"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "star-wars-battlefront-ii",
+    "title": "STAR WARS™ Battlefront™ II",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1237980/header.jpg",
+    "url": "https://store.steampowered.com/app/1237980/",
+    "description": "Combates épicos de STAR WARS en tierra y espacio.",
+    "tags": ["FPS", "STAR-WARS", "multijugador"],
+    "platforms": ["PC"]
   },
   {
     "id": "gta-v",
     "title": "Grand Theft Auto V",
-    "cover": "/img/games/gta-v.jpg",
-    "description": "Crimen, caos y humor en la ciudad de Los Santos. Campaña y GTA Online.",
-    "tags": ["acción", "sandbox"],
-    "platforms": ["PC", "Xbox", "PlayStation"]
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg",
+    "url": "https://store.steampowered.com/app/271590/",
+    "description": "Acción de mundo abierto en Los Santos y su modo GTA Online.",
+    "tags": ["mundo-abierto", "acción", "sandbox"],
+    "platforms": ["PC"]
   },
   {
-    "id": "minecraft",
-    "title": "Minecraft",
-    "cover": "/img/games/minecraft.jpg",
-    "description": "Explora, construye y sobrevive en mundos generados proceduralmente.",
-    "tags": ["creativo", "supervivencia", "familiar"],
-    "platforms": ["PC", "Xbox", "PlayStation", "Switch"]
+    "id": "war-robots-frontiers",
+    "title": "War Robots: Frontiers",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2098160/header.jpg",
+    "url": "https://store.steampowered.com/app/2098160/",
+    "description": "Batallas de mechas personalizables en entornos destructibles.",
+    "tags": ["mechas", "acción", "PvP"],
+    "platforms": ["PC"]
   },
   {
-    "id": "forza-horizon-5",
-    "title": "Forza Horizon 5",
-    "cover": "/img/games/forza-horizon-5.jpg",
-    "description": "Festival de conducción en mundo abierto ambientado en México.",
-    "tags": ["coches", "mundo-abierto"],
-    "platforms": ["PC", "Xbox"]
+    "id": "7-days-to-die",
+    "title": "7 Days to Die",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/251570/header.jpg",
+    "url": "https://store.steampowered.com/app/251570/",
+    "description": "Survival con crafting y zombies: fortifica, fabrica y resiste.",
+    "tags": ["supervivencia", "crafting", "zombies"],
+    "platforms": ["PC"]
   },
   {
-    "id": "rdr2",
-    "title": "Red Dead Redemption 2",
-    "cover": "/img/games/rdr2.jpg",
-    "description": "Épica historia de forajidos en el ocaso del Salvaje Oeste.",
-    "tags": ["historia", "mundo-abierto"],
-    "platforms": ["PC", "Xbox", "PlayStation"]
+    "id": "terraria",
+    "title": "Terraria",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/105600/header.jpg",
+    "url": "https://store.steampowered.com/app/105600/",
+    "description": "Aventura 2D de exploración, construcción y combate.",
+    "tags": ["sandbox", "aventura", "2D"],
+    "platforms": ["PC"]
   },
   {
-    "id": "cyberpunk-2077",
-    "title": "Cyberpunk 2077",
-    "cover": "/img/games/cyberpunk-2077.jpg",
-    "description": "RPG futurista en Night City con narrativa ramificada y estética neon.",
-    "tags": ["rpg", "historia", "futurista"],
-    "platforms": ["PC", "Xbox", "PlayStation"]
+    "id": "starbound",
+    "title": "Starbound",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/211820/header.jpg",
+    "url": "https://store.steampowered.com/app/211820/",
+    "description": "Explora planetas generados proceduralmente y crea tu propia historia.",
+    "tags": ["sandbox", "exploración", "espacio"],
+    "platforms": ["PC"]
   },
   {
-    "id": "fifa-24",
-    "title": "EA Sports FC 24",
-    "cover": "/img/games/fc24.jpg",
-    "description": "El fútbol que amas con clubes, ligas y modos competitivos.",
-    "tags": ["deportes", "multijugador"],
-    "platforms": ["PC", "Xbox", "PlayStation", "Switch"]
-  },
-  {
-    "id": "fortnite",
-    "title": "Fortnite",
-    "cover": "/img/games/fortnite.jpg",
-    "description": "Acción battle royale con eventos en vivo y construcción.",
-    "tags": ["battle-royale", "gratis", "multijugador"],
-    "platforms": ["PC", "Xbox", "PlayStation", "Switch", "Móvil"]
-  },
-  {
-    "id": "apex",
-    "title": "Apex Legends",
-    "cover": "/img/games/apex.jpg",
-    "description": "FPS battle royale con héroes, habilidades y movimiento fluido.",
-    "tags": ["battle-royale", "fps", "multijugador"],
-    "platforms": ["PC", "Xbox", "PlayStation", "Switch"]
+    "id": "phasmophobia",
+    "title": "Phasmophobia",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/739630/header.jpg",
+    "url": "https://store.steampowered.com/app/739630/",
+    "description": "Investigación paranormal cooperativa con chat de voz por proximidad.",
+    "tags": ["terror", "cooperativo", "investigación"],
+    "platforms": ["PC"]
   }
 ]

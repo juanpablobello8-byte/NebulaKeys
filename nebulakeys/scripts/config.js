@@ -36,6 +36,3 @@ window.NEBULA_PUBLIC = {
     },
   },
 };
-
-};
-</script>

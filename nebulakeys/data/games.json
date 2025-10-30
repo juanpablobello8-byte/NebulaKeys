@@ -1,10 +1,10 @@
 [
   {
-    "id": "elden-ring",
-    "title": "Elden Ring",
-    "cover": "/img/games/elden-ring.jpg",
-    "description": "Una colosal aventura de fantasía oscura diseñada por FromSoftware y George R. R. Martin.",
-    "tags": ["rpg", "mundo-abierto", "difícil"],
+    "id": "Dead-by-Daylight",
+    "title": "Dead By Daylight",
+    "cover": "https://cdn1.epicgames.com/spt-assets/2b2299be8ae84d679d4dc57c55af1510/dead-by-daylight-1hg3x.jpg",
+    "description": "Dead by Daylight es un videojuego de terror y supervivencia multijugador asimétrico en línea desarrollado y publicado por el estudio canadiense Behaviour Interactive. Es un juego de uno contra cuatro en el que un jugador asume el papel de un asesino y los otros cuatro juegan como supervivientes;​ el asesino debe cazar y empalar a cada superviviente en ganchos de sacrificio para apaciguar a una fuerza malévola conocida como la Entidad, mientras que los supervivientes tienen que evitar ser atrapados y encender las puertas de salida trabajando juntos para arreglar cinco generadores.",
+    "tags": ["Survival horror", "Videojuego de pelea", "Videojuego de acción y aventura"],
     "platforms": ["PC", "Xbox", "PlayStation"]
   },
   {

@@ -1,114 +1,52 @@
-<script type="module">
-  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+// /scripts/dashboard.js
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-  // === Tu config pública (ya la cargas con /scripts/config.js) ===
-  const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.NEBULA_PUBLIC;
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.NEBULA_PUBLIC;
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // === Mapeo de price_id -> etiqueta visible y duración ===
-  // EDITA los price_... por los tuyos. La duración se usa sólo como
-  // fallback si current_period_end aún no está en la DB cuando cargas la página.
-  const PRICE_META = {
-    // semanal (7 días)
-    'price_1SJH1zKwqs0TzO3l23W3RIfE': { label: 'Plan semanal', duration: { days: 7 } },
+// Referencias a elementos del DOM
+const subStatus    = document.getElementById('subStatus');
+const subInfoBox   = document.getElementById('subInfo');
+const planEl       = document.getElementById('plan');
+const untilEl      = document.getElementById('until');
+const subscribeBtn = document.getElementById('subscribeBtn');
 
-    // quincenal (15 días)  <-- pon aquí tu price real
-    'price_1SJH4eKwqs0TzO3l1ODa7pRx': { label: 'Plan quincenal', duration: { days: 15 } },
+const fmtDate = iso =>
+  iso
+    ? new Date(iso).toLocaleDateString(undefined, {
+        year:'numeric', month:'short', day:'2-digit'
+      })
+    : '—';
 
-    // mensual (1 mes)  <-- pon aquí tu price real
-    'price_1SJH9FKwqs0TzO3lxTTonf6H': { label: 'Plan mensual', duration: { months: 1 } },
-  };
+async function getActiveSubscription(email){
+  // 1) Buscar el customer_id (cus_...) de este email
+  const { data: cust, error: e1 } = await supabase
+    .from('customers')
+    .select('id')
+    .eq('email', email)
+    .maybeSingle();
+  if (e1) throw e1;
+  if (!cust) return null;
 
-  // === Elementos de UI ===
-  const subStatus    = document.getElementById('subStatus');
-  const subInfoBox   = document.getElementById('subInfo');
-  const planEl       = document.getElementById('plan');
-  const untilEl      = document.getElementById('until');
-  const subscribeBtn = document.getElementById('subscribeBtn');
+  // 2) Buscar su suscripción activa / trial / etc
+  const { data: subs, error: e2 } = await supabase
+    .from('subscriptions')
+    .select('id,status,price_id,current_period_end')
+    .eq('customer_id', cust.id)
+    .in('status', ['active','trialing','past_due','unpaid'])
+    .order('current_period_end', { ascending:false, nullsLast:true })
+    .limit(1);
 
-  // === Helpers ===
-  const fmtDate = iso =>
-    new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' });
+  if (e2) throw e2;
+  return subs?.[0] || null;
+}
 
-  function addDuration(dateISO, dur) {
-    const d = new Date(dateISO);
-    if (dur?.days)   d.setDate(d.getDate() + dur.days);
-    if (dur?.months) d.setMonth(d.getMonth() + dur.months);
-    return d;
-  }
+async function refreshSubscriptionUI(){
+  // ¿Quién está logueado?
+  const { data: { user } } = await supabase.auth.getUser();
 
-  // === Carga/recarga UI con el estado de suscripción ===
-  async function refreshSubscriptionUI() {
-    subStatus.textContent = 'Comprobando…';
+  if (!user){
+    subStatus.textContent = 'Inicia sesión para ver tu suscripción';
     subInfoBox.classList.add('hidden');
-    subscribeBtn?.classList?.add('hidden'); // lo ocultamos si hay sub activa
-
-    const { data: auth } = await supabase.auth.getUser();
-    const user = auth?.user;
-    if (!user) {
-      subStatus.textContent = 'Inicia sesión para ver tu suscripción';
-      subscribeBtn?.classList?.remove('hidden');
-      return;
-    }
-
-    const { data, error } = await supabase
-      .from('customers')
-      .select(`
-        id,
-        email,
-        subscriptions (
-          status,
-          price_id,
-          current_period_start,
-          current_period_end
-        )
-      `)
-      .eq('email', user.email)
-      .maybeSingle();
-
-    if (error) {
-      console.error(error);
-      subStatus.textContent = 'Error al consultar el estado';
-      subscribeBtn?.classList?.remove('hidden');
-      return;
-    }
-
-    const sub = data?.subscriptions?.[0];
-
-    if (!sub || !['active','trialing','past_due','unpaid'].includes(sub.status)) {
-      subStatus.textContent = 'Sin suscripción activa';
-      subscribeBtn?.classList?.remove('hidden');
-      return;
-    }
-
-    // Suscripción activa
-    subStatus.textContent = 'Suscripción activa';
-
-    // 1) Nombre de plan a partir del price_id
-    const meta = PRICE_META[sub.price_id];
-    planEl.textContent = meta?.label ?? sub.price_id;
-
-    // 2) Vencimiento (preferimos el current_period_end que envía el webhook)
-    let venceTxt = '—';
-    if (sub.current_period_end) {
-      venceTxt = fmtDate(sub.current_period_end);
-    } else if (sub.current_period_start && meta?.duration) {
-      // Fallback: calculamos localmente por si el webhook aún no llegó
-      const end = addDuration(sub.current_period_start, meta.duration);
-      venceTxt = fmtDate(end.toISOString());
-    }
-    untilEl.textContent = venceTxt;
-
-    subInfoBox.classList.remove('hidden');
-    subscribeBtn?.classList?.add('hidden');
-  }
-
-  // === Carga inicial + pequeño polling por si el webhook tarda unos segundos ===
-  await refreshSubscriptionUI();
-  let tries = 0;
-  const iv = setInterval(async () => {
-    tries += 1;
-    await refreshSubscriptionUI();
-    if (tries >= 6) clearInterval(iv); // ~48s
-  }, 8000);
-</script>
+    subscribeBtn.classList.remove('hidden'); // puede suscribirse una vez haga login
+    return;

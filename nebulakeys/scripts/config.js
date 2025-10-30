@@ -1,8 +1,3 @@
-<!-- /scripts/config.js -->
-<script>
-// ======= CONFIGURACIÓN PÚBLICA (visible en el navegador) =======
-// Asegúrate de cargar este archivo ANTES de /scripts/dashboard.js
-
 window.NEBULA_PUBLIC = {
   // --- Supabase ---
   SUPABASE_URL: "https://uhsggttdnajnhpmlzyud.supabase.co",

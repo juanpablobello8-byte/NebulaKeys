@@ -1,165 +1,95 @@
-// CATALOGO PÚBLICO (sin login)
-// Carga /data/games.json, renderiza tarjetas, búsqueda y chips de etiquetas.
+// /scripts/catalog.js
+(() => {
+  const GRID   = document.querySelector('#grid');
+  const Q      = document.querySelector('#q');
+  const STATUS = document.querySelector('#status');
 
-const $ = (sel, root = document) => root.querySelector(sel);
-const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+  // Tu JSON ya está como /data/games.json en Vercel
+  const DATA_URL = '/data/games.json';
 
-const grid   = $('#grid');
-const empty  = $('#empty');
-const qInput = $('#q');
-const tagsBar = $('#tagsBar');
+  // Fallback de imagen sin subir archivos (cambia si lo deseas)
+  const FALLBACK = 'https://placehold.co/480x200/101522/94a3b8?text=Sin+imagen';
 
-const modal  = $('#detailsModal');
-const mCover = $('#mCover');
-const mTitle = $('#mTitle');
-const mDesc  = $('#mDesc');
-const mTags  = $('#mTags');
-const mPlatforms = $('#mPlatforms');
-const mClose = $('#mClose');
+  let ALL = [];
 
-let GAMES = [];
-let ACTIVE_TAG = null;
+  const esc = (s='') =>
+    s.toString().replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-// ---- Utils ----
-function tagChip(text, classes = '') {
-  const span = document.createElement('span');
-  span.className = `chip px-2.5 py-1 rounded-lg text-sm ${classes}`;
-  span.textContent = text;
-  return span;
-}
+  const pill = (label, cls='bg-white/10') =>
+    `<span class="inline-block text-xs ${cls} px-2 py-1 rounded-md mr-1 mb-1">${esc(label)}</span>`;
 
-function imgFallback(ev) {
-  ev.target.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
-    <svg xmlns="http://www.w3.org/2000/svg" width="480" height="640">
-      <rect width="100%" height="100%" fill="#111827"/>
-      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-            fill="#6b7280" font-family="sans-serif" font-size="20">Sin portada</text>
-    </svg>
-  `);
-}
+  const cover = (src, alt) => {
+    const safeSrc = src && src.trim() ? src : FALLBACK;
+    return `<img src="${safeSrc}" alt="${esc(alt)}" loading="lazy"
+                onerror="this.onerror=null;this.src='${FALLBACK}'">`;
+  };
 
-// ---- Render ----
-function renderGrid(games) {
-  grid.innerHTML = '';
-  if (!games.length) {
-    empty.classList.remove('hidden');
-    return;
+  function card(g) {
+    // Soporta url | steamUrl | website
+    const link  = g.url || g.steamUrl || g.website || '#';
+    const tags  = Array.isArray(g.tags) ? g.tags : [];
+    const plats = Array.isArray(g.platforms) ? g.platforms : [];
+
+    return `
+      <article class="game card rounded-xl p-3">
+        <a href="${link}" target="_blank" rel="noopener">
+          ${cover(g.cover, g.title)}
+        </a>
+        <div class="meta">
+          <h3>${esc(g.title || '')}</h3>
+          <p class="text-slate-400 mt-1">${esc(g.description || '')}</p>
+
+          ${(plats.length || tags.length) ? `
+            <div class="mt-3">
+              ${plats.map(p => pill(p, 'bg-indigo-600/30')).join('')}
+              ${tags.map(t => pill(t)).join('')}
+            </div>` : ''}
+        </div>
+      </article>`;
   }
-  empty.classList.add('hidden');
 
-  for (const g of games) {
-    const card = document.createElement('article');
-    card.className = 'card rounded-2xl overflow-hidden flex flex-col';
-
-    const img = document.createElement('img');
-    img.src = g.cover;
-    img.alt = g.title;
-    img.loading = 'lazy';
-    img.className = 'w-full h-48 object-cover bg-slate-800';
-    img.onerror = imgFallback;
-
-    const body = document.createElement('div');
-    body.className = 'p-4 flex flex-col gap-2 flex-1';
-
-    const h3 = document.createElement('h3');
-    h3.className = 'text-lg font-semibold';
-    h3.textContent = g.title;
-
-    const p = document.createElement('p');
-    p.className = 'text-slate-300 clamp-3';
-    p.textContent = g.description;
-
-    const tagWrap = document.createElement('div');
-    tagWrap.className = 'flex flex-wrap gap-2 mt-auto';
-    g.tags.forEach(t => tagWrap.appendChild(tagChip('#' + t)));
-
-    const btn = document.createElement('button');
-    btn.className = 'mt-3 px-3 py-2 rounded-lg bg-indigo-500/90 hover:bg-indigo-500 text-white focus-ring';
-    btn.textContent = 'Ver detalles';
-    btn.addEventListener('click', () => openModal(g));
-
-    body.append(h3, p, tagWrap, btn);
-    card.append(img, body);
-    grid.appendChild(card);
+  function render(list) {
+    const total = ALL.length;
+    const shown = list.length;
+    STATUS.innerHTML = shown
+      ? `Mostrando <strong>${shown}</strong> de <strong>${total}</strong> juegos`
+      : `No hay juegos para mostrar.`;
+    GRID.innerHTML = shown ? list.map(card).join('') : '';
   }
-}
 
-function openModal(game) {
-  mTitle.textContent = game.title;
-  mDesc.textContent = game.description;
-  mCover.src = game.cover;
-  mCover.onerror = imgFallback;
+  function applySearch() {
+    const q = (Q.value || '').trim().toLowerCase();
+    if (!q) return render(ALL);
 
-  mTags.innerHTML = '';
-  mPlatforms.innerHTML = '';
-  game.tags.forEach(t => mTags.appendChild(tagChip('#' + t)));
-  game.platforms.forEach(p => mPlatforms.appendChild(tagChip(p)));
-
-  modal.showModal();
-}
-
-mClose.addEventListener('click', () => modal.close());
-modal.addEventListener('click', (e) => {
-  if (e.target === modal) modal.close();
-});
-
-// ---- Búsqueda + filtro de tag ----
-function filterGames() {
-  const q = (qInput.value || '').trim().toLowerCase();
-
-  const out = GAMES.filter(g => {
-    const qOk =
-      !q ||
-      g.title.toLowerCase().includes(q) ||
-      g.tags.some(t => t.toLowerCase().includes(q));
-    const tagOk =
-      !ACTIVE_TAG || g.tags.includes(ACTIVE_TAG);
-    return qOk && tagOk;
-  });
-
-  renderGrid(out);
-}
-
-qInput.addEventListener('input', filterGames);
-
-// ---- Chips de etiquetas globales ----
-function buildTagChips(games) {
-  const all = new Set();
-  games.forEach(g => g.tags.forEach(t => all.add(t)));
-  const tags = [...all].sort();
-
-  tagsBar.innerHTML = '';
-  // chip "Todos"
-  const cAll = tagChip('Todos', ACTIVE_TAG ? 'opacity-60 cursor-pointer' : 'bg-indigo-500/80 text-white');
-  cAll.addEventListener('click', () => {
-    ACTIVE_TAG = null;
-    buildTagChips(GAMES);
-    filterGames();
-  });
-  tagsBar.appendChild(cAll);
-
-  tags.forEach(t => {
-    const isActive = ACTIVE_TAG === t;
-    const chip = tagChip('#' + t, isActive ? 'bg-indigo-500/80 text-white' : 'opacity-60 cursor-pointer');
-    chip.addEventListener('click', () => {
-      ACTIVE_TAG = isActive ? null : t;
-      buildTagChips(GAMES);
-      filterGames();
+    const filtered = ALL.filter(g => {
+      const hay = [
+        g.title, g.description,
+        ...(g.tags || []),
+        ...(g.platforms || [])
+      ].filter(Boolean).join(' ').toLowerCase();
+      return hay.includes(q);
     });
-    tagsBar.appendChild(chip);
-  });
-}
 
-// ---- Carga inicial ----
-(async function init() {
-  try {
-    const res = await fetch('/data/games.json', { cache: 'no-store' });
-    GAMES = await res.json();
-    buildTagChips(GAMES);
-    renderGrid(GAMES);
-  } catch (err) {
-    console.error('Error cargando catálogo:', err);
-    empty.textContent = 'No se pudo cargar el catálogo.';
-    empty.classList.remove('hidden');
+    render(filtered);
   }
+
+  async function load() {
+    try {
+      STATUS.textContent = 'Cargando catálogo…';
+      const res = await fetch(DATA_URL, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status} al cargar ${DATA_URL}`);
+      const json = await res.json();
+      if (!Array.isArray(json)) throw new Error('El JSON no es un array');
+
+      ALL = json;
+      render(ALL);
+    } catch (err) {
+      console.error('Error cargando catálogo:', err);
+      STATUS.innerHTML = `<span class="text-red-400">No se pudo cargar el catálogo:</span> ${esc(err.message)}`;
+      GRID.innerHTML = '';
+    }
+  }
+
+  Q.addEventListener('input', applySearch);
+  load();
 })();

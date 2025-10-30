@@ -1,15 +1,12 @@
-<!-- /scripts/config.js -->
-<script>
-// ======= CONFIGURACIÓN PÚBLICA (visible en el navegador) =======
-// Asegúrate de cargar este archivo ANTES de /scripts/dashboard.js
-
+// /scripts/config.js  (JS plano, SIN <script>)
+// ==================================================
 window.NEBULA_PUBLIC = {
   // --- Supabase ---
   SUPABASE_URL: "https://uhsggttdnajnhpmlzyud.supabase.co",
   SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVoc2dndHRkbmFqbmhwbWx6eXVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2Nzg2MDksImV4cCI6MjA3NjI1NDYwOX0.KMP5Wts7DgJxEPh8W_SayvsqsOJ7NTMI9lqvMiMKPAg",
 
   // --- Endpoint serverless que crea la sesión de Stripe Checkout ---
-  // Si tu archivo se llama distinto (p. ej. /api/create-checkout-session.js), cambia esta ruta.
+  // Si tu archivo es /api/create-checkout-session.js, cambia la ruta aquí:
   CHECKOUT_ENDPOINT: "/api/create-checkout",
 
   // --- Rutas útiles (opcional) ---
@@ -26,7 +23,7 @@ window.NEBULA_PUBLIC = {
       interval: "semana",
     },
     biweekly: { // $250 Quincenal
-      id: "price_1SJH4eKwqs0TzO3l1ODa7pRx",
+      id: "price_1SJH4eKwqs0TzO3l1ODa7pRx",  // ojo: '1ODa7pRx' (no '1ODDa7pRx')
       label: "Plan quincenal",
       amount: 250,
       interval: "quincena",
@@ -38,5 +35,7 @@ window.NEBULA_PUBLIC = {
       interval: "mes",
     },
   },
+};
+
 };
 </script>

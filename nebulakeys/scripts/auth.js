@@ -1,90 +1,135 @@
 // /scripts/auth.js
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-// leemos la config pública
-const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.NEBULA_PUBLIC;
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-// elementos del DOM
-const form       = document.getElementById('authForm');
-const emailInput = document.getElementById('email');
-const passInput  = document.getElementById('password');
-const steamInput = document.getElementById('steam');
-const modeToggle = document.getElementById('modeToggle');
-const submitBtn  = document.getElementById('submitBtn');
-const errorBox   = document.getElementById('authError');
-
-function showError(msg) {
-  if (!msg) {
-    errorBox.classList.remove('show');
-    errorBox.textContent = '';
-  } else {
-    errorBox.classList.add('show');
-    errorBox.textContent = msg;
-  }
+const cfg = window.NEBULA_PUBLIC;
+if (!cfg?.SUPABASE_URL || !cfg?.SUPABASE_ANON_KEY) {
+  alert("Falta configuración de Supabase. Revisa /scripts/config.js");
+  throw new Error("NEBULA_PUBLIC config missing");
 }
 
-form.addEventListener('submit', async (evt) => {
-  evt.preventDefault();
-  showError('');
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Procesando...';
+const supabase = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
 
-  const email = emailInput.value.trim();
-  const pass  = passInput.value;
-  const steam = steamInput.value.trim();
-  const loginMode = modeToggle.checked; // true = login, false = signup
+// UI
+const emailEl = document.getElementById("email");
+const passEl = document.getElementById("password");
+const steamEl = document.getElementById("steam");
+const haveAccountEl = document.getElementById("haveAccount");
+const submitBtn = document.getElementById("submitBtn");
 
+// Helper UI
+function lock(b) {
+  submitBtn.disabled = b;
+  submitBtn.textContent = b ? "Procesando..." : "Continuar";
+}
+function toast(msg) {
+  alert(msg);
+}
+
+// Upsert perfil
+async function upsertProfile(userId, email, steamUser) {
+  // Ajusta los nombres de columnas si difieren en tu tabla
+  const { error } = await supabase
+    .from("profiles")
+    .upsert(
+      {
+        id: userId,          // asumiendo PK = uuid del auth
+        email: email,
+        steam_username: steamUser || null,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "id" }
+    );
+
+  if (error) throw error;
+}
+
+async function signInFlow(email, password) {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+  if (error) throw error;
+
+  // Opcional: asegurar que existe perfil
+  const user = data.user;
+  if (user) {
+    try {
+      await upsertProfile(user.id, user.email, null);
+    } catch (e) {
+      console.warn("upsert profile on sign-in:", e);
+    }
+  }
+  return data;
+}
+
+async function signUpFlow(email, password, steamUser) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      // útil si quieres guardar metadatos
+      data: { steam_username: steamUser || null },
+      // emailRedirectTo: '<tu_url>/...' (si usas confirmación por correo)
+    },
+  });
+  if (error) throw error;
+
+  // Si tienes deshabilitada la confirmación por correo, user viene lleno
+  // Si la confirmación está habilitada, user puede venir null y te dirá que verifiques email
+  if (!data.user) {
+    toast("Revisa tu correo y confirma tu cuenta para continuar.");
+    return data;
+  }
+
+  // Crear/actualizar perfil
+  await upsertProfile(data.user.id, email, steamUser);
+  return data;
+}
+
+submitBtn?.addEventListener("click", async () => {
   try {
-    let authRes;
-    if (loginMode) {
-      // INICIAR SESIÓN
-      authRes = await supabase.auth.signInWithPassword({
-        email,
-        password: pass
-      });
+    lock(true);
+    const email = (emailEl?.value || "").trim();
+    const password = passEl?.value || "";
+    const steam = (steamEl?.value || "").trim();
+    const isLogin = !!haveAccountEl?.checked;
+
+    if (!email || !password) {
+      toast("Escribe email y contraseña.");
+      return;
+    }
+    if (!isLogin && !steam) {
+      toast("Escribe tu usuario de Steam para registrar la cuenta.");
+      return;
+    }
+
+    if (isLogin) {
+      const { user } = await signInFlow(email, password);
+      if (user) location.href = "/dashboard.html";
+      else toast("Inicio de sesión correcto. Redirigiendo...");
     } else {
-      // CREAR CUENTA
-      authRes = await supabase.auth.signUp({
-        email,
-        password: pass
-      });
+      const { user } = await signUpFlow(email, password, steam);
+      if (user) {
+        toast("Cuenta creada. Redirigiendo...");
+        location.href = "/dashboard.html";
+      } else {
+        // Confirmación de correo activada
+        toast("Te enviamos un correo de confirmación. Verifícalo para continuar.");
+      }
     }
-
-    if (authRes.error) {
-      throw authRes.error;
-    }
-
-    const user = authRes.data.user;
-    if (!user) {
-      throw new Error(
-        'No se devolvió usuario. ¿Está habilitado sign-up sin confirmación de email en Supabase?'
-      );
-    }
-
-    // Guardar / actualizar perfil en "profiles"
-    const { error: profileErr } = await supabase
-      .from('profiles')
-      .upsert(
-        {
-          id: user.id,              // mismo id que auth.users
-          email: user.email,
-          steam_username: steam || null
-        },
-        { onConflict: 'id' }
-      );
-
-    if (profileErr) {
-      console.warn('No se pudo guardar perfil en profiles:', profileErr.message);
-      // No rompo el flujo por esto
-    }
-
-    // OK → al dashboard
-    window.location.href = '/dashboard.html';
   } catch (err) {
-    console.error('[auth error]', err);
-    showError('Error: ' + err.message);
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Continuar';
+    console.error(err);
+    toast(`Error: ${err?.message || err}`);
+  } finally {
+    lock(false);
   }
 });
+
+// Autorellenar en caso de estar logueado y llegar aquí
+(async () => {
+  const { data } = await supabase.auth.getUser();
+  if (data?.user) {
+    // Ya logueado
+    location.replace("/dashboard.html");
+  }
+})();

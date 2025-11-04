@@ -313,5 +313,150 @@
   "description": "Novela visual sandbox con gestión de relaciones y decisiones que alteran la historia.",
   "tags": ["visual novel", "sandbox", "simulación"],
   "platforms": ["PC"]
+},
+  {
+  "id": "little-nightmares-2",
+  "title": "Little Nightmares II",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/860510/header.jpg",
+  "url": "https://store.steampowered.com/app/860510/Little_Nightmares_II/",
+  "description": "Secuela de terror/aventura con puzles y sigilo.",
+  "tags": ["terror", "puzles", "aventura"],
+  "platforms": ["PC"]
+},
+{
+  "id": "project-zomboid",
+  "title": "Project Zomboid",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/108600/header.jpg",
+  "url": "https://store.steampowered.com/app/108600/Project_Zomboid/",
+  "description": "Supervivencia isométrica hardcore en apocalipsis zombi.",
+  "tags": ["supervivencia", "zombies", "sandbox"],
+  "platforms": ["PC"]
+},
+{
+  "id": "geometry-dash",
+  "title": "Geometry Dash",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/322170/header.jpg",
+  "url": "https://store.steampowered.com/app/322170/Geometry_Dash/",
+  "description": "Plataformas rítmico brutalmente desafiante.",
+  "tags": ["plataformas", "rítmico", "difícil"],
+  "platforms": ["PC"]
+},
+{
+  "id": "little-nightmares",
+  "title": "Little Nightmares (Enhanced)",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/424840/header.jpg",
+  "url": "https://store.steampowered.com/app/424840/Little_Nightmares/",
+  "description": "Pesadillas en miniatura: sigilo, puzles y una atmósfera única.",
+  "tags": ["terror", "puzles", "sigilo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "plants-vs-zombies",
+  "title": "Plants vs. Zombies GOTY",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/3590/header.jpg",
+  "url": "https://store.steampowered.com/app/3590/Plants_vs_Zombies_GOTY_Edition/",
+  "description": "Clásico tower defense: defiende tu jardín con plantas.",
+  "tags": ["tower defense", "casual", "estrategia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "overcooked-2",
+  "title": "Overcooked! 2",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/728880/header.jpg",
+  "url": "https://store.steampowered.com/app/728880/Overcooked_2/",
+  "description": "Cooperativo caótico de cocina para partidas locas.",
+  "tags": ["cooperativo", "fiesta", "casual"],
+  "platforms": ["PC"]
+},
+{
+  "id": "dying-light-2",
+  "title": "Dying Light 2 Stay Human",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/534380/header.jpg",
+  "url": "https://store.steampowered.com/app/534380/Dying_Light_2_Stay_Human/",
+  "description": "Parkour + acción en mundo abierto postapocalíptico.",
+  "tags": ["acción", "mundo abierto", "zombies"],
+  "platforms": ["PC"]
+},
+{
+  "id": "apex-legends",
+  "title": "Apex Legends",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1172470/header.jpg",
+  "url": "https://store.steampowered.com/app/1172470/Apex_Legends/",
+  "description": "Battle royale hero-shooter por equipos.",
+  "tags": ["shooter", "battle royale", "free to play"],
+  "platforms": ["PC"]
+},
+{
+  "id": "blasphemous",
+  "title": "Blasphemous",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/774361/header.jpg",
+  "url": "https://store.steampowered.com/app/774361/Blasphemous/",
+  "description": "Metroidvania de acción 2D oscuro y desafiante.",
+  "tags": ["metroidvania", "acción", "difícil"],
+  "platforms": ["PC"]
+},
+{
+  "id": "ark-survival-ascended",
+  "title": "ARK: Survival Ascended",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2399830/header.jpg",
+  "url": "https://store.steampowered.com/app/2399830/ARK_Survival_Ascended/",
+  "description": "Sobrevive, doma dinosaurios y construye en mundos inmensos.",
+  "tags": ["supervivencia", "mundo abierto", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "portal-2",
+  "title": "Portal 2",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/620/header.jpg",
+  "url": "https://store.steampowered.com/app/620/Portal_2/",
+  "description": "Puzles con portales; campaña y modo cooperativo legendarios.",
+  "tags": ["puzles", "cooperativo", "narrativa"],
+  "platforms": ["PC"]
+},
+{
+  "id": "inside-the-backrooms",
+  "title": "Inside the Backrooms",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2255320/header.jpg",
+  "url": "https://store.steampowered.com/app/2255320/Inside_the_Backrooms/",
+  "description": "Horror cooperativo ambientado en los inquietantes Backrooms.",
+  "tags": ["terror", "cooperativo", "supervivencia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "poppy-playtime",
+  "title": "Poppy Playtime",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1721470/header.jpg",
+  "url": "https://store.steampowered.com/app/1721470/Poppy_Playtime/",
+  "description": "Horror y puzles en una fábrica de juguetes abandonada.",
+  "tags": ["terror", "puzles", "primera persona"],
+  "platforms": ["PC"]
+},
+{
+  "id": "halo-infinite",
+  "title": "Halo Infinite",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1240440/header.jpg",
+  "url": "https://store.steampowered.com/app/1240440/Halo_Infinite/",
+  "description": "Shooter de Halo con campaña y multijugador F2P.",
+  "tags": ["shooter", "campaña", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "black-desert",
+  "title": "Black Desert",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/582660/header.jpg",
+  "url": "https://store.steampowered.com/app/582660/Black_Desert/",
+  "description": "MMORPG de acción con combate rápido y mundo enorme.",
+  "tags": ["MMORPG", "mundo abierto", "acción"],
+  "platforms": ["PC"]
+},
+{
+  "id": "crab-game",
+  "title": "Crab Game",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1782210/header.jpg",
+  "url": "https://store.steampowered.com/app/1782210/Crab_Game/",
+  "description": "Minijuegos multijugador al estilo survival, caóticos y divertidos.",
+  "tags": ["fiesta", "multijugador", "casual"],
+  "platforms": ["PC"]
 }
+
 ]

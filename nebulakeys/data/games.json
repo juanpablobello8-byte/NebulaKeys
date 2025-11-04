@@ -700,6 +700,33 @@
   "description": "Ocioso/clicker sobre evolución, civilización y tecnología.",
   "tags": ["idle", "educativo", "simulación"],
   "platforms": ["PC"]
+},
+{
+  "id": "boris-and-the-dark-survival",
+  "title": "Boris and the Dark Survival",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1236990/header.jpg",
+  "url": "https://store.steampowered.com/app/1236990/Boris_and_the_Dark_Survival/",
+  "description": "Horror y supervivencia top-down en el universo de Bendy. Reúne recursos, evita a la criatura y descubre secretos.",
+  "tags": ["terror", "supervivencia", "sigilo", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "beltmatic",
+  "title": "Beltmatic",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2674590/header.jpg",
+  "url": "https://store.steampowered.com/app/2674590/Beltmatic/",
+  "description": "Puzles de automatización con cintas transportadoras: diseña flujos, enruta recursos y optimiza tus fábricas.",
+  "tags": ["puzles", "automatización", "construcción", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "bioshock",
+  "title": "BioShock",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/7670/header.jpg",
+  "url": "https://store.steampowered.com/app/7670/BioShock/",
+  "description": "El shooter inmersivo que redefinió el género: explora Rapture, combina poderes y armas y desentraña su historia.",
+  "tags": ["shooter", "inmersivo", "historia", "clásico"],
+  "platforms": ["PC"]
 }
 
 ]

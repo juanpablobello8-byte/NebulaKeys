@@ -124,5 +124,177 @@
     "description": "Investigación paranormal cooperativa con chat de voz por proximidad.",
     "tags": ["terror", "cooperativo", "investigación"],
     "platforms": ["PC"]
-  }
+  },
+  {
+  "id": "sons-of-the-forest",
+  "title": "Sons of the Forest",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1326470/header.jpg",
+  "url": "https://store.steampowered.com/app/1326470/",
+  "description": "Supervivencia y terror en un bosque hostil, secuela de The Forest.",
+  "tags": ["supervivencia", "terror", "cooperativo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "dead-cells",
+  "title": "Dead Cells",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/588650/header.jpg",
+  "url": "https://store.steampowered.com/app/588650/",
+  "description": "Rogue-lite de acción 2D con combates rápidos y exploración estilo metroidvania.",
+  "tags": ["roguelite", "plataformas", "acción"],
+  "platforms": ["PC"]
+},
+{
+  "id": "talisman-digital-edition",
+  "title": "Talisman: Digital Edition",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/247000/header.jpg",
+  "url": "https://store.steampowered.com/app/247000/",
+  "description": "Adaptación digital del clásico juego de mesa de fantasía.",
+  "tags": ["mesa", "fantasía", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "dying-light",
+  "title": "Dying Light",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/239140/header.jpg",
+  "url": "https://store.steampowered.com/app/239140/",
+  "description": "Parkour + zombis en un mundo abierto con ciclo día/noche.",
+  "tags": ["zombis", "mundo abierto", "cooperativo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "age-of-mythology-extended-edition",
+  "title": "Age of Mythology: Extended Edition",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/266840/header.jpg",
+  "url": "https://store.steampowered.com/app/266840/",
+  "description": "Clásico de estrategia en tiempo real con dioses y mitología.",
+  "tags": ["estrategia", "RTS", "mitología"],
+  "platforms": ["PC"]
+},
+{
+  "id": "subnautica-below-zero",
+  "title": "Subnautica: Below Zero",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/848450/header.jpg",
+  "url": "https://store.steampowered.com/app/848450/",
+  "description": "Aventura de supervivencia submarina en un mundo helado.",
+  "tags": ["supervivencia", "submarino", "aventura"],
+  "platforms": ["PC"]
+},
+{
+  "id": "far-cry-primal",
+  "title": "Far Cry Primal",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/371660/header.jpg",
+  "url": "https://store.steampowered.com/app/371660/",
+  "description": "Viaja a la Edad de Piedra y domina la naturaleza para sobrevivir.",
+  "tags": ["mundo abierto", "acción", "prehistoria"],
+  "platforms": ["PC"]
+},
+{
+  "id": "planet-centauri",
+  "title": "Planet Centauri",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/385380/header.jpg",
+  "url": "https://store.steampowered.com/app/385380/",
+  "description": "Sandbox 2D con construcción, criaturas y progresión de RPG.",
+  "tags": ["sandbox", "aventura", "crafting"],
+  "platforms": ["PC"]
+},
+{
+  "id": "bigfoot",
+  "title": "BIGFOOT",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/509980/header.jpg",
+  "url": "https://store.steampowered.com/app/509980/",
+  "description": "Caza (o huye de) la legendaria criatura en partidas cooperativas.",
+  "tags": ["terror", "cooperativo", "supervivencia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "for-honor",
+  "title": "For Honor",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/304390/header.jpg",
+  "url": "https://store.steampowered.com/app/304390/",
+  "description": "Combates cuerpo a cuerpo competitivos entre caballeros, vikingos y samuráis.",
+  "tags": ["acción", "multijugador", "melee"],
+  "platforms": ["PC"]
+},
+{
+  "id": "farlight-84",
+  "title": "Farlight 84",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1928420/header.jpg",
+  "url": "https://store.steampowered.com/app/1928420/",
+  "description": "Hero-shooter con jetpacks y habilidades en batallas trepidantes.",
+  "tags": ["shooter", "battle royale", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "grounded",
+  "title": "Grounded",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/962130/header.jpg",
+  "url": "https://store.steampowered.com/app/962130/",
+  "description": "Supervivencia en miniatura: encógete y explora el patio trasero.",
+  "tags": ["supervivencia", "cooperativo", "aventura"],
+  "platforms": ["PC"]
+},
+{
+  "id": "lethal-company",
+  "title": "Lethal Company",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1966720/header.jpg",
+  "url": "https://store.steampowered.com/app/1966720/",
+  "description": "Coop de terror: recupera chatarra en lunas hostiles y vuelve con vida.",
+  "tags": ["terror", "cooperativo", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "halo-the-master-chief-collection",
+  "title": "Halo: The Master Chief Collection",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/976730/header.jpg",
+  "url": "https://store.steampowered.com/app/976730/",
+  "description": "La saga clásica de Halo remasterizada en una colección definitiva.",
+  "tags": ["shooter", "campaña", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "valheim",
+  "title": "Valheim",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/892970/header.jpg",
+  "url": "https://store.steampowered.com/app/892970/",
+  "description": "Supervivencia vikinga procedural con construcción y jefes míticos.",
+  "tags": ["supervivencia", "cooperativo", "mundo abierto"],
+  "platforms": ["PC"]
+},
+{
+  "id": "counter-strike-classic",
+  "title": "Counter-Strike",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/10/header.jpg",
+  "url": "https://store.steampowered.com/app/10/",
+  "description": "El clásico shooter táctico 5v5 de antiterroristas vs terroristas.",
+  "tags": ["shooter", "clásico", "competitivo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "tmodloader",
+  "title": "tModLoader",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1281930/header.jpg",
+  "url": "https://store.steampowered.com/app/1281930/",
+  "description": "Plataforma oficial para mods de Terraria (gratuita).",
+  "tags": ["mods", "herramienta", "terraria"],
+  "platforms": ["PC"]
+},
+{
+  "id": "albion-online",
+  "title": "Albion Online",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/761890/header.jpg",
+  "url": "https://store.steampowered.com/app/761890/",
+  "description": "MMO sandbox con economía de jugador y combates PvP masivos.",
+  "tags": ["MMO", "sandbox", "PvP"],
+  "platforms": ["PC"]
+},
+{
+  "id": "plague-inc-evolved",
+  "title": "Plague Inc: Evolved",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/246620/header.jpg",
+  "url": "https://store.steampowered.com/app/246620/",
+  "description": "Estrategia: crea y evoluciona un patógeno para extinguir a la humanidad.",
+  "tags": ["estrategia", "simulación", "sandbox"],
+  "platforms": ["PC"]
+}
+
 ]

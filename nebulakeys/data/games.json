@@ -727,6 +727,177 @@
   "description": "El shooter inmersivo que redefinió el género: explora Rapture, combina poderes y armas y desentraña su historia.",
   "tags": ["shooter", "inmersivo", "historia", "clásico"],
   "platforms": ["PC"]
+},
+{
+  "id": "chasing-tails",
+  "title": "Chasing Tails",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/APPID/header.jpg",
+  "url": "https://store.steampowered.com/app/APPID/",
+  "description": "Visual novel romántica con toques adultos y comedia.",
+  "tags": ["visual novel", "romance", "adulto"],
+  "platforms": ["PC"]
+},
+{
+  "id": "the-coffin-of-andy-and-leyley",
+  "title": "The Coffin of Andy and Leyley",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/APPID/header.jpg",
+  "url": "https://store.steampowered.com/app/APPID/",
+  "description": "Aventura de horror psicológico con narrativa intensa.",
+  "tags": ["horror", "narrativo", "psicológico", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "college-kings",
+  "title": "College Kings",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/APPID/header.jpg",
+  "url": "https://store.steampowered.com/app/APPID/",
+  "description": "Visual novel universitaria con decisiones y romance.",
+  "tags": ["visual novel", "elecciones", "romance", "adulto"],
+  "platforms": ["PC"]
+},
+{
+  "id": "content-warning",
+  "title": "Content Warning",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2933140/header.jpg",
+  "url": "https://store.steampowered.com/app/2933140/Content_Warning/",
+  "description": "Co-op de terror: graba monstruos para hacerte viral sin morir en el intento.",
+  "tags": ["cooperativo", "terror", "multijugador", "viral"],
+  "platforms": ["PC"]
+},
+{
+  "id": "contra-anniversary-collection",
+  "title": "Contra Anniversary Collection",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1018000/header.jpg",
+  "url": "https://store.steampowered.com/app/1018000/Contra_Anniversary_Collection/",
+  "description": "Colección clásica de Contra con varios títulos retro.",
+  "tags": ["retro", "acción", "shoot'em up", "clásico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "counter-strike-2",
+  "title": "Counter-Strike 2",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/730/header.jpg",
+  "url": "https://store.steampowered.com/app/730/CounterStrike_2/",
+  "description": "El competitivo FPS de Valve, ahora en su nueva versión.",
+  "tags": ["FPS", "competitivo", "multijugador", "shooter"],
+  "platforms": ["PC"]
+},
+{
+  "id": "counter-strike-condition-zero",
+  "title": "Counter-Strike: Condition Zero",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/80/header.jpg",
+  "url": "https://store.steampowered.com/app/80/CounterStrike_Condition_Zero/",
+  "description": "CS con campaña y misiones tácticas para un jugador.",
+  "tags": ["FPS", "táctico", "clásico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "counter-strike-condition-zero-deleted-scenes",
+  "title": "Counter-Strike: Condition Zero - Deleted Scenes",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/92/header.jpg",
+  "url": "https://store.steampowered.com/app/92/CounterStrike_Condition_Zero_Deleted_Scenes/",
+  "description": "Episodios extra de la campaña singleplayer de CZ.",
+  "tags": ["FPS", "campaña", "clásico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "counter-strike-source",
+  "title": "Counter-Strike: Source",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/240/header.jpg",
+  "url": "https://store.steampowered.com/app/240/CounterStrike_Source/",
+  "description": "Counter-Strike con Source Engine, mapas y físicas renovadas.",
+  "tags": ["FPS", "competitivo", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "crossout",
+  "title": "Crossout",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/386180/header.jpg",
+  "url": "https://store.steampowered.com/app/386180/Crossout/",
+  "description": "Construye vehículos post-apocalípticos y compite en batallas PvP.",
+  "tags": ["vehículos", "construcción", "PVP", "free to play"],
+  "platforms": ["PC"]
+},
+{
+  "id": "crush-crush",
+  "title": "Crush Crush",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/459820/header.jpg",
+  "url": "https://store.steampowered.com/app/459820/Crush_Crush/",
+  "description": "Idle/dating sim adorable: sube stats y conquista chicas.",
+  "tags": ["idle", "simulación", "dating sim", "anime"],
+  "platforms": ["PC"]
+},
+{
+  "id": "cult-of-the-lamb",
+  "title": "Cult of the Lamb",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1313140/header.jpg",
+  "url": "https://store.steampowered.com/app/1313140/Cult_of_the_Lamb/",
+  "description": "Administra tu secta, construye la base y derrota herejes en este roguelite.",
+  "tags": ["roguelite", "gestión", "acción", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "cuphead",
+  "title": "Cuphead",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/header.jpg",
+  "url": "https://store.steampowered.com/app/268910/Cuphead/",
+  "description": "Run & gun con jefes brutales y estética de caricatura 1930s.",
+  "tags": ["acción", "plataformas", "difícil", "co-op local"],
+  "platforms": ["PC"]
+},
+{
+  "id": "a-dance-of-fire-and-ice",
+  "title": "A Dance of Fire and Ice",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/977950/header.jpg",
+  "url": "https://store.steampowered.com/app/977950/A_Dance_of_Fire_and_Ice/",
+  "description": "Juego de ritmo de un botón: precisión pura y mapas creativos.",
+  "tags": ["ritmo", "difícil", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "day-of-defeat",
+  "title": "Day of Defeat",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/30/header.jpg",
+  "url": "https://store.steampowered.com/app/30/Day_of_Defeat/",
+  "description": "FPS multijugador ambientado en la Segunda Guerra Mundial (GoldSrc).",
+  "tags": ["FPS", "WW2", "clásico", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "day-of-defeat-source",
+  "title": "Day of Defeat: Source",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/300/header.jpg",
+  "url": "https://store.steampowered.com/app/300/Day_of_Defeat_Source/",
+  "description": "Versión en Source con gráficos y físicas mejoradas.",
+  "tags": ["FPS", "WW2", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "dead-island-definitive-edition",
+  "title": "Dead Island Definitive Edition",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/383150/header.jpg",
+  "url": "https://store.steampowered.com/app/383150/Dead_Island_Definitive_Edition/",
+  "description": "Acción y supervivencia zombie en mundo abierto tropical (remaster).",
+  "tags": ["zombies", "mundo abierto", "acción", "co-op"],
+  "platforms": ["PC"]
+},
+{
+  "id": "dead-island-retro-revenge",
+  "title": "Dead Island Retro Revenge",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/383180/header.jpg",
+  "url": "https://store.steampowered.com/app/383180/Dead_Island_Retro_Revenge/",
+  "description": "Beat ’em up lateral estilo retro ambientado en el universo Dead Island.",
+  "tags": ["beat 'em up", "retro", "arcade"],
+  "platforms": ["PC"]
+},
+{
+  "id": "dead-island-riptide-definitive-edition",
+  "title": "Dead Island Riptide Definitive Edition",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/383180/header.jpg",
+  "url": "https://store.steampowered.com/app/383190/Dead_Island_Riptide_Definitive_Edition/",
+  "description": "Secuela/expansión remasterizada con más caos zombie en cooperativo.",
+  "tags": ["zombies", "acción", "co-op"],
+  "platforms": ["PC"]
 }
 
 ]

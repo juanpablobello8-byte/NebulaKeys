@@ -502,5 +502,78 @@
   "description": "Novela visual para adultos con humor y toques de fantasía.",
   "tags": ["visual-novel", "adulto", "comedia"],
   "platforms": ["PC"]
+},
+  {
+  "id": "subnautica",
+  "title": "Subnautica",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/264710/header.jpg",
+  "url": "https://store.steampowered.com/app/264710/Subnautica/",
+  "description": "Exploración y supervivencia submarina en un planeta alienígena.",
+  "tags": ["supervivencia", "exploración", "mundo-abierto"],
+  "platforms": ["PC"]
+},
+{
+  "id": "scp-secret-laboratory",
+  "title": "SCP: Secret Laboratory",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/700330/header.jpg",
+  "url": "https://store.steampowered.com/app/700330/SCP_Secret_Laboratory/",
+  "description": "Multijugador asimétrico en el universo SCP: fuga, caos y contención.",
+  "tags": ["multijugador", "terror", "asimétrico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "left-4-dead",
+  "title": "Left 4 Dead",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/500/header.jpg",
+  "url": "https://store.steampowered.com/app/500/Left_4_Dead/",
+  "description": "Cooperativo frenético contra hordas de infectados.",
+  "tags": ["cooperativo", "shooter", "zombies"],
+  "platforms": ["PC"]
+},
+{
+  "id": "alan-wake",
+  "title": "Alan Wake",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/108710/header.jpg",
+  "url": "https://store.steampowered.com/app/108710/Alan_Wake/",
+  "description": "Thriller de acción y horror psicológico con narrativa intensa.",
+  "tags": ["terror", "historia", "acción"],
+  "platforms": ["PC"]
+},
+{
+  "id": "among-us",
+  "title": "Among Us",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/945360/header.jpg",
+  "url": "https://store.steampowered.com/app/945360/Among_Us/",
+  "description": "Encuentra al impostor en partidas sociales de engaño y deducción.",
+  "tags": ["party", "multijugador", "social"],
+  "platforms": ["PC"]
+},
+{
+  "id": "age-of-empires-iv",
+  "title": "Age of Empires IV",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1466860/header.jpg",
+  "url": "https://store.steampowered.com/app/1466860/Age_of_Empires_IV/",
+  "description": "Estrategia en tiempo real histórica con campañas y multijugador.",
+  "tags": ["estrategia", "RTS", "histórico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "assassins-creed-origins",
+  "title": "Assassin’s Creed Origins",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/582160/header.jpg",
+  "url": "https://store.steampowered.com/app/582160/Assassins_Creed_Origins/",
+  "description": "Acción/RPG en mundo abierto en el antiguo Egipto.",
+  "tags": ["acción", "mundo-abierto", "RPG"],
+  "platforms": ["PC"]
+},
+{
+  "id": "assassins-creed-syndicate",
+  "title": "Assassin’s Creed Syndicate",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/368500/header.jpg",
+  "url": "https://store.steampowered.com/app/368500/Assassins_Creed_Syndicate/",
+  "description": "Londres victoriano, dos protagonistas y sigilo a tope.",
+  "tags": ["acción", "sigilo", "mundo-abierto"],
+  "platforms": ["PC"]
 }
+
 ]

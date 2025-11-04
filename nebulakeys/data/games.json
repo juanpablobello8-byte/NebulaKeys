@@ -457,6 +457,50 @@
   "description": "Minijuegos multijugador al estilo survival, caóticos y divertidos.",
   "tags": ["fiesta", "multijugador", "casual"],
   "platforms": ["PC"]
+},
+{
+  "id": "age-of-mythology-retold",
+  "title": "Age of Mythology: Retold",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1934680/header.jpg",
+  "url": "https://store.steampowered.com/app/1934680/Age_of_Mythology_Retold/",
+  "description": "RTS clásico con deidades y mitología, ahora modernizado en la edición Retold.",
+  "tags": ["estrategia", "RTS", "mitología"],
+  "platforms": ["PC"]
+},
+{
+  "id": "little-nightmares-iii",
+  "title": "Little Nightmares III",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1392860/header.jpg",
+  "url": "https://store.steampowered.com/app/1392860/Little_Nightmares_III/",
+  "description": "Nueva entrega de la saga de terror y puzles con atmósfera inquietante.",
+  "tags": ["terror", "puzles", "aventura"],
+  "platforms": ["PC"]
+},
+{
+  "id": "billar-3d-pool",
+  "title": "Billar 3D - Pool",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/670290/header.jpg",
+  "url": "https://store.steampowered.com/app/670290/Billar_3D__Pool/",
+  "description": "Simulador de billar sencillo y casual con vista 3D.",
+  "tags": ["deportes", "billar", "casual"],
+  "platforms": ["PC"]
+},
+{
+  "id": "kof-xiii-steam-edition",
+  "title": "THE KING OF FIGHTERS XIII STEAM EDITION",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/222940/header.jpg",
+  "url": "https://store.steampowered.com/app/222940/THE_KING_OF_FIGHTERS_XIII_STEAM_EDITION/",
+  "description": "Clásico de lucha 2D con sprites detallados y jugabilidad técnica.",
+  "tags": ["lucha", "2D", "arcade"],
+  "platforms": ["PC"]
+},
+{
+  "id": "aristocunts",
+  "title": "Aristocunts",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1314630/ss_8ce174fc5cc1d62d736b476fde883eaf98be275d.1920x1080.jpg",
+  "url": "https://store.steampowered.com/app/1314630/",
+  "description": "Novela visual para adultos con humor y toques de fantasía.",
+  "tags": ["visual-novel", "adulto", "comedia"],
+  "platforms": ["PC"]
 }
-
 ]

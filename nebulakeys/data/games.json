@@ -295,6 +295,23 @@
   "description": "Estrategia: crea y evoluciona un patógeno para extinguir a la humanidad.",
   "tags": ["estrategia", "simulación", "sandbox"],
   "platforms": ["PC"]
+},
+  {
+  "id": "repo",
+  "title": "REPO",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/3241660/header.jpg",
+  "url": "https://store.steampowered.com/app/3241660/REPO/",
+  "description": "Acción con vista superior y elementos roguelite. Completa misiones con tu exotraje y mejora tu equipo.",
+  "tags": ["acción", "roguelite", "twin-stick"],
+  "platforms": ["PC"]
+},
+{
+  "id": "come-home",
+  "title": "Come Home",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1724190/header.jpg",
+  "url": "https://store.steampowered.com/app/1724190/Come_Home/",
+  "description": "Novela visual sandbox con gestión de relaciones y decisiones que alteran la historia.",
+  "tags": ["visual novel", "sandbox", "simulación"],
+  "platforms": ["PC"]
 }
-
 ]

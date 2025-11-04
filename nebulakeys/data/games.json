@@ -574,6 +574,132 @@
   "description": "Londres victoriano, dos protagonistas y sigilo a tope.",
   "tags": ["acción", "sigilo", "mundo-abierto"],
   "platforms": ["PC"]
+},
+{
+  "id": "battleblock-theater",
+  "title": "BattleBlock Theater",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/238460/header.jpg",
+  "url": "https://store.steampowered.com/app/238460/BattleBlock_Theater/",
+  "description": "Plataformas y coop caótico de The Behemoth con editor de niveles.",
+  "tags": ["plataformas", "cooperativo", "party"],
+  "platforms": ["PC"]
+},
+{
+  "id": "bendy-and-the-ink-machine",
+  "title": "Bendy and the Ink Machine",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/622650/header.jpg",
+  "url": "https://store.steampowered.com/app/622650/Bendy_and_the_Ink_Machine/",
+  "description": "Terror en primera persona con estética de dibujos animados vintage.",
+  "tags": ["terror", "historia", "primera-persona"],
+  "platforms": ["PC"]
+},
+{
+  "id": "the-binding-of-isaac",
+  "title": "The Binding of Isaac",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/113200/header.jpg",
+  "url": "https://store.steampowered.com/app/113200/The_Binding_of_Isaac/",
+  "description": "Roguelike de mazmorras con permadeath, miles de ítems y locura bíblica.",
+  "tags": ["roguelike", "acción", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "the-binding-of-isaac-rebirth",
+  "title": "The Binding of Isaac: Rebirth",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/250900/header.jpg",
+  "url": "https://store.steampowered.com/app/250900/The_Binding_of_Isaac_Rebirth/",
+  "description": "Remake/expansión masivo del clásico con toneladas de sinergias.",
+  "tags": ["roguelike", "acción", "difícil"],
+  "platforms": ["PC"]
+},
+{
+  "id": "bioshock-remastered",
+  "title": "BioShock Remastered",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/409710/header.jpg",
+  "url": "https://store.steampowered.com/app/409710/BioShock_Remastered/",
+  "description": "El clásico de Rapture con mejoras visuales.",
+  "tags": ["shooter", "inmersivo", "historia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "bioshock-2-remastered",
+  "title": "BioShock 2 Remastered",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/409720/header.jpg",
+  "url": "https://store.steampowered.com/app/409720/BioShock_2_Remastered/",
+  "description": "Regreso a Rapture con el poder de un Big Daddy.",
+  "tags": ["shooter", "inmersivo", "historia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "bioshock-infinite",
+  "title": "BioShock Infinite",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/8870/header.jpg",
+  "url": "https://store.steampowered.com/app/8870/BioShock_Infinite/",
+  "description": "Una odisea en la ciudad flotante de Columbia.",
+  "tags": ["shooter", "narrativa", "singleplayer"],
+  "platforms": ["PC"]
+},
+{
+  "id": "bomber-crew",
+  "title": "Bomber Crew",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/537800/header.jpg",
+  "url": "https://store.steampowered.com/app/537800/Bomber_Crew/",
+  "description": "Gestión de tripulación y simulación ligera en misiones aéreas.",
+  "tags": ["estrategia", "gestión", "simulación"],
+  "platforms": ["PC"]
+},
+{
+  "id": "borderlands-2",
+  "title": "Borderlands 2",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/49520/header.jpg",
+  "url": "https://store.steampowered.com/app/49520/Borderlands_2/",
+  "description": "Loot-shooter cooperativo con humor ácido y millones de armas.",
+  "tags": ["cooperativo", "shooter", "loot"],
+  "platforms": ["PC"]
+},
+{
+  "id": "call-of-duty-black-ops-ii",
+  "title": "Call of Duty®: Black Ops II",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/202970/header.jpg",
+  "url": "https://store.steampowered.com/app/202970/Call_of_Duty_Black_Ops_II/",
+  "description": "Campaña de guerra fría futurista, multijugador y Zombies.",
+  "tags": ["shooter", "multijugador", "acción"],
+  "platforms": ["PC"]
+},
+{
+  "id": "call-of-juarez-gunslinger",
+  "title": "Call of Juarez: Gunslinger",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/204450/header.jpg",
+  "url": "https://store.steampowered.com/app/204450/Call_of_Juarez_Gunslinger/",
+  "description": "Western arcade con balaceras estilizadas y narrador poco fiable.",
+  "tags": ["shooter", "western", "arcade"],
+  "platforms": ["PC"]
+},
+{
+  "id": "capcom-arcade-stadium",
+  "title": "Capcom Arcade Stadium",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1515950/header.jpg",
+  "url": "https://store.steampowered.com/app/1515950/Capcom_Arcade_Stadium/",
+  "description": "Colección retro de arcades clásicos de Capcom.",
+  "tags": ["arcade", "retro", "colección"],
+  "platforms": ["PC"]
+},
+{
+  "id": "castle-crashers",
+  "title": "Castle Crashers®",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/204360/header.jpg",
+  "url": "https://store.steampowered.com/app/204360/Castle_Crashers/",
+  "description": "Beat’em up cooperativo con humor y montón de personajes.",
+  "tags": ["beat-em-up", "cooperativo", "party"],
+  "platforms": ["PC"]
+},
+{
+  "id": "cell-to-singularity",
+  "title": "Cell to Singularity - Evolution Never Ends",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/977400/header.jpg",
+  "url": "https://store.steampowered.com/app/977400/Cell_to_Singularity__Evolution_Never_Ends/",
+  "description": "Ocioso/clicker sobre evolución, civilización y tecnología.",
+  "tags": ["idle", "educativo", "simulación"],
+  "platforms": ["PC"]
 }
 
 ]

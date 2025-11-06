@@ -5,8 +5,8 @@
 // Con espacios, deben ir codificados como %20.
 const PLAN_IMAGES = {
   starter: "/assets/plans/Starter%20Pack.png",
-  priority: "/assets/plans/Priority%20Pack.png",
-  ultimate: "/assets/plans/Pro%20Pack.png", // usamos tu "Pro Pack" para Ultimate
+  priority: "/assets/plans/Pro%20Pack.png",
+  ultimate: "/assets/plans/Priority%20Pack.png", // usamos tu "Pro Pack" para Ultimate
 };
 
 // Asigna imágenes a las tarjetas (por si alguna no cargó)

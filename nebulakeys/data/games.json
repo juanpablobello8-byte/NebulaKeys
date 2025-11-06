@@ -730,29 +730,29 @@
 },
 {
   "id": "chasing-tails",
-  "title": "Chasing Tails",
+  "title": "Chasing Tails ~A Promise in the Snow~",
   "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1555110/header.jpg",
-  "url": "https://store.steampowered.com/app/APPID/",
-  "description": "Visual novel romántica con toques adultos y comedia.",
-  "tags": ["visual novel", "romance", "adulto"],
-  "platforms": ["PC"]
+  "url": "https://store.steampowered.com/app/1555110/Chasing_Tails__A_Promise_in_the_Snow/",
+  "description": "Novela visual con arte anime y una historia romántica invernal. Enfocada en narrativa y decisiones del jugador.",
+  "tags": ["novela visual", "anime", "historia"],
+  "platforms": ["PC"],
 },
 {
-  "id": "the-coffin-of-andy-and-leyley",
+   "id": "coffin-andy-leyley",
   "title": "The Coffin of Andy and Leyley",
   "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2378900/header.jpg",
-  "url": "https://store.steampowered.com/app/APPID/",
-  "description": "Aventura de horror psicológico con narrativa intensa.",
-  "tags": ["horror", "narrativo", "psicológico", "indie"],
+  "url": "https://store.steampowered.com/app/2378900/The_Coffin_of_Andy_and_Leyley/",
+  "description": "Aventura narrativa de horror psicológico con estética pixel art. Sigue la historia de Andy y Leyley en un viaje retorcido lleno de decisiones incómodas y momentos inquietantes.",
+  "tags": ["horror", "psicológico", "narrativa", "aventura", "pixel art", "indie"],
   "platforms": ["PC"]
 },
 {
-  "id": "college-kings",
-  "title": "College Kings",
+  "id": "college-kings-complete",
+  "title": "College Kings — The Complete Season",
   "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1463120/header.jpg",
-  "url": "https://store.steampowered.com/app/APPID/",
-  "description": "Visual novel universitaria con decisiones y romance.",
-  "tags": ["visual novel", "elecciones", "romance", "adulto"],
+  "url": "https://store.steampowered.com/app/1463120/College_Kings__The_Complete_Season/",
+  "description": "Novela visual para adultos con decisiones y múltiples rutas. Incluye la temporada completa con todas las historias.",
+  "tags": ["novela visual", "adultos", "elecciones"],
   "platforms": ["PC"]
 },
 {
@@ -900,40 +900,40 @@
   "platforms": ["PC"]
 },
 {
-   "id": "dead-rising-2",
-    "title": "Dead Rising 2",
-    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
-    "url": "https://store.steampowered.com/app/APPID/",
-    "description": "Zombis + crafting de armas en Fortune City.",
-    "tags": ["acción", "zombis", "mundo-abierto"],
-    "platforms": ["PC"]
+ "id": "dead-rising-2",
+  "title": "Dead Rising 2",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/45740/header.jpg",
+  "url": "https://store.steampowered.com/app/45740/Dead_Rising_2/",
+  "description": "Acción y mundo abierto en una ciudad tomada por zombis. Fabrica armas absurdas, rescata supervivientes y sobrevive contra reloj.",
+  "tags": ["acción", "mundo abierto", "zombis", "supervivencia", "crafting", "humor negro"],
+  "platforms": ["PC"]
   },
   {
     "id": "dead-space-2008",
-    "title": "Dead Space",
-    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
-    "url": "https://store.steampowered.com/app/APPID/",
-    "description": "Horror de supervivencia en la USG Ishimura.",
-    "tags": ["horror", "sci-fi", "tercera-persona"],
-    "platforms": ["PC"]
+  "title": "Dead Space (2008)",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/17470/header.jpg",
+  "url": "https://store.steampowered.com/app/17470/Dead_Space_2008/",
+  "description": "Explora la USG Ishimura, una nave minera infestada por horrores alienígenas. Desmembra para sobrevivir en este clásico del survival horror espacial.",
+  "tags": ["horror", "supervivencia", "ciencia ficción", "tercera persona", "clásico"],
+  "platforms": ["PC"]
   },
   {
     "id": "dead-space-2",
-    "title": "Dead Space 2",
-    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
-    "url": "https://store.steampowered.com/app/APPID/",
-    "description": "Isaac Clarke vuelve frente a una nueva plaga necromorfa.",
-    "tags": ["horror", "acción", "sci-fi"],
-    "platforms": ["PC"]
+  "title": "Dead Space 2",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/47780/header.jpg",
+  "url": "https://store.steampowered.com/app/47780/Dead_Space_2/",
+  "description": "Horror de ciencia ficción en tercera persona. Isaac Clarke vuelve para enfrentar a los necrófagos con tensión constante y combate visceral.",
+  "tags": ["horror", "tercera persona", "ciencia ficción", "supervivencia", "acción"],
+  "platforms": ["PC"]
   },
   {
-    "id": "deathmatch-classic",
-    "title": "Deathmatch Classic",
-    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
-    "url": "https://store.steampowered.com/app/APPID/",
-    "description": "Arena shooter al estilo Quake sobre motor de Half-Life.",
-    "tags": ["shooter", "clásico", "multijugador"],
-    "platforms": ["PC"]
+     "id": "deathmatch-classic",
+  "title": "Deathmatch Classic",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/40/header.jpg",
+  "url": "https://store.steampowered.com/app/40/Deathmatch_Classic/",
+  "description": "Shooter arena de ritmo rápido inspirado en los clásicos de los 90. Saltos, cohetes y acción multijugador pura.",
+  "tags": ["shooter", "arena", "clásico", "multijugador", "retro"],
+  "platforms": ["PC"]
   },
   {
     "id": "destiny-2",
@@ -964,39 +964,39 @@
   },
   {
     "id": "eleusis",
-    "title": "Eleusis",
-    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
-    "url": "https://store.steampowered.com/app/APPID/",
-    "description": "Aventura de horror en un pueblo griego abandonado.",
-    "tags": ["horror", "aventura", "misterio"],
-    "platforms": ["PC"]
+  "title": "Eleusis",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/251310/header.jpg",
+  "url": "https://store.steampowered.com/app/251310/Eleusis/",
+  "description": "Aventura de horror y misterio en un pueblo griego abandonado. Explora ruinas, resuelve puzles y descubre oscuros cultos.",
+  "tags": ["horror", "aventura", "misterio", "puzles", "atmósfera"],
+  "platforms": ["PC"]
   },
   {
-    "id": "enlisted",
-    "title": "Enlisted",
-    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
-    "url": "https://store.steampowered.com/app/APPID/",
-    "description": "FPS masivo ambientado en conflictos históricos.",
-    "tags": ["shooter", "masivo", "free-to-play"],
-    "platforms": ["PC"]
+   "id": "enlisted",
+  "title": "Enlisted",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2051620/header.jpg",
+  "url": "https://store.steampowered.com/app/2051620/Enlisted/",
+  "description": "FPS masivo ambientado en la Segunda Guerra Mundial. Dirige escuadras, usa vehículos y participa en batallas históricas.",
+  "tags": ["shooter", "masivo", "Segunda Guerra Mundial", "multijugador", "free-to-play"],
+  "platforms": ["PC"]
   },
   {
     "id": "fallout-shelter",
-    "title": "Fallout Shelter",
-    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
-    "url": "https://store.steampowered.com/app/APPID/",
-    "description": "Gestiona tu bóveda y cuida a tus moradores.",
-    "tags": ["gestión", "simulación", "free-to-play"],
-    "platforms": ["PC"]
+  "title": "Fallout Shelter",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/588430/header.jpg",
+  "url": "https://store.steampowered.com/app/588430/Fallout_Shelter/",
+  "description": "Construye y gestiona tu propio refugio Vault. Cuida a tus moradores, amplía estancias y sobrevive en el yermo.",
+  "tags": ["gestión", "simulación", "free-to-play", "estrategia", "postapocalíptico"],
+  "platforms": ["PC"]
   },
   {
-    "id": "feed-and-grow-fish",
-    "title": "Feed and Grow: Fish",
-    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
-    "url": "https://store.steampowered.com/app/APPID/",
-    "description": "Empieza como pececillo y devora para crecer.",
-    "tags": ["simulación", "supervivencia", "océano"],
-    "platforms": ["PC"]
+   "id": "feed-and-grow-fish",
+  "title": "Feed and Grow: Fish",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/429050/header.jpg",
+  "url": "https://store.steampowered.com/app/429050/Feed_and_Grow_Fish/",
+  "description": "Simulador sandbox: empieza como un pez pequeño, caza para crecer y domina el ecosistema submarino.",
+  "tags": ["simulación", "supervivencia", "sandbox", "submarino", "casual"],
+  "platforms": ["PC"]
   },
   {
     "id": "first-descendant",
@@ -1009,12 +1009,12 @@
   },
   {
     "id": "fishing-planet",
-    "title": "Fishing Planet",
-    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
-    "url": "https://store.steampowered.com/app/APPID/",
-    "description": "Simulador de pesca realista free-to-play.",
-    "tags": ["simulación", "deportes", "free-to-play"],
-    "platforms": ["PC"]
+  "title": "Fishing Planet",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/380600/header.jpg",
+  "url": "https://store.steampowered.com/app/380600/Fishing_Planet/",
+  "description": "Simulador de pesca realista free-to-play con físicas detalladas, equipos licenciados y decenas de especies.",
+  "tags": ["simulación", "deportes", "realista", "free-to-play", "multijugador"],
+  "platforms": ["PC"]
   },
   {
     "id": "dont-starve-together",

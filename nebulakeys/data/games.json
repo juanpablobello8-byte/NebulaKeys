@@ -735,10 +735,10 @@
   "url": "https://store.steampowered.com/app/1555110/Chasing_Tails__A_Promise_in_the_Snow/",
   "description": "Novela visual con arte anime y una historia romántica invernal. Enfocada en narrativa y decisiones del jugador.",
   "tags": ["novela visual", "anime", "historia"],
-  "platforms": ["PC"],
+  "platforms": ["PC"]
 },
 {
-   "id": "coffin-andy-leyley",
+  "id": "coffin-andy-leyley",
   "title": "The Coffin of Andy and Leyley",
   "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2378900/header.jpg",
   "url": "https://store.steampowered.com/app/2378900/The_Coffin_of_Andy_and_Leyley/",

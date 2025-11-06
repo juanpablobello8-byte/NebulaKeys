@@ -1,29 +1,37 @@
 // scripts/home.js
-// Carga la portada de HELLDIVERS 2 en la tarjeta "Próximos juegos"
-// y deja el texto del rótulo un poco más arriba (ya lo hace el HTML con top-4/top-5).
-
+// Portada para "Próximos juegos"
 document.addEventListener('DOMContentLoaded', () => {
-  // HELLDIVERS 2 (Steam app 553850)
   const COVER_URL = 'https://cdn.cloudflare.steamstatic.com/steam/apps/553850/header.jpg';
-
   const img   = document.getElementById('upcoming-cover');
   const title = document.getElementById('upcoming-title');
 
-  if (!img || !title) return;
+  if (img) {
+    img.src = COVER_URL;
+    img.onload = () => {
+      img.classList.remove('hidden');
+      // Ocultamos el rótulo sobre la imagen para evitar duplicado (ya existe arriba como badge)
+      if (title) title.classList.add('hidden');
+    };
+  }
 
-  // Colocamos la portada del juego
-  img.src = COVER_URL;
+  // Mostrar "Ver planes" sólo si hay sesión.
+  const plansBtn = document.getElementById('btn-plans');
 
-  // Cuando cargue, mostramos la imagen (dejando el texto arriba como rótulo)
-  img.onload = () => {
-    img.classList.remove('hidden');
+  async function isLoggedIn() {
+    // Si usas Supabase y ya cargaste el cliente en otro script, lo intentamos:
+    try {
+      if (window.supabase && window.supabase.auth) {
+        const { data: { session } } = await window.supabase.auth.getSession();
+        if (session) return true;
+      }
+    } catch (_) {}
 
-    // Si prefieres ocultar el texto al haber imagen, descomenta:
-    // title.classList.add('hidden');
-  };
+    // Fallback por si guardas un flag local después del login
+    // (ajústalo según tu flujo real)
+    return localStorage.getItem('nk_is_logged_in') === '1';
+  }
 
-  // Si falla la imagen, mantenemos sólo el placeholder
-  img.onerror = () => {
-    console.warn('No se pudo cargar la portada de HELLDIVERS 2.');
-  };
+  isLoggedIn().then(ok => {
+    if (plansBtn) plansBtn.classList.toggle('hidden', !ok);
+  });
 });

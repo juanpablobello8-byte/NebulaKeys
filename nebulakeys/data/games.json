@@ -740,7 +740,7 @@
 {
   "id": "the-coffin-of-andy-and-leyley",
   "title": "The Coffin of Andy and Leyley",
-  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/APPID/header.jpg",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2378900/header.jpg",
   "url": "https://store.steampowered.com/app/APPID/",
   "description": "Aventura de horror psicológico con narrativa intensa.",
   "tags": ["horror", "narrativo", "psicológico", "indie"],

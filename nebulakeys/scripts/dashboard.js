@@ -1,166 +1,169 @@
-// /scripts/dashboard.js
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+// ===============================
+// Mi cuenta: Plan actual
+// ===============================
 
-const {
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY,
-  CHECKOUT_ENDPOINT,
-  PLANS,
-} = window.NEBULA_PUBLIC;
+(async () => {
+  // 1) Supabase
+  if (!window.NEBULA_PUBLIC?.SUPABASE_URL || !window.NEBULA_PUBLIC?.SUPABASE_ANON_KEY) {
+    alert("Falta configuración de Supabase en /scripts/config.js");
+    return;
+  }
+  const { createClient } = window.supabase;
+  const supabase = createClient(
+    window.NEBULA_PUBLIC.SUPABASE_URL,
+    window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
+  );
 
-// Supabase
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  // Helpers DOM
+  const $ = (sel) => document.querySelector(sel);
+  const planPanel = $("#planPanel");
+  const emailBox = $("#emailBox");
+  const steamBox = $("#steamBox");
+  const logoutBtn = $("#logoutBtn");
 
-// UI
-const subStatus   = document.getElementById('subStatus');
-const subInfoBox  = document.getElementById('subInfo');
-const planEl      = document.getElementById('plan');
-const untilEl     = document.getElementById('until');
-const subscribeBtn = document.getElementById('subscribeBtn');
+  // 2) Sesión
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.user) {
+    // no logueado -> a login
+    window.location.href = "/login.html";
+    return;
+  }
+  const email = (session.user.email || "").toLowerCase();
+  emailBox.textContent = email;
 
-// Modal
-const plansModal = document.getElementById('plansModal');
-const closePlans = document.getElementById('closePlans');
-
-function openPlans()  { plansModal.classList.remove('hidden'); }
-function hidePlans()  { plansModal.classList.add('hidden'); }
-
-function fmtDate(isoOrSec) {
+  // (Opcional) muestra steam_user si lo guardas en profiles
   try {
-    const dt = typeof isoOrSec === 'number'
-      ? new Date(isoOrSec * 1000)
-      : new Date(isoOrSec);
-    return dt.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'2-digit' });
-  } catch {
-    return '—';
-  }
-}
-
-function priceIdToLabel(priceId) {
-  const entry = Object.values(PLANS).find(p => p.id === priceId);
-  return entry ? entry.label : priceId || '—';
-}
-
-async function refreshSubscriptionUI() {
-  subStatus.textContent = 'Comprobando…';
-  subInfoBox.classList.add('hidden');
-  subscribeBtn.classList.remove('hidden');
-  subscribeBtn.disabled = true;
-
-  // Usuario autenticado?
-  const { data: auth, error: authErr } = await supabase.auth.getUser();
-  const user = auth?.user;
-  if (authErr) console.error(authErr);
-
-  if (!user) {
-    subStatus.textContent = 'Inicia sesión para ver tu suscripción';
-    subscribeBtn.disabled = false;
-    return;
-  }
-
-  // Buscar cliente por email y suscripciones
-  const { data, error } = await supabase
-    .from('customers')
-    .select(`
-      id,
-      email,
-      subscriptions (
-        status,
-        price_id,
-        current_period_start,
-        current_period_end
-      )
-    `)
-    .eq('email', user.email)
-    .maybeSingle();
-
-  if (error) {
-    console.error(error);
-    subStatus.textContent = 'Error al consultar el estado';
-    subscribeBtn.disabled = false;
-    return;
-  }
-
-  const sub = data?.subscriptions?.[0];
-
-  if (!sub || !['active', 'trialing', 'past_due', 'unpaid'].includes(sub.status)) {
-    subStatus.textContent = 'Sin suscripción activa';
-    subscribeBtn.disabled = false;
-    return;
-  }
-
-  // Suscripción encontrada
-  subStatus.textContent = 'Suscripción activa';
-  planEl.textContent  = priceIdToLabel(sub.price_id);
-  untilEl.textContent = sub.current_period_end ? fmtDate(sub.current_period_end) : '—';
-  subInfoBox.classList.remove('hidden');
-
-  // Con suscripción activa, ocultamos el CTA
-  subscribeBtn.classList.add('hidden');
-  subscribeBtn.disabled = false;
-}
-
-// Iniciar checkout con POST al endpoint
-async function startCheckout(priceId) {
-  try {
-    subscribeBtn.disabled = true;
-
-    const { data: auth } = await supabase.auth.getUser();
-    const user = auth?.user;
-
-    const res = await fetch(CHECKOUT_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json' },
-      body: JSON.stringify({
-        priceId,
-        userId: user?.id || '',
-        email:  user?.email || '',
-      }),
-    });
-
-    if (!res.ok) {
-      const msg = await res.text();
-      throw new Error(msg || 'Fallo creando sesión de checkout');
+    const { data: prof } = await supabase.from("profiles").select("steam_user").eq("email", email).maybeSingle();
+    if (prof?.steam_user) {
+      steamBox.textContent = `Steam: ${prof.steam_user}`;
+    } else {
+      steamBox.textContent = "Steam: —";
     }
+  } catch {
+    steamBox.textContent = "Steam: —";
+  }
 
-    const { url } = await res.json();
-    location.href = url;
+  // 3) Cargar plan actual desde la vista v_current_subscription
+  try {
+    const { data, error } = await supabase
+      .from("v_current_subscription")
+      .select("*")
+      .eq("email", email)
+      .maybeSingle();
+
+    if (error) throw error;
+    renderPlan(data);
   } catch (err) {
     console.error(err);
-    alert('No se pudo iniciar el checkout: ' + err.message);
-  } finally {
-    subscribeBtn.disabled = false;
+    renderPlan(null);
   }
-}
 
-// Abrir modal al pulsar "Suscribirme"
-subscribeBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  openPlans();
-});
+  // 4) Logout
+  logoutBtn.onclick = async () => {
+    await supabase.auth.signOut();
+    window.location.href = "/index.html";
+  };
 
-// Cerrar modal (botón o click en overlay)
-closePlans.addEventListener('click', hidePlans);
-plansModal.addEventListener('click', (ev) => {
-  if (ev.target === plansModal) hidePlans();
-});
+  // ------------ UI ------------
+  function renderPlan(row) {
+    planPanel.innerHTML = "";
 
-// Opción de plan → checkout
-plansModal.querySelectorAll('[data-plan]').forEach(btn => {
-  btn.addEventListener('click', async () => {
-    const key  = btn.dataset.plan;          // weekly | biweekly | monthly
-    const plan = PLANS[key];
-    if (!plan?.id) return alert('Plan no disponible.');
-    hidePlans();
-    await startCheckout(plan.id);
-  });
-});
+    if (!row) {
+      const el = document.createElement("div");
+      el.className = "card";
+      el.style.background = "#0f172a";
+      el.style.border = "1px dashed #243157";
+      el.style.padding = "14px";
+      el.innerHTML = `
+        <div class="row" style="justify-content:space-between;">
+          <div>
+            <div class="h" style="margin:0 0 6px">Sin suscripción activa</div>
+            <div class="muted">Elige un plan para comenzar.</div>
+          </div>
+          <a class="btn btn-brand" href="/pricing.html">Elegir plan</a>
+        </div>
+      `;
+      planPanel.appendChild(el);
+      return;
+    }
 
-// Carga inicial + pequeño polling por si vuelven desde success.html
-await refreshSubscriptionUI();
-let tries = 0;
-const iv = setInterval(async () => {
-  tries += 1;
-  await refreshSubscriptionUI();
-  if (tries >= 8) clearInterval(iv);
-}, 8000);
+    // Mapear estado a badge
+    const { status, price_amount_decimal, price_currency, price_interval, product_name, cancel_at_period_end } = row;
+    const amount = (price_amount_decimal ?? 0).toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const intervalTxt = intervalToEs(price_interval);
+    const statusChip = statusChipEl(status);
+
+    const renewText = (() => {
+      const end = row.current_period_end ? new Date(row.current_period_end) : null;
+      if (!end) return "";
+      const dateStr = end.toLocaleDateString("es-MX", { day:"2-digit", month:"short", year:"numeric" });
+      return cancel_at_period_end
+        ? `Se cancelará el ${dateStr}`
+        : `Se renueva el ${dateStr}`;
+    })();
+
+    const el = document.createElement("div");
+    el.className = "card";
+    el.style.background = "#0f172a";
+    el.style.padding = "16px";
+    el.innerHTML = `
+      <div class="row" style="justify-content:space-between; align-items:flex-start;">
+        <div>
+          <div class="row" style="gap:12px;align-items:center;margin-bottom:6px">
+            <div class="h" style="margin:0">${product_name ?? "Plan"}</div>
+            ${statusChip}
+          </div>
+          <div class="row" style="gap:10px;align-items:baseline">
+            <div class="price">${price_currency?.toUpperCase() ?? "MXN"} ${amount}</div>
+            <div class="muted">/ ${intervalTxt}</div>
+          </div>
+          <div class="mini" style="margin-top:8px">${renewText}</div>
+        </div>
+        <div class="actions" style="align-self:flex-end">
+          <a id="manageBtn" class="btn">Gestionar</a>
+          <a class="btn" href="/pricing.html">Cambiar plan</a>
+        </div>
+      </div>
+    `;
+    planPanel.appendChild(el);
+
+    // Botón "Gestionar" -> Portal de facturación (opcional)
+    const manageBtn = el.querySelector("#manageBtn");
+    manageBtn.onclick = async () => {
+      try {
+        const returnUrl = window.location.origin + "/dashboard.html";
+        const res = await fetch(`/api/create-portal-session.js?return_url=${encodeURIComponent(returnUrl)}`, { method: "POST" });
+        if (!res.ok) throw new Error("No se pudo crear la sesión de portal");
+        const { url } = await res.json();
+        window.location.href = url;
+      } catch (e) {
+        console.error(e);
+        alert("No fue posible abrir el portal de facturación.");
+      }
+    };
+  }
+
+  function intervalToEs(iv) {
+    switch ((iv || "month")) {
+      case "day": return "día";
+      case "week": return "semana";
+      case "year": return "año";
+      default: return "mes";
+    }
+  }
+
+  function statusChipEl(status) {
+    const span = document.createElement("span");
+    span.className = "badge";
+    const st = (status || "").toLowerCase();
+    let txt = st;
+    if (st === "active")       { span.classList.add("b-ok");   txt = "Activo"; }
+    else if (st === "trialing"){ span.classList.add("b-ok");   txt = "Prueba"; }
+    else if (st === "past_due"){ span.classList.add("b-warn"); txt = "Vencido"; }
+    else if (st === "paused")  { span.classList.add("b-warn"); txt = "Pausado"; }
+    else if (st === "canceled"){ span.classList.add("b-bad");  txt = "Cancelado"; }
+    else                       { span.classList.add("b-warn"); txt = st || "—"; }
+    span.textContent = txt;
+    return span.outerHTML;
+  }
+})();

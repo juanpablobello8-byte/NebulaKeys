@@ -1456,6 +1456,186 @@
   "description": "Shooter de extracción con economía de mercado. Saquea, comercia y sobrevive en operaciones PvPvE.",
   "tags": ["shooter", "extracción", "PvPvE", "free-to-play"],
   "platforms": ["PC"]
+},
+{
+  "id": "made-in-abyss-binary-star",
+  "title": "Made in Abyss: Binary Star Falling into Darkness",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1203630/header.jpg",
+  "url": "https://store.steampowered.com/app/1203630/Made_in_Abyss_Binary_Star_Falling_into_Darkness/",
+  "description": "JRPG/acción con historia original supervisada por Akihito Tsukushi. Explora el Abismo y sobrevive a sus peligros.",
+  "tags": ["JRPG", "acción", "supervivencia", "anime"],
+  "platforms": ["PC"]
+},
+{
+  "id": "mafia-definitive-edition",
+  "title": "Mafia: Definitive Edition",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1030840/header.jpg",
+  "url": "https://store.steampowered.com/app/1030840/Mafia_Definitive_Edition/",
+  "description": "Remake del clásico. Historia criminal en la ciudad de Lost Heaven durante la Ley Seca.",
+  "tags": ["acción", "historia", "mundo-abierto"],
+  "platforms": ["PC"]
+},
+{
+  "id": "mirror",
+  "title": "Mirror",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/644560/header.jpg",
+  "url": "https://store.steampowered.com/app/644560/Mirror/",
+  "description": "Match-3 + novela visual con estética anime y rutas para adultos.",
+  "tags": ["puzles", "novela visual", "anime", "adultos"],
+  "platforms": ["PC"]
+},
+{
+  "id": "mortal-kombat-11",
+  "title": "Mortal Kombat 11",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/976310/header.jpg",
+  "url": "https://store.steampowered.com/app/976310/Mortal_Kombat11/",
+  "description": "Lucha brutal con variaciones de personaje, cinemáticas y modos offline/online.",
+  "tags": ["lucha", "competitivo", "gore"],
+  "platforms": ["PC"]
+},
+{
+  "id": "multiversus",
+  "title": "MultiVersus",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1818750/header.jpg",
+  "url": "https://store.steampowered.com/app/1818750/MultiVersus/",
+  "description": "Plataformas 2D por equipos con personajes de Warner. Enfoque cooperativo 2v2.",
+  "tags": ["lucha", "plataformas", "free-to-play", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "murdered-soul-suspect",
+  "title": "Murdered: Soul Suspect",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/233290/header.jpg",
+  "url": "https://store.steampowered.com/app/233290/Murdered_Soul_Suspect/",
+  "description": "Aventura detectivesca sobrenatural: resuelve tu propio asesinato como fantasma.",
+  "tags": ["aventura", "misterio", "sobrenatural"],
+  "platforms": ["PC"]
+},
+{
+  "id": "muse-dash",
+  "title": "Muse Dash",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/774171/header.jpg",
+  "url": "https://store.steampowered.com/app/774171/Muse_Dash/",
+  "description": "Ritmo + acción lateral con estética anime y cientos de canciones/paquetes.",
+  "tags": ["ritmo", "acción", "anime"],
+  "platforms": ["PC"]
+},
+{
+  "id": "my-singing-monsters",
+  "title": "My Singing Monsters",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1429690/header.jpg",
+  "url": "https://store.steampowered.com/app/1429690/My_Singing_Monsters/",
+  "description": "Cría monstruos musicales, compón y decora islas rítmicas.",
+  "tags": ["simulación", "casual", "música", "free-to-play"],
+  "platforms": ["PC"]
+},
+{
+  "id": "naruto-to-boruto-shinobi-striker",
+  "title": "NARUTO TO BORUTO: SHINOBI STRIKER",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/633230/header.jpg",
+  "url": "https://store.steampowered.com/app/633230/NARUTO_TO_BORUTO_SHINOBI_STRIKER/",
+  "description": "Combates 4v4 acrobáticos con creación de ninja y roles (ataque/defensa/apoyo).",
+  "tags": ["acción", "PvP", "anime", "online"],
+  "platforms": ["PC"]
+},
+{
+  "id": "no-mans-sky",
+  "title": "No Man's Sky",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/275850/header.jpg",
+  "url": "https://store.steampowered.com/app/275850/No_Mans_Sky/",
+  "description": "Exploración espacial procedural, base-building, comercio y multijugador.",
+  "tags": ["supervivencia", "exploración", "mundo-abierto", "co-op"],
+  "platforms": ["PC"]
+},
+{
+  "id": "once-human",
+  "title": "Once Human",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2139460/header.jpg",
+  "url": "https://store.steampowered.com/app/2139460/Once_Human/",
+  "description": "Shooter de supervivencia y extracción en un mundo distópico con anomalías.",
+  "tags": ["supervivencia", "shooter", "PvPvE", "co-op"],
+  "platforms": ["PC"]
+},
+{
+  "id": "outlast",
+  "title": "Outlast",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/238320/header.jpg",
+  "url": "https://store.steampowered.com/app/238320/Outlast/",
+  "description": "Horror en primera persona. Investiga un manicomio armado solo con tu cámara.",
+  "tags": ["terror", "sigilo", "supervivencia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "outlast-2",
+  "title": "Outlast 2",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/414700/header.jpg",
+  "url": "https://store.steampowered.com/app/414700/Outlast_2/",
+  "description": "Secuela de horror psicológico en un entorno rural y fanático.",
+  "tags": ["terror", "sigilo", "historia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "marvel-rivals",
+  "title": "Marvel Rivals",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2767030/header.jpg",
+  "url": "https://store.steampowered.com/app/2767030/Marvel_Rivals/",
+  "description": "Shooter 6v6 por equipos con superhéroes y villanos de Marvel, mapas dinámicos y sinergias de poderes.",
+  "tags": ["shooter", "PvP", "equipo", "free-to-play"],
+  "platforms": ["PC"]
+},
+{
+  "id": "maxi-pool-masters-vr",
+  "title": "Maxi Pool Masters VR",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/831250/header.jpg",
+  "url": "https://store.steampowered.com/app/831250/Maxi_Pool_Masters_VR/",
+  "description": "Billar en realidad virtual con físicas realistas, modos arcade y práctica.",
+  "tags": ["VR", "simulación", "deportes"],
+  "platforms": ["PC (VR)"]
+},
+{
+  "id": "metal-slug-awakening",
+  "title": "METAL SLUG: Awakening",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2963870/header.jpg",
+  "url": "https://store.steampowered.com/app/2963870/Metal_Slug_Awakening/",
+  "description": "Acción run-and-gun con estilo clásico, personajes icónicos y vehículos (slugs) reimaginados.",
+  "tags": ["acción", "run-and-gun", "arcade"],
+  "platforms": ["PC"]
+},
+{
+  "id": "metro-2033-redux",
+  "title": "Metro 2033 Redux",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/286690/header.jpg",
+  "url": "https://store.steampowered.com/app/286690/Metro_2033_Redux/",
+  "description": "Shooter/supervivencia postapocalíptico en los túneles del metro de Moscú, con enfoque narrativo.",
+  "tags": ["shooter", "supervivencia", "historia", "sigilo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "metro-last-light-redux",
+  "title": "Metro: Last Light Redux",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/287390/header.jpg",
+  "url": "https://store.steampowered.com/app/287390/Metro_Last_Light_Redux/",
+  "description": "Secuela de Metro con más acción, exploración y decisiones en un mundo subterráneo hostil.",
+  "tags": ["shooter", "historia", "sigilo", "postapocalíptico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "my-sexy-neighbor-prologue",
+  "title": "My Sexy Neighbor — Prologue",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/3121490/header.jpg",
+  "url": "https://store.steampowered.com/app/3121490/My_Sexy_Neighbor__Prologue/",
+  "description": "Prólogo de novela visual/romance con decisiones y escenas para adultos.",
+  "tags": ["novela visual", "romance", "adultos"],
+  "platforms": ["PC"]
+},
+{
+  "id": "ocean-world-eden-crafters-prologue",
+  "title": "Ocean World: Eden Crafters — Prologue",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2811830/header.jpg",
+  "url": "https://store.steampowered.com/app/2811830/Ocean_World_Eden_Crafters_Prologue/",
+  "description": "Prólogo de supervivencia y crafteo en mundo oceánico: recolecta, construye y explora islas flotantes.",
+  "tags": ["supervivencia", "crafteo", "exploración", "sandbox"],
+  "platforms": ["PC"]
 }
 
 ]

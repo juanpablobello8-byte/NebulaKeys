@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NebulaKeys — Renta videojuegos por membresía</title>
 
-  <!-- Tailwind (CDN para simplicidad) -->
+  <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -13,29 +13,19 @@
         extend: {
           colors: {
             brand: {
-              50:  '#f5f6ff',
-              100: '#eaedff',
-              200: '#cdd2ff',
-              300: '#aab2ff',
-              400: '#848cff',
-              500: '#6366f1',   /* morado/indigo */
+              500: '#6366f1',
               600: '#514de1',
-              700: '#4338ca',
-              800: '#3730a3',
-              900: '#2a267a'
+              700: '#4338ca'
             }
           }
         }
       }
     }
   </script>
-
   <style>
-    /* Fondo oscuro general */
-    body { background: #0b1020; color: #e5e7eb; }
+    body { background:#0b1020; color:#e5e7eb; }
   </style>
 </head>
-
 <body class="min-h-screen antialiased">
   <!-- Header -->
   <header class="border-b border-white/5">
@@ -44,9 +34,14 @@
         <div class="h-9 w-9 rounded-full bg-brand-600 grid place-items-center font-bold">NK</div>
         <div class="text-xl font-semibold">NebulaKeys</div>
       </div>
-      <nav class="flex items-center gap-4">
+      <nav class="flex items-center gap-3">
         <a href="/login.html" class="inline-flex items-center rounded-lg bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10">
           Ingresar
+        </a>
+        <!-- Botón planes: oculto por defecto; se mostrará si el usuario está logueado -->
+        <a id="btn-plans" href="/pricing.html"
+           class="hidden inline-flex items-center rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold hover:bg-brand-700">
+          Ver planes
         </a>
       </nav>
     </div>
@@ -55,53 +50,43 @@
   <!-- Hero -->
   <main>
     <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
-      <div class="grid lg:grid-cols-2 gap-8 items-center">
-        <!-- Columna izquierda: texto -->
+      <div class="grid lg:grid-cols-2 gap-8 items-start">
+        <!-- Texto -->
         <div class="space-y-6">
           <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
-            Renta videojuegos <span class="text-brand-400">ilimitados</span> por membresía.
+            Renta videojuegos <span class="text-brand-500">ilimitados</span> por membresía.
           </h1>
-
-          <div class="text-slate-300/90">
-            <p>Para suscribirte, inicia sesión primero.</p>
-          </div>
+          <p class="text-slate-300/90">
+            Para suscribirte, inicia sesión primero.
+          </p>
 
           <div class="flex items-center gap-3 pt-2">
-            <a href="/pricing.html" class="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-5 py-3 text-sm font-semibold shadow hover:bg-brand-700 transition">
-              Ver planes
-            </a>
+            <!-- Eliminado el botón "Ver planes" aquí -->
             <a href="/catalogo.html" class="inline-flex items-center gap-2 rounded-xl bg-white/5 px-5 py-3 text-sm font-semibold hover:bg-white/10 transition">
               Explorar catálogo
             </a>
           </div>
         </div>
 
-        <!-- Columna derecha: Próximos juegos -->
-        <div class="space-y-4">
-          <div
-            id="upcoming-card"
-            class="relative bg-slate-900/40 rounded-2xl p-3 md:p-4 min-h-[260px] md:min-h-[320px] overflow-hidden"
-          >
-            <!-- Imagen del juego -->
-            <img
-              id="upcoming-cover"
-              class="hidden absolute inset-0 w-full h-full object-cover rounded-xl"
-              alt="Próximos juegos"
-            />
+        <!-- Próximos juegos -->
+        <div class="space-y-3">
+          <!-- Etiqueta arriba de la portada -->
+          <div>
+            <span class="inline-flex items-center gap-2 rounded-full bg-brand-600/20 px-3 py-1 text-xs font-semibold text-brand-500 ring-1 ring-brand-600/30">
+              🎮 Próximos juegos
+            </span>
+          </div>
 
-            <!-- Título/placeholder (lo subimos un poco) -->
-            <div
-              id="upcoming-title"
-              class="absolute inset-x-0 top-4 md:top-5 text-center text-slate-300/90 text-sm md:text-base font-medium flex items-center justify-center gap-2 pointer-events-none"
-            >
-              <span>🎮 Próximos juegos</span>
+          <div id="upcoming-card" class="relative bg-slate-900/40 rounded-2xl p-0 min-h-[260px] md:min-h-[320px] overflow-hidden">
+            <img id="upcoming-cover" class="hidden absolute inset-0 w-full h-full object-cover rounded-2xl" alt="Próximos juegos"/>
+            <!-- overlay label (lo ocultaremos desde JS para no duplicar) -->
+            <div id="upcoming-title" class="absolute inset-x-0 top-4 text-center text-slate-300/90 text-sm md:text-base font-medium pointer-events-none">
+              Próximos juegos
             </div>
-
-            <!-- Sombra suave para legibilidad -->
             <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent"></div>
           </div>
 
-          <!-- Pequeños “stats” debajo -->
+          <!-- Stats -->
           <div class="grid grid-cols-3 gap-3">
             <div class="rounded-xl bg-white/5 px-4 py-4 text-center">
               <div class="text-xl md:text-2xl font-extrabold">120+</div>
@@ -120,30 +105,52 @@
       </div>
     </section>
 
-    <!-- (Opcional) Sección de planes resumida -->
+    <!-- Precios -->
     <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
-      <h2 class="text-2xl font-bold mb-6">Elige tu plan</h2>
+      <h2 class="text-2xl font-bold mb-2">Elige tu plan</h2>
+      <p class="text-slate-300/80 mb-6">Inicia sesión para suscribirte</p>
+
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="rounded-2xl bg-white/5 p-6">
-          <div class="text-lg font-semibold mb-1">Starter</div>
-          <p class="text-sm text-slate-300/80">Para probar el servicio.</p>
-        </div>
-        <div class="rounded-2xl bg-white/5 p-6 ring-2 ring-brand-600">
-          <div class="inline-block mb-2 rounded-full bg-brand-600/20 px-2 py-0.5 text-xs font-medium text-brand-300">
-            Recomendado
+        <!-- Starter -->
+        <div class="rounded-2xl bg-white/5 overflow-hidden">
+          <div class="aspect-[16/9] w-full overflow-hidden">
+            <img src="/assets/plans/starter.jpg" alt="Starter" class="h-full w-full object-cover">
           </div>
-          <div class="text-lg font-semibold mb-1">Gamer</div>
-          <p class="text-sm text-slate-300/80">La mejor relación precio/beneficio.</p>
+          <div class="p-6 space-y-2">
+            <div class="text-lg font-semibold">Starter</div>
+            <div class="text-3xl font-extrabold">MXN $150</div>
+            <p class="text-sm text-slate-300/80">Para probar el servicio.</p>
+          </div>
         </div>
-        <div class="rounded-2xl bg-white/5 p-6">
-          <div class="text-lg font-semibold mb-1">Ultimate</div>
-          <p class="text-sm text-slate-300/80">Para los más exigentes.</p>
+
+        <!-- Priority (antes Gamer) -->
+        <div class="rounded-2xl bg-white/5 overflow-hidden ring-2 ring-brand-600">
+          <div class="aspect-[16/9] w-full overflow-hidden">
+            <img src="/assets/plans/priority.jpg" alt="Priority" class="h-full w-full object-cover">
+          </div>
+          <div class="p-6 space-y-2">
+            <span class="inline-block mb-1 rounded-full bg-brand-600/20 px-2 py-0.5 text-xs font-medium text-brand-500">Recomendado</span>
+            <div class="text-lg font-semibold">Priority</div>
+            <div class="text-3xl font-extrabold">MXN $250</div>
+            <p class="text-sm text-slate-300/80">La mejor relación precio/beneficio.</p>
+          </div>
+        </div>
+
+        <!-- Ultimate -->
+        <div class="rounded-2xl bg-white/5 overflow-hidden">
+          <div class="aspect-[16/9] w-full overflow-hidden">
+            <img src="/assets/plans/ultimate.jpg" alt="Ultimate" class="h-full w-full object-cover">
+          </div>
+          <div class="p-6 space-y-2">
+            <div class="text-lg font-semibold">Ultimate</div>
+            <div class="text-3xl font-extrabold">MXN $350</div>
+            <p class="text-sm text-slate-300/80">Para los más exigentes.</p>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Script del home -->
   <script type="module" src="/scripts/home.js"></script>
 </body>
 </html>

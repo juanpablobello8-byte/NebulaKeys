@@ -1,57 +1,55 @@
-// scripts/home.js
-// 1) Coloca la portada de HELLDIVERS 2 en “Próximos juegos”
-// 2) Muestra el botón “Ver planes” sólo si el usuario está logueado (Supabase)
+// /scripts/home.js
 
-/* =======================
-   1) Portada próximos juegos
-   ======================= */
-document.addEventListener('DOMContentLoaded', async () => {
-  const COVER_URL = 'https://cdn.cloudflare.steamstatic.com/steam/apps/553850/header.jpg'; // HELLDIVERS 2
-  const img = document.getElementById('upcoming-cover');
+// Rutas de imágenes de planes
+// OJO: si cambiaste los nombres en GitHub, ajusta aquí.
+// Con espacios, deben ir codificados como %20.
+const PLAN_IMAGES = {
+  starter: "/assets/plans/Starter%20Pack.png",
+  priority: "/assets/plans/Priority%20Pack.png",
+  ultimate: "/assets/plans/Pro%20Pack.png", // usamos tu "Pro Pack" para Ultimate
+};
 
-  if (img) {
-    img.src = COVER_URL;
-    img.onload = () => img.classList.remove('hidden');
-    img.onerror = () => console.warn('No se pudo cargar la portada de HELLDIVERS 2.');
-  }
-});
-
-/* =======================
-   2) Mostrar “Ver planes” si hay sesión
-   ======================= */
-(async () => {
-  const btnPlanes = document.getElementById('btnPlanes');
-  if (!btnPlanes) return;
-
-  // Por defecto, el botón está oculto (class="hidden")
-  // Si existe Supabase y hay usuario autenticado, lo mostramos.
-  try {
-    // Si tienes /scripts/config.js con window.NEBULA_PUBLIC, lo usamos.
-    const cfg = window.NEBULA_PUBLIC || {};
-    const url = cfg.SUPABASE_URL;
-    const key = cfg.SUPABASE_ANON_KEY;
-
-    // Si supabase-js está cargado (via CDN del <head>)
-    if (window.supabase && url && key) {
-      const supa = window.supabase.createClient(url, key);
-      const { data } = await supa.auth.getUser();
-      if (data && data.user) {
-        btnPlanes.classList.remove('hidden');
-      } else {
-        btnPlanes.classList.add('hidden');
-      }
-
-      // Opcional: reaccionar a cambios de sesión (login/logout)
-      supa.auth.onAuthStateChange((_event, session) => {
-        if (session?.user) btnPlanes.classList.remove('hidden');
-        else btnPlanes.classList.add('hidden');
-      });
-    } else {
-      // Si no hay supabase, mantenemos oculto.
-      btnPlanes.classList.add('hidden');
-    }
-  } catch (err) {
-    console.warn('No se pudo verificar sesión de Supabase:', err);
-    btnPlanes.classList.add('hidden');
-  }
+// Asigna imágenes a las tarjetas (por si alguna no cargó)
+(function assignPlanImages() {
+  const imgStarter = document.getElementById("img-starter-plan");
+  const imgPriority = document.getElementById("img-priority-plan");
+  const imgUltimate = document.getElementById("img-ultimate-plan");
+  if (imgStarter) imgStarter.src = PLAN_IMAGES.starter;
+  if (imgPriority) imgPriority.src = PLAN_IMAGES.priority;
+  if (imgUltimate) imgUltimate.src = PLAN_IMAGES.ultimate;
 })();
+
+// ===== Mostrar/ocultar "Ver planes" según sesión =====
+async function bootAuthVisibility() {
+  try {
+    // Crear cliente Supabase (usa los datos de /scripts/config.js)
+    const supa =
+      window.supabase ||
+      supabase.createClient(
+        window.NEBULA_PUBLIC.SUPABASE_URL,
+        window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
+      );
+
+    const btnViewPlans = document.getElementById("btnViewPlans");
+    if (!btnViewPlans) return;
+
+    const setVisible = (on) => {
+      if (on) btnViewPlans.classList.remove("hidden");
+      else btnViewPlans.classList.add("hidden");
+    };
+
+    // Estado inicial
+    const { data } = await supa.auth.getUser();
+    setVisible(!!data?.user);
+
+    // Suscríbete a cambios de sesión
+    supa.auth.onAuthStateChange((_event, session) => {
+      setVisible(!!session?.user);
+    });
+  } catch (err) {
+    // Si algo falla, deja oculto el botón (comportamiento seguro)
+    console.error("[home] auth visibility error:", err);
+  }
+}
+
+bootAuthVisibility();

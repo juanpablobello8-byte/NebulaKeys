@@ -2,191 +2,168 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>NebulaKeys — Ingresar</title>
-
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Tipografía bonita -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
     />
-    <style>
-      :root {
-        color-scheme: dark;
-      }
-      html,
-      body {
-        background: #0b0f1a;
-        font-family: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI,
-          Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      }
-      .nk-card {
-        background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-      }
-      .nk-input {
-        @apply w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-[15px] outline-none placeholder:text-slate-500 focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400;
-      }
-      .nk-label {
-        @apply mb-2 text-sm font-semibold text-slate-300;
-      }
-      .nk-btn {
-        @apply inline-flex w-full items-center justify-center rounded-xl bg-indigo-600 px-4 py-3 font-semibold transition hover:bg-indigo-500 disabled:opacity-60;
-      }
-      .nk-badge {
-        @apply inline-flex items-center gap-2 rounded-full bg-indigo-600/90 px-3 py-1 text-xs font-semibold tracking-wide;
-      }
-    </style>
+    <title>NebulaKeys — Ingresar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
+  <body class="min-h-screen bg-[#0b1020] text-white">
+    <!-- Toast -->
+    <div id="toast" style="display:none"></div>
 
-  <body class="text-slate-200">
-    <main class="min-h-screen flex items-center justify-center px-4">
-      <div class="w-full max-w-3xl grid md:grid-cols-2 gap-8">
-        <!-- Lado izquierdo (branding) -->
-        <div class="hidden md:flex flex-col justify-center">
-          <a href="/" class="mb-8 inline-flex items-center gap-3">
-            <span
-              class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 font-extrabold"
-              >NK</span
+    <main class="max-w-6xl mx-auto px-6 py-12 grid lg:grid-cols-2 gap-10">
+      <!-- Lado izquierdo -->
+      <section>
+        <div class="inline-flex items-center gap-3 mb-6">
+          <div
+            class="h-10 w-10 rounded-full bg-indigo-500/20 grid place-items-center text-indigo-300 font-bold"
+          >
+            NK
+          </div>
+          <h1 class="text-2xl font-semibold text-slate-200">NebulaKeys</h1>
+        </div>
+
+        <p class="text-sm uppercase tracking-widest text-slate-400">Acceso</p>
+        <h2
+          class="mt-2 text-4xl sm:text-5xl font-extrabold leading-tight text-slate-100"
+        >
+          Crea tu cuenta o<br />inicia sesión
+        </h2>
+        <p class="mt-4 text-slate-400 max-w-prose">
+          Manejo seguro con Supabase. Tu usuario de Steam nos permite activar tu
+          suscripción en tu cuenta de Steam.
+        </p>
+      </section>
+
+      <!-- Formulario -->
+      <section
+        class="bg-[#0f172a]/60 border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl"
+      >
+        <h3 class="text-xl font-semibold text-slate-200 mb-6">
+          NebulaKeys — Ingresar
+        </h3>
+
+        <form id="authForm" class="space-y-4">
+          <!-- Email -->
+          <div>
+            <label class="block text-sm text-slate-400 mb-1" for="email"
+              >Email</label
             >
-            <span class="text-xl font-extrabold">NebulaKeys</span>
-          </a>
+            <input
+              id="email"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-indigo-400/60"
+              placeholder="tuCorreo@example.com"
+              required
+            />
+          </div>
 
-          <div class="space-y-3">
-            <span class="nk-badge">Acceso</span>
-            <h1 class="text-3xl font-extrabold leading-tight">
-              Crea tu cuenta o<br />inicia sesión
-            </h1>
-            <p class="text-slate-400">
-              Manejo seguro con Supabase. Tu usuario de Steam nos permite
-              activar tu suscripción en tu cuenta de Steam.
+          <!-- Password -->
+          <div>
+            <label class="block text-sm text-slate-400 mb-1" for="password"
+              >Contraseña</label
+            >
+            <div class="relative">
+              <input
+                id="password"
+                type="password"
+                autocomplete="current-password"
+                class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 pr-11 outline-none focus:border-indigo-400/60"
+                placeholder="••••••••"
+                required
+              />
+              <button
+                type="button"
+                id="togglePassword"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+                title="Mostrar/ocultar"
+              >
+                👁️
+              </button>
+            </div>
+            <p class="mt-1 text-xs text-slate-500">
+              Mínimo 6 caracteres.
             </p>
           </div>
-        </div>
 
-        <!-- Lado derecho (formulario) -->
-        <div
-          class="nk-card rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl"
-        >
-          <h2 class="text-xl font-extrabold mb-5">NebulaKeys — Ingresar</h2>
+          <!-- Steam -->
+          <div>
+            <label class="block text-sm text-slate-400 mb-1" for="steam"
+              >Usuario de Steam</label
+            >
+            <input
+              id="steam"
+              type="text"
+              class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-indigo-400/60"
+              placeholder="TuUsuarioDeSteam"
+            />
+            <p class="mt-1 text-xs text-amber-300/80">
+              IMPORTANTE: Este usuario se usará para activar la suscripción en
+              tu cuenta de Steam.
+            </p>
+          </div>
 
-          <form id="authForm" class="space-y-5" autocomplete="on" novalidate>
-            <!-- Email -->
-            <div>
-              <label class="nk-label" for="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                placeholder="tucorreo@example.com"
-                required
-                class="nk-input"
-              />
-            </div>
+          <!-- Checkbox (iniciar sesión) -->
+          <label class="flex items-center gap-3 text-sm text-slate-300">
+            <input
+              id="haveAccount"
+              type="checkbox"
+              class="h-4 w-4 rounded border-white/20 bg-white/5"
+            />
+            <span>Ya tengo cuenta (Iniciar sesión)</span>
+          </label>
 
-            <!-- Password -->
-            <div>
-              <label class="nk-label" for="password">Contraseña</label>
-              <div class="relative">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  minlength="6"
-                  placeholder="••••••••"
-                  required
-                  class="nk-input pr-12"
-                />
-                <button
-                  type="button"
-                  id="togglePass"
-                  class="absolute inset-y-0 right-0 px-4 text-slate-400 hover:text-slate-200"
-                  aria-label="Mostrar u ocultar contraseña"
-                >
-                  👁️
-                </button>
-              </div>
-            </div>
+          <!-- Submit -->
+          <button
+            id="submitBtn"
+            type="submit"
+            class="w-full rounded-2xl bg-indigo-600 hover:bg-indigo-500 transition px-5 py-3 font-semibold text-white inline-flex items-center justify-center gap-2"
+          >
+            <svg
+              id="btnSpinner"
+              class="hidden h-5 w-5 animate-spin"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              ></path>
+            </svg>
+            <span>Continuar</span>
+          </button>
 
-            <!-- Steam user -->
-            <div>
-              <label class="nk-label" for="steam">Usuario de Steam</label>
-              <input
-                id="steam"
-                name="steam"
-                type="text"
-                placeholder="UsuarioDeSteam"
-                class="nk-input"
-                autocomplete="nickname"
-              />
-              <p class="mt-2 text-xs text-amber-300">
-                IMPORTANTE: Este usuario se usará para activar la suscripción en
-                tu cuenta de Steam.
-              </p>
-            </div>
-
-            <!-- Checkbox: ya tengo cuenta -->
-            <div class="flex items-center gap-3">
-              <input
-                id="hasAccount"
-                name="hasAccount"
-                type="checkbox"
-                class="h-4 w-4 rounded border-white/20 bg-white/10 text-indigo-600 focus:ring-indigo-500"
-              />
-              <label for="hasAccount" class="select-none text-sm">
-                Ya tengo cuenta (Iniciar sesión)
-              </label>
-            </div>
-
-            <!-- Botón -->
-            <button id="submitBtn" type="submit" class="nk-btn">
-              <span id="btnText">Continuar</span>
-              <svg
-                id="btnSpinner"
-                class="ml-2 hidden h-5 w-5 animate-spin text-white"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                ></path>
-              </svg>
-            </button>
-
-            <div class="text-right">
-              <a
-                href="/index.html"
-                class="text-sm text-slate-400 hover:text-slate-200"
-                >¿Listo? Volver al inicio</a
-              >
-            </div>
-          </form>
-        </div>
-      </div>
+          <p class="text-center text-sm text-slate-500">
+            ¿Listo?
+            <a
+              class="text-indigo-300 hover:text-indigo-200 underline"
+              href="/index.html"
+              >Volver al inicio</a
+            >
+          </p>
+        </form>
+      </section>
     </main>
 
-    <!-- Toast simple -->
-    <div
-      id="toast"
-      class="pointer-events-none fixed top-4 right-4 z-50 hidden rounded-xl border border-white/10 bg-[#121826] px-4 py-3 text-sm shadow-2xl"
-    ></div>
-
-    <!-- Config pública + Supabase + lógica -->
+    <!-- Orden CORRECTO de scripts -->
+    <!-- 1) Config pública -->
     <script src="/scripts/config.js"></script>
+    <!-- 2) Supabase SDK v2 (global window.supabase) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- 3) Nuestro auth -->
     <script src="/scripts/auth.js"></script>
   </body>
 </html>

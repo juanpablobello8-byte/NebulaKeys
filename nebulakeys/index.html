@@ -3,219 +3,147 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NebulaKeys — Renta de videojuegos por membresía</title>
+  <title>NebulaKeys — Renta videojuegos por membresía</title>
 
-  <!-- Estilos -->
-  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <!-- Tailwind (CDN para simplicidad) -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50:  '#f5f6ff',
+              100: '#eaedff',
+              200: '#cdd2ff',
+              300: '#aab2ff',
+              400: '#848cff',
+              500: '#6366f1',   /* morado/indigo */
+              600: '#514de1',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#2a267a'
+            }
+          }
+        }
+      }
+    }
+  </script>
 
-  <!-- Supabase SDK v2 -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- Config pública (DEBE existir /scripts/config.js) -->
-  <script defer src="/scripts/config.js?v=4"></script>
-
-  <meta name="description" content="NebulaKeys: renta de videojuegos por membresía. Planes mensuales con acceso rotativo a cientos de títulos." />
+  <style>
+    /* Fondo oscuro general */
+    body { background: #0b1020; color: #e5e7eb; }
+  </style>
 </head>
-<body class="bg-gray-950 text-gray-100">
-  <!-- Header -->
-  <header class="max-w-6xl mx-auto px-4 py-6 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-3">
-      <!-- Si tienes un logo en /assets, cámbialo -->
-      <div class="w-9 h-9 rounded-xl bg-indigo-500/20 border border-indigo-400/30 grid place-items-center">
-        <span class="text-indigo-300 font-bold">NK</span>
-      </div>
-      <span class="text-xl font-extrabold">NebulaKeys</span>
-    </a>
 
-    <nav class="flex items-center gap-3">
-      <a id="nav-login" href="/login.html" class="px-4 py-2 rounded-lg border border-white/15 hover:border-white/40">Ingresar</a>
-      <a id="nav-dashboard" href="/dashboard.html" class="hidden px-4 py-2 rounded-lg border border-white/15 hover:border-white/40">Mi cuenta</a>
-      <button id="nav-logout" class="hidden px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white">Cerrar sesión</button>
-    </nav>
+<body class="min-h-screen antialiased">
+  <!-- Header -->
+  <header class="border-b border-white/5">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-full bg-brand-600 grid place-items-center font-bold">NK</div>
+        <div class="text-xl font-semibold">NebulaKeys</div>
+      </div>
+      <nav class="flex items-center gap-4">
+        <a href="/login.html" class="inline-flex items-center rounded-lg bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10">
+          Ingresar
+        </a>
+      </nav>
+    </div>
   </header>
 
   <!-- Hero -->
-  <section class="max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center">
-    <div>
-      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
-        Renta videojuegos <span class="text-indigo-400">ilimitados</span> por membresía.
-      </h1>
-      <p class="mt-4 text-gray-300">
-      </p>
-      <div class="mt-6 flex flex-wrap gap-3">
-        <a href="#planes" class="px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold">Ver planes</a>
-        <a href="/catalogo.html" class="px-5 py-3 rounded-xl border border-white/15 hover:border-white/40">Explorar catálogo</a>
-      </div>
-      <p id="auth-hint" class="mt-3 text-xs text-gray-400"></p>
-    </div>
-    <div class="rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-6">
-      <div class="aspect-video rounded-xl bg-black/40 border border-white/10 grid place-items-center">
-        <span class="text-gray-400">🎮 Proximos juegos</span>
-      </div>
-      <ul class="mt-6 grid sm:grid-cols-3 gap-3 text-center">
-        <li class="rounded-xl bg-black/40 border border-white/10 p-4">
-          <div class="text-2xl font-extrabold">120+</div>
-          <div class="text-xs text-gray-400">juegos</div>
-        </li>
-        <li class="rounded-xl bg-black/40 border border-white/10 p-4">
-          <div class="text-2xl font-extrabold">24h</div>
-          <div class="text-xs text-gray-400">soporte</div>
-        </li>
-        <li class="rounded-xl bg-black/40 border border-white/10 p-4">
-          <div class="text-2xl font-extrabold">MXN</div>
-          <div class="text-xs text-gray-400">precios locales</div>
-        </li>
-      </ul>
-    </div>
-  </section>
+  <main>
+    <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <!-- Columna izquierda: texto -->
+        <div class="space-y-6">
+          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+            Renta videojuegos <span class="text-brand-400">ilimitados</span> por membresía.
+          </h1>
 
-  <!-- Planes -->
-  <section id="planes" class="max-w-6xl mx-auto px-4 py-12">
-    <h2 class="text-3xl font-extrabold mb-6">Elige tu plan</h2>
+          <div class="text-slate-300/90">
+            <p>Para suscribirte, inicia sesión primero.</p>
+          </div>
 
-    <div class="grid md:grid-cols-3 gap-6">
-      <!-- Starter -->
-      <div class="rounded-2xl border border-white/10 bg-black/30 p-6">
-        <h3 class="text-xl font-bold">Starter</h3>
-        <p class="text-gray-300 text-sm mt-1">Ideal para empezar</p>
-        <div class="mt-4">
-          <div class="text-3xl font-extrabold">$150<span class="text-base font-semibold text-gray-300">/mes</span></div>
+          <div class="flex items-center gap-3 pt-2">
+            <a href="/pricing.html" class="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-5 py-3 text-sm font-semibold shadow hover:bg-brand-700 transition">
+              Ver planes
+            </a>
+            <a href="/catalogo.html" class="inline-flex items-center gap-2 rounded-xl bg-white/5 px-5 py-3 text-sm font-semibold hover:bg-white/10 transition">
+              Explorar catálogo
+            </a>
+          </div>
         </div>
-        <ul class="mt-4 space-y-2 text-sm text-gray-300">
-          <li>• Soporte estándar</li>
-        </ul>
-        <button
-          class="subscribe mt-6 w-full px-4 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold"
-          data-price-id="price_1SJH1zKwqs0TzO3l23W3RIfE">
-          Elegir Starter
-        </button>
-      </div>
 
-      <!-- Pro -->
-      <div class="rounded-2xl border border-indigo-400/30 bg-indigo-500/10 p-6">
-        <div class="inline-block px-2 py-1 text-xs rounded-md bg-indigo-500/20 border border-indigo-400/40 text-indigo-200">Recomendado</div>
-        <h3 class="text-xl font-bold mt-2">Pro</h3>
-        <div class="mt-4">
-          <div class="text-3xl font-extrabold">$250<span class="text-base font-semibold text-gray-300">/mes</span></div>
+        <!-- Columna derecha: Próximos juegos -->
+        <div class="space-y-4">
+          <div
+            id="upcoming-card"
+            class="relative bg-slate-900/40 rounded-2xl p-3 md:p-4 min-h-[260px] md:min-h-[320px] overflow-hidden"
+          >
+            <!-- Imagen del juego -->
+            <img
+              id="upcoming-cover"
+              class="hidden absolute inset-0 w-full h-full object-cover rounded-xl"
+              alt="Próximos juegos"
+            />
+
+            <!-- Título/placeholder (lo subimos un poco) -->
+            <div
+              id="upcoming-title"
+              class="absolute inset-x-0 top-4 md:top-5 text-center text-slate-300/90 text-sm md:text-base font-medium flex items-center justify-center gap-2 pointer-events-none"
+            >
+              <span>🎮 Próximos juegos</span>
+            </div>
+
+            <!-- Sombra suave para legibilidad -->
+            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent"></div>
+          </div>
+
+          <!-- Pequeños “stats” debajo -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="rounded-xl bg-white/5 px-4 py-4 text-center">
+              <div class="text-xl md:text-2xl font-extrabold">120+</div>
+              <div class="text-xs md:text-sm text-slate-300/80">juegos</div>
+            </div>
+            <div class="rounded-xl bg-white/5 px-4 py-4 text-center">
+              <div class="text-xl md:text-2xl font-extrabold">24h</div>
+              <div class="text-xs md:text-sm text-slate-300/80">soporte</div>
+            </div>
+            <div class="rounded-xl bg-white/5 px-4 py-4 text-center">
+              <div class="text-xl md:text-2xl font-extrabold">MXN</div>
+              <div class="text-xs md:text-sm text-slate-300/80">precios locales</div>
+            </div>
+          </div>
         </div>
-        <ul class="mt-4 space-y-2 text-sm text-gray-300">
-          <li>• Soporte prioritario</li>
-        </ul>
-        <button
-          class="subscribe mt-6 w-full px-4 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold"
-          data-price-id="price_1SJH4eKwqs0TzO3l1ODa7pRx">
-          Elegir Pro
-        </button>
       </div>
+    </section>
 
-      <!-- Ultimate -->
-      <div class="rounded-2xl border border-yellow-300/20 bg-yellow-300/5 p-6">
-        <h3 class="text-xl font-bold">Ultimate</h3>
-        <p class="text-gray-300 text-sm mt-1">Para los que quieren disfrutar el tiempo completo</p>
-        <div class="mt-4">
-          <div class="text-3xl font-extrabold">$350<span class="text-base font-semibold text-gray-300">/mes</span></div>
+    <!-- (Opcional) Sección de planes resumida -->
+    <section class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
+      <h2 class="text-2xl font-bold mb-6">Elige tu plan</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="rounded-2xl bg-white/5 p-6">
+          <div class="text-lg font-semibold mb-1">Starter</div>
+          <p class="text-sm text-slate-300/80">Para probar el servicio.</p>
         </div>
-        <ul class="mt-4 space-y-2 text-sm text-gray-300">
-          <li>• Lista de Deseos</li>
-          <li>• Soporte VIP</li>
-        </ul>
-        <button
-          class="subscribe mt-6 w-full px-4 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold"
-          data-price-id="price_1SJH9FKwqs0TzO3lxTTonf6H">
-          Elegir Ultimate
-        </button>
+        <div class="rounded-2xl bg-white/5 p-6 ring-2 ring-brand-600">
+          <div class="inline-block mb-2 rounded-full bg-brand-600/20 px-2 py-0.5 text-xs font-medium text-brand-300">
+            Recomendado
+          </div>
+          <div class="text-lg font-semibold mb-1">Gamer</div>
+          <p class="text-sm text-slate-300/80">La mejor relación precio/beneficio.</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 p-6">
+          <div class="text-lg font-semibold mb-1">Ultimate</div>
+          <p class="text-sm text-slate-300/80">Para los más exigentes.</p>
+        </div>
       </div>
-    </div>
+    </section>
+  </main>
 
-    <p class="text-xs text-gray-400 mt-4">
-    </p>
-  </section>
-
-  <!-- Footer -->
-  <footer class="max-w-6xl mx-auto px-4 py-10 text-sm text-gray-400">
-    © <span id="year"></span> NebulaKeys
-  </footer>
-
-  <!-- Lógica de la página -->
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      // año en footer
-      document.getElementById('year').textContent = new Date().getFullYear();
-
-      // Crear cliente de Supabase
-      if (!window.NEBULA_PUBLIC?.SUPABASE_URL || !window.NEBULA_PUBLIC?.SUPABASE_ANON_KEY) {
-        console.error('NEBULA_PUBLIC no está definido. Revisa /scripts/config.js');
-        return;
-      }
-      const supa = window.supabase.createClient(
-        window.NEBULA_PUBLIC.SUPABASE_URL,
-        window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
-      );
-
-      // UI de auth (login/dashboard/logout)
-      const navLogin = document.getElementById('nav-login');
-      const navDash  = document.getElementById('nav-dashboard');
-      const navOut   = document.getElementById('nav-logout');
-      const hint     = document.getElementById('auth-hint');
-
-      async function refreshAuthUI() {
-        const { data: { session } } = await supa.auth.getSession();
-        if (session?.user) {
-          navLogin.classList.add('hidden');
-          navDash.classList.remove('hidden');
-          navOut.classList.remove('hidden');
-          hint.textContent = `Conectado como ${session.user.email}`;
-        } else {
-          navLogin.classList.remove('hidden');
-          navDash.classList.add('hidden');
-          navOut.classList.add('hidden');
-          hint.textContent = 'Para suscribirte, inicia sesión primero.';
-        }
-        return session;
-      }
-
-      navOut.addEventListener('click', async () => {
-        await supa.auth.signOut();
-        await refreshAuthUI();
-      });
-
-      const session = await refreshAuthUI();
-
-      // Suscripciones (Checkout)
-      document.querySelectorAll('.subscribe').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          const { data: { session } } = await supa.auth.getSession();
-          if (!session?.user) {
-            window.location.href = '/login.html';
-            return;
-          }
-
-          // Llama a tu API para crear la sesión de Checkout
-          try {
-            const res = await fetch('/api/create-checkout-session', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                priceId: btn.dataset.priceId,
-                userId: session.user.id,
-                email: session.user.email
-              })
-            });
-            if (!res.ok) {
-              const t = await res.text();
-              alert('No se pudo iniciar el Checkout: ' + t);
-              return;
-            }
-            const { url } = await res.json();
-            window.location.href = url;
-          } catch (e) {
-            console.error(e);
-            alert('Error conectando con el servidor.');
-          }
-        });
-      });
-    });
-  </script>
+  <!-- Script del home -->
+  <script type="module" src="/scripts/home.js"></script>
 </body>
 </html>

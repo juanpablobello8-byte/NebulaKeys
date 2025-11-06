@@ -1078,6 +1078,150 @@
   "description": "Título experimental/relajado de corta duración con un enfoque minimalista y curiosidad interactiva.",
   "tags": ["experimental", "casual", "relajante"],
   "platforms": ["PC"]
+},
+{
+  "id": "fnaf-security-breach",
+  "title": "Five Nights at Freddy's: Security Breach",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/747660/header.jpg",
+  "url": "https://store.steampowered.com/app/747660/Five_Nights_at_Freddys_Security_Breach/",
+  "description": "Horror de supervivencia en mundo semiabierto dentro del Mega Pizzaplex. Escóndete, huye y usa a Freddy para sobrevivir la noche.",
+  "tags": ["horror", "supervivencia", "stealth", "aventura"],
+  "platforms": ["PC"]
+},
+{
+  "id": "the-forest",
+  "title": "The Forest",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/242760/header.jpg",
+  "url": "https://store.steampowered.com/app/242760/The_Forest/",
+  "description": "Supervivencia y construcción en una isla repleta de caníbales mutantes. Fabrica, construye y descubre los secretos del bosque.",
+  "tags": ["supervivencia", "crafting", "terror", "mundo abierto", "cooperativo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "gang-beasts",
+  "title": "Gang Beasts",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/285900/header.jpg",
+  "url": "https://store.steampowered.com/app/285900/Gang_Beasts/",
+  "description": "Peleas físicas absurdas con gelatinosos protagonistas en escenarios peligrosos. Caótico, hilarante y perfecto para jugar con amigos.",
+  "tags": ["party", "peleas", "física", "multijugador", "local"],
+  "platforms": ["PC"]
+},
+{
+  "id": "garrys-mod",
+  "title": "Garry's Mod",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/4000/header.jpg",
+  "url": "https://store.steampowered.com/app/4000/Garrys_Mod/",
+  "description": "Sandbox basado en Source. Juguetea con físicas, addons y modos creados por la comunidad. Tu imaginación es el límite.",
+  "tags": ["sandbox", "física", "modding", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "gears-5",
+  "title": "Gears 5",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1097840/header.jpg",
+  "url": "https://store.steampowered.com/app/1097840/Gears_5/",
+  "description": "Acción en tercera persona con campaña cooperativa, PvP y el modo Horda. La saga Gears en su versión más completa.",
+  "tags": ["acción", "tercera persona", "cooperativo", "shooter"],
+  "platforms": ["PC"]
+},
+{
+  "id": "ghost-watchers",
+  "title": "Ghost Watchers",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1766350/header.jpg",
+  "url": "https://store.steampowered.com/app/1766350/Ghost_Watchers/",
+  "description": "Caza fantasmas cooperativa con progresión, aparatos y entidades variadas. Investiga, identifica y atrapa.",
+  "tags": ["horror", "cooperativo", "investigación", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "ghostbusters-remastered",
+  "title": "Ghostbusters: The Video Game Remastered",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1549130/header.jpg",
+  "url": "https://store.steampowered.com/app/1549130/Ghostbusters_The_Video_Game_Remastered/",
+  "description": "Regresa con los Cazafantasmas en una aventura con guion original. Atrapa espectros con tu mochila de protones.",
+  "tags": ["acción", "aventura", "humor", "franquicia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "google-earth-vr",
+  "title": "Google Earth VR",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/348250/header.jpg",
+  "url": "https://store.steampowered.com/app/348250/Google_Earth_VR/",
+  "description": "Recorre el planeta en realidad virtual. Sobrevuela ciudades y maravillas naturales a escala global.",
+  "tags": ["VR", "exploración", "educativo", "gratuito"],
+  "platforms": ["PC"]
+},
+{
+  "id": "gta-san-andreas",
+  "title": "Grand Theft Auto: San Andreas",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/12120/header.jpg",
+  "url": "https://store.steampowered.com/app/12120/Grand_Theft_Auto_San_Andreas/",
+  "description": "Clásico de mundo abierto ambientado en los 90. Vuelve con CJ a Grove Street y conquista Los Santos, San Fierro y Las Venturas.",
+  "tags": ["mundo abierto", "acción", "clásico", "sandbox"],
+  "platforms": ["PC"]
+},
+{
+  "id": "gta-v",
+  "title": "Grand Theft Auto V",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg",
+  "url": "https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/",
+  "description": "Mundo abierto gigantesco con tres protagonistas y el multijugador de GTA Online.",
+  "tags": ["mundo abierto", "acción", "sandbox", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "guilty-gear-strive",
+  "title": "GUILTY GEAR -STRIVE-",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1384160/header.jpg",
+  "url": "https://store.steampowered.com/app/1384160/GUILTY_GEAR_STRIVE/",
+  "description": "Peleas 2D de altísima calidad visual y jugabilidad precisa. Netcode rollback y una banda sonora brutal.",
+  "tags": ["lucha", "2D", "competitivo", "rollback"],
+  "platforms": ["PC"]
+},
+{
+  "id": "half-life",
+  "title": "Half-Life",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/70/header.jpg",
+  "url": "https://store.steampowered.com/app/70/HalfLife/",
+  "description": "El clásico de Valve que redefinió el FPS narrativo con física, puzles y ambientación inolvidable.",
+  "tags": ["FPS", "clásico", "histórico", "narrativo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "half-life-2",
+  "title": "Half-Life 2",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/220/header.jpg",
+  "url": "https://store.steampowered.com/app/220/HalfLife_2/",
+  "description": "La secuela legendaria: gravedad, física avanzada y la resistencia contra la Alianza.",
+  "tags": ["FPS", "física", "clásico", "historia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "half-life-2-deathmatch",
+  "title": "Half-Life 2: Deathmatch",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/320/header.jpg",
+  "url": "https://store.steampowered.com/app/320/HalfLife_2_Deathmatch/",
+  "description": "Multijugador frenético con armas de HL2 y la icónica Gravity Gun.",
+  "tags": ["FPS", "multijugador", "arena", "clásico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "half-life-2-episode-one",
+  "title": "Half-Life 2: Episode One",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/380/header.jpg",
+  "url": "https://store.steampowered.com/app/380/HalfLife_2_Episode_One/",
+  "description": "Primera expansión de HL2. Escapa de Ciudad 17 con Alyx Vance.",
+  "tags": ["FPS", "historia", "clásico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "half-life-2-episode-two",
+  "title": "Half-Life 2: Episode Two",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/420/header.jpg",
+  "url": "https://store.steampowered.com/app/420/HalfLife_2_Episode_Two/",
+  "description": "Segunda expansión, más grande y con momentos míticos de la saga.",
+  "tags": ["FPS", "historia", "clásico"],
+  "platforms": ["PC"]
 }
 
 ]

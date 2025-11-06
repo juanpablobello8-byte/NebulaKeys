@@ -1267,6 +1267,195 @@
   "description": "Conversión no oficial para jugar Half-Life 2: Episode Two en realidad virtual. Requiere el juego base en tu biblioteca.",
   "tags": ["VR", "FPS", "mod", "clásico"],
   "platforms": ["PC"]
+},
+{
+  "id": "half-life-blue-shift",
+  "title": "Half-Life: Blue Shift",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/130/header.jpg",
+  "url": "https://store.steampowered.com/app/130/HalfLife_Blue_Shift/",
+  "description": "Expansión de Half-Life protagonizada por Barney Calhoun. Escapa de Black Mesa desde otra perspectiva.",
+  "tags": ["FPS", "clásico", "campaña"],
+  "platforms": ["PC"]
+},
+{
+  "id": "half-life-deathmatch-source",
+  "title": "Half-Life Deathmatch: Source",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/320/header.jpg",
+  "url": "https://store.steampowered.com/app/320/HalfLife_Deathmatch_Source/",
+  "description": "Multijugador clásico de Half-Life remodelado en Source. Acceso rápido a deathmatch puro.",
+  "tags": ["FPS", "multijugador", "clásico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "half-life-opposing-force",
+  "title": "Half-Life: Opposing Force",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/50/header.jpg",
+  "url": "https://store.steampowered.com/app/50/HalfLife_Opposing_Force/",
+  "description": "Expansión de Half-Life desde el punto de vista de un soldado HECU.",
+  "tags": ["FPS", "clásico", "campaña"],
+  "platforms": ["PC"]
+},
+{
+  "id": "half-life-source",
+  "title": "Half-Life: Source",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/280/header.jpg",
+  "url": "https://store.steampowered.com/app/280/HalfLife_Source/",
+  "description": "El Half-Life original llevado al motor Source con mejoras visuales.",
+  "tags": ["FPS", "clásico", "campaña"],
+  "platforms": ["PC"]
+},
+{
+  "id": "hollow-knight",
+  "title": "Hollow Knight",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/367520/header.jpg",
+  "url": "https://store.steampowered.com/app/367520/Hollow_Knight/",
+  "description": "Metroidvania desafiante con un mundo 2D hecho a mano y combates precisos.",
+  "tags": ["metroidvania", "plataformas", "acción", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "hollow-knight-silksong",
+  "title": "Hollow Knight: Silksong",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1030300/header.jpg",
+  "url": "https://store.steampowered.com/app/1030300/Hollow_Knight_Silksong/",
+  "description": "Secuela enfocada en Hornet: más verticalidad, herramientas nuevas y biomas inéditos.",
+  "tags": ["metroidvania", "plataformas", "acción"],
+  "platforms": ["PC"]
+},
+{
+  "id": "injustice-2",
+  "title": "Injustice 2",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/627270/header.jpg",
+  "url": "https://store.steampowered.com/app/627270/Injustice_2/",
+  "description": "Peleas con superhéroes de DC y un sistema de equipo que personaliza habilidades y aspecto.",
+  "tags": ["lucha", "superhéroes", "competitivo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "killing-floor",
+  "title": "Killing Floor",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1250/header.jpg",
+  "url": "https://store.steampowered.com/app/1250/Killing_Floor/",
+  "description": "Cooperativo por oleadas contra especímenes en mapas cerrados. Economía y roles.",
+  "tags": ["cooperativo", "supervivencia", "zombis"],
+  "platforms": ["PC"]
+},
+{
+  "id": "killing-floor-2",
+  "title": "Killing Floor 2",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/232090/header.jpg",
+  "url": "https://store.steampowered.com/app/232090/Killing_Floor_2/",
+  "description": "Secuela con gore mejorado, clases ampliadas y mayor variedad de jefes y armas.",
+  "tags": ["cooperativo", "supervivencia", "FPS"],
+  "platforms": ["PC"]
+},
+{
+  "id": "kof-xv",
+  "title": "THE KING OF FIGHTERS XV",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1552550/header.jpg",
+  "url": "https://store.steampowered.com/app/1552550/THE_KING_OF_FIGHTERS_XV/",
+  "description": "La saga 3-vs-3 de SNK con rollback netcode y plantel enorme.",
+  "tags": ["lucha", "competitivo", "online"],
+  "platforms": ["PC"]
+},
+{
+  "id": "the-lab",
+  "title": "The Lab",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/450390/header.jpg",
+  "url": "https://store.steampowered.com/app/450390/The_Lab/",
+  "description": "Colección gratuita de miniexperimentos VR por Valve ambientados en el universo de Aperture.",
+  "tags": ["VR", "minijuegos", "experiencias"],
+  "platforms": ["PC"]
+},
+{
+  "id": "life-is-strange",
+  "title": "Life is Strange",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/319630/header.jpg",
+  "url": "https://store.steampowered.com/app/319630/Life_is_Strange/",
+  "description": "Aventura narrativa por episodios con toma de decisiones y mecánica de rebobinado del tiempo.",
+  "tags": ["aventura", "narrativo", "decisiones"],
+  "platforms": ["PC"]
+},
+{
+  "id": "hogwarts-legacy",
+  "title": "Hogwarts Legacy",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg",
+  "url": "https://store.steampowered.com/app/990080/Hogwarts_Legacy/",
+  "description": "RPG de mundo abierto en el universo mágico del siglo XIX: clases, hechizos y exploración.",
+  "tags": ["RPG", "mundo abierto", "aventura"],
+  "platforms": ["PC"]
+},
+{
+  "id": "little-nightmares-enhanced",
+  "title": "Little Nightmares (Enhanced)",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/424840/header.jpg",
+  "url": "https://store.steampowered.com/app/424840/Little_Nightmares/",
+  "description": "Pesadilla de plataformas y puzles con atmósfera opresiva. Versión actualizada con mejoras.",
+  "tags": ["aventura", "puzles", "terror"],
+  "platforms": ["PC"]
+},
+{
+  "id": "lost-ark",
+  "title": "Lost Ark",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1599340/header.jpg",
+  "url": "https://store.steampowered.com/app/1599340/Lost_Ark/",
+  "description": "MMOARPG isométrico con clases espectaculares, dungeons y endgame variado.",
+  "tags": ["MMO", "ARPG", "cooperativo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "her-new-memory",
+  "title": "Her New Memory — Hentai Simulator",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1296770/header.jpg",
+  "url": "https://store.steampowered.com/app/1296770/Her_New_Memory__Hentai_Simulator/",
+  "description": "Simulador/novela visual con minijuegos y escenas para adultos. Gestión de relaciones y eventos con múltiples rutas.",
+  "tags": ["novela visual", "simulador", "adultos", "anime"],
+  "platforms": ["PC"]
+},
+{
+  "id": "heroic-armored-company",
+  "title": "Heroic Armored Company",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1388370/header.jpg",
+  "url": "https://store.steampowered.com/app/1388370/Heroic_Armored_Company/",
+  "description": "Estrategia/táctico centrado en unidades blindadas. Despliega escuadrones de tanques y completa misiones en mapas abiertos.",
+  "tags": ["estrategia", "táctico", "tanques", "guerra"],
+  "platforms": ["PC"]
+},
+{
+  "id": "horny-villa",
+  "title": "Horny Villa",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2903690/header.jpg",
+  "url": "https://store.steampowered.com/app/2903690/Horny_Villa/",
+  "description": "Aventura/novela visual para adultos con decisiones y escenas explícitas. Conoce personajes, desbloquea rutas y finales.",
+  "tags": ["novela visual", "adultos", "decisiones", "anime"],
+  "platforms": ["PC"]
+},
+{
+  "id": "lewdapocalypse-hentai-evil",
+  "title": "LEWDAPOCALYPSE: Hentai Evil",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1271710/header.jpg",
+  "url": "https://store.steampowered.com/app/1271710/LEWDAPOCALYPSE_Hentai_Evil/",
+  "description": "Acción ligera con humor subido de tono y estética anime. Combina disparos arcade con niveles cortos y coleccionables.",
+  "tags": ["acción", "arcade", "anime", "adultos"],
+  "platforms": ["PC"]
+},
+{
+  "id": "linked",
+  "title": "Linked",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/596590/header.jpg",
+  "url": "https://store.steampowered.com/app/596590/Linked/",
+  "description": "Puzles minimalistas basados en enlazar nodos con reglas simples que escalan en complejidad.",
+  "tags": ["puzles", "minimalista", "relajante", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "lost-light",
+  "title": "Lost Light",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1797880/header.jpg",
+  "url": "https://store.steampowered.com/app/1797880/Lost_Light/",
+  "description": "Shooter de extracción con economía de mercado. Saquea, comercia y sobrevive en operaciones PvPvE.",
+  "tags": ["shooter", "extracción", "PvPvE", "free-to-play"],
+  "platforms": ["PC"]
 }
 
 ]

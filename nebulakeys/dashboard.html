@@ -1,85 +1,77 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mi cuenta — NebulaKeys</title>
-
-  <!-- Tailwind (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Estilos mínimos -->
-  <style>
-    body { background:#0b0f1a; color:#e5e7eb; }
-    .card { background:#0f1626; border:1px solid rgba(255,255,255,.06); }
-    .btn { display:inline-block; padding:.6rem 1rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.12); }
-    .btn:hover { background:rgba(255,255,255,.06); }
-    .btn-primary { background:#5b61ff; border-color:#5b61ff; color:white; }
-    .btn-primary:hover { filter:brightness(1.05); }
-  </style>
-
-  <!-- Tu configuración pública (antes del módulo) -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NebulaKeys — Mi cuenta</title>
+  <link rel="icon" href="/favicon.ico">
   <script defer src="/scripts/config.js"></script>
+  <script defer src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter/variable.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0b1220; --panel:#111a2b; --muted:#9aa5b1; --text:#e6ebf5;
+      --brand:#5b6cff; --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444; --chip:#1b2540;
+    }
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:"InterVariable","Inter",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;}
+    a{color:var(--brand);text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    header{display:flex;align-items:center;gap:12px;margin:8px 0 24px}
+    .logo{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#2b3560;color:#cdd6ff;font-weight:700}
+    .title{font-weight:800;font-size:22px}
+    .grid{display:grid;gap:20px;grid-template-columns:1.2fr .8fr}
+    .card{background:var(--panel);border:1px solid #1c2743;border-radius:16px;padding:18px}
+    .h{font-weight:700;margin:0 0 10px;font-size:18px}
+    .muted{color:var(--muted);font-size:14px}
+    .row{display:flex;align-items:center;gap:10px}
+    .badge{padding:4px 10px;border-radius:999px;font-size:12px;background:var(--chip);border:1px solid #263153}
+    .b-ok{border-color:#184a2f;background:#0d1e14;color:#8ff0a3}
+    .b-warn{border-color:#54420f;background:#1f1a0a;color:#f9d37a}
+    .b-bad{border-color:#4c1617;background:#251012;color:#ffb3b1}
+    .price{font-weight:800;font-size:28px}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{background:#202b46;border:1px solid #2d3864;color:#e6ebf5;border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer}
+    .btn:hover{filter:brightness(1.1)}
+    .btn-brand{background:var(--brand);border-color:var(--brand);color:#fff}
+    .list{display:grid;gap:12px}
+    .skeleton{position:relative;overflow:hidden;background:#0e172b;border-radius:12px;height:110px}
+    .skeleton::after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,#18234280,transparent);animation:sh 1s infinite}
+    @keyframes sh{to{transform:translateX(100%)}}
+    .mini{font-size:12px;color:var(--muted)}
+  </style>
 </head>
-<body class="min-h-screen">
-  <header class="max-w-4xl mx-auto px-4 py-8">
-    <h1 class="text-4xl font-extrabold">Mi cuenta</h1>
-  </header>
-
-  <main class="max-w-4xl mx-auto px-4 pb-24 space-y-10">
-
-    <!-- Estado de suscripción -->
-    <section class="card rounded-2xl p-6">
-      <h2 class="text-2xl font-bold mb-3">Estado de suscripción</h2>
-      <p id="subStatus" class="text-slate-300">Comprobando…</p>
-
-      <div id="subInfo" class="mt-4 hidden space-y-1">
-        <p><span class="text-slate-400">Plan:</span> <span id="plan"></span></p>
-        <p><span class="text-slate-400">Vence:</span> <span id="until">—</span></p>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">NK</div>
+      <div class="title">NebulaKeys — Mi cuenta</div>
+      <div style="margin-left:auto" class="row">
+        <button id="logoutBtn" class="btn">Cerrar sesión</button>
       </div>
+    </header>
 
-      <div class="mt-6 flex gap-3">
-        <a href="/index.html" class="btn">← Volver al lobby</a>
-        <a id="subscribeBtn" class="btn btn-primary cursor-pointer">Suscribirme</a>
-      </div>
-    </section>
+    <div class="grid">
+      <!-- Panel Plan actual -->
+      <section class="card">
+        <h2 class="h">Plan actual</h2>
+        <div id="planPanel" class="list">
+          <div class="skeleton"></div>
+        </div>
+      </section>
 
-    <!-- Aquí puedes mantener tu sección de juegos / biblioteca -->
-  </main>
-
-  <!-- ========== MODAL DE PLANES ========== -->
-  <div id="plansModal" class="fixed inset-0 z-50 hidden">
-    <!-- overlay -->
-    <div class="absolute inset-0 bg-black/60"></div>
-
-    <!-- tarjeta -->
-    <div class="relative mx-auto max-w-xl mt-24 card rounded-2xl p-6">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-xl font-bold">Elige tu plan</h3>
-        <button id="closePlans" class="btn">✕</button>
-      </div>
-
-      <div class="grid gap-3">
-        <button class="btn btn-primary flex items-center justify-between" data-plan="weekly">
-          <span>Plan semanal</span>
-          <span class="opacity-80">$150 MXN</span>
-        </button>
-
-        <button class="btn btn-primary flex items-center justify-between" data-plan="biweekly">
-          <span>Plan quincenal</span>
-          <span class="opacity-80">$250 MXN</span>
-        </button>
-
-        <button class="btn btn-primary flex items-center justify-between" data-plan="monthly">
-          <span>Plan mensual</span>
-          <span class="opacity-80">$350 MXN</span>
-        </button>
-      </div>
+      <!-- Panel Perfil -->
+      <aside class="card">
+        <h2 class="h">Perfil</h2>
+        <div class="muted mini" id="emailBox">Cargando…</div>
+        <div class="muted mini" id="steamBox"></div>
+        <div class="actions" style="margin-top:12px">
+          <a class="btn" href="/catalogo.html">Explorar catálogo</a>
+          <a class="btn" href="/pricing.html">Elegir plan</a>
+        </div>
+      </aside>
     </div>
   </div>
-  <!-- ===================================== -->
 
-  <!-- Lógica del dashboard -->
-  <script type="module" src="/scripts/dashboard.js"></script>
+  <script defer src="/scripts/dashboard.js"></script>
 </body>
 </html>

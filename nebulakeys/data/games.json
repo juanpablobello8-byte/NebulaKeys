@@ -1024,6 +1024,60 @@
     "description": "Sobrevive con amigos en un mundo hostil y estilizado.",
     "tags": ["supervivencia", "sandbox", "coop"],
     "platforms": ["PC"]
-  }
-  
+  },
+  {
+  "id": "five-nights-at-freddys",
+  "title": "Five Nights at Freddy's",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/319510/header.jpg",
+  "url": "https://store.steampowered.com/app/319510/Five_Nights_at_Freddys/",
+  "description": "Horror de supervivencia point-and-click en la pizzería Freddy Fazbear: vigila cámaras, ahorra energía y sobrevive cinco noches.",
+  "tags": ["horror", "indie", "point-and-click"],
+  "platforms": ["PC"]
+},
+{
+  "id": "fake-lay",
+  "title": "Fake Lay",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1191420/header.jpg",
+  "url": "https://store.steampowered.com/app/1191420/Fake_Lay/",
+  "description": "Novela visual para adultos con toques de comedia y decisiones. Explora rutas de historia y múltiples finales.",
+  "tags": ["novela visual", "adultos", "elecciones"],
+  "platforms": ["PC"]
+},
+{
+  "id": "dundun-vr",
+  "title": "DunDun VR",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1695870/header.jpg",
+  "url": "https://store.steampowered.com/app/1695870/DunDun_VR/",
+  "description": "Experiencia VR casual y colorida con minijuegos y física caricaturesca. Pensado para sesiones cortas y diversión ligera.",
+  "tags": ["VR", "casual", "minijuegos"],
+  "platforms": ["PC", "VR"]
+},
+{
+  "id": "felix-jumpman",
+  "title": "Felix Jumpman",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/575920/header.jpg",
+  "url": "https://store.steampowered.com/app/575920/Felix_Jumpman/",
+  "description": "Plataformas retro-arcade con niveles cortos y desafiantes centrados en precisión y velocidad.",
+  "tags": ["plataformas", "retro", "arcade"],
+  "platforms": ["PC"]
+},
+{
+  "id": "doc-apocalypse",
+  "title": "Doc Apocalypse",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/509920/header.jpg",
+  "url": "https://store.steampowered.com/app/509920/Doc_Apocalypse/",
+  "description": "Aventura point-and-click de ciencia ficción sobre un científico que lucha por sobrevivir y encontrar respuestas tras una catástrofe.",
+  "tags": ["aventura", "point-and-click", "historia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "egg",
+  "title": "Egg",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2784840/header.jpg",
+  "url": "https://store.steampowered.com/app/2784840/Egg/",
+  "description": "Título experimental/relajado de corta duración con un enfoque minimalista y curiosidad interactiva.",
+  "tags": ["experimental", "casual", "relajante"],
+  "platforms": ["PC"]
+}
+
 ]

@@ -898,6 +898,185 @@
   "description": "Secuela/expansión remasterizada con más caos zombie en cooperativo.",
   "tags": ["zombies", "acción", "co-op"],
   "platforms": ["PC"]
-}
-
+},
+{
+  "id": "fake-lay",
+  "title": "Fake Lay",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1191420/header.jpg",
+  "url": "https://store.steampowered.com/app/1191420/Fake_Lay/",
+  "description": "Novela visual para adultos con toques de comedia y decisiones. Explora rutas de historia y múltiples finales.",
+  "tags": ["novela visual", "adultos", "elecciones"],
+  "platforms": ["PC"]
+},
+{
+  "id": "dundun-vr",
+  "title": "DunDun VR",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1695870/header.jpg",
+  "url": "https://store.steampowered.com/app/1695870/DunDun_VR/",
+  "description": "Experiencia VR casual y colorida con minijuegos y física caricaturesca. Pensado para sesiones cortas y diversión ligera.",
+  "tags": ["VR", "casual", "minijuegos"],
+  "platforms": ["PC", "VR"]
+},
+{
+  "id": "felix-jumpman",
+  "title": "Felix Jumpman",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/575920/header.jpg",
+  "url": "https://store.steampowered.com/app/575920/Felix_Jumpman/",
+  "description": "Plataformas retro-arcade con niveles cortos y desafiantes centrados en precisión y velocidad.",
+  "tags": ["plataformas", "retro", "arcade"],
+  "platforms": ["PC"]
+},
+{
+  "id": "doc-apocalypse",
+  "title": "Doc Apocalypse",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/509920/header.jpg",
+  "url": "https://store.steampowered.com/app/509920/Doc_Apocalypse/",
+  "description": "Aventura point-and-click de ciencia ficción sobre un científico que lucha por sobrevivir y encontrar respuestas tras una catástrofe.",
+  "tags": ["aventura", "point-and-click", "historia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "egg",
+  "title": "Egg",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2784840/header.jpg",
+  "url": "https://store.steampowered.com/app/2784840/Egg/",
+  "description": "Título experimental/relajado de corta duración con un enfoque minimalista y curiosidad interactiva.",
+  "tags": ["experimental", "casual", "relajante"],
+  "platforms": ["PC"]
+},
+{
+  "id": "five-nights-at-freddys",
+  "title": "Five Nights at Freddy's",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/319510/header.jpg",
+  "url": "https://store.steampowered.com/app/319510/Five_Nights_at_Freddys/",
+  "description": "Horror de supervivencia point-and-click en la pizzería Freddy Fazbear: vigila cámaras, ahorra energía y sobrevive cinco noches.",
+  "tags": ["horror", "indie", "point-and-click"],
+  "platforms": ["PC"]
+},
+  {
+    "id": "dead-rising-2",
+    "title": "Dead Rising 2",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
+    "url": "https://store.steampowered.com/app/APPID/",
+    "description": "Zombis + crafting de armas en Fortune City.",
+    "tags": ["acción", "zombis", "mundo-abierto"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "dead-space-2008",
+    "title": "Dead Space",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
+    "url": "https://store.steampowered.com/app/APPID/",
+    "description": "Horror de supervivencia en la USG Ishimura.",
+    "tags": ["horror", "sci-fi", "tercera-persona"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "dead-space-2",
+    "title": "Dead Space 2",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
+    "url": "https://store.steampowered.com/app/APPID/",
+    "description": "Isaac Clarke vuelve frente a una nueva plaga necromorfa.",
+    "tags": ["horror", "acción", "sci-fi"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "deathmatch-classic",
+    "title": "Deathmatch Classic",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
+    "url": "https://store.steampowered.com/app/APPID/",
+    "description": "Arena shooter al estilo Quake sobre motor de Half-Life.",
+    "tags": ["shooter", "clásico", "multijugador"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "destiny-2",
+    "title": "Destiny 2",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1085660/header.jpg",
+    "url": "https://store.steampowered.com/app/1085660/",
+    "description": "Looter-shooter cooperativo con raids y temporadas.",
+    "tags": ["shooter", "cooperativo", "looter"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "doom-2016",
+    "title": "DOOM (2016)",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/379720/header.jpg",
+    "url": "https://store.steampowered.com/app/379720/",
+    "description": "Regresa el FPS brutal: velocidad, glory kills y metal.",
+    "tags": ["shooter", "rápido", "singleplayer"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "duke-nukem-forever",
+    "title": "Duke Nukem Forever",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/57900/header.jpg",
+    "url": "https://store.steampowered.com/app/57900/",
+    "description": "El Duke vuelve contra los alienígenas (otra vez).",
+    "tags": ["shooter", "humor", "retro"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "eleusis",
+    "title": "Eleusis",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
+    "url": "https://store.steampowered.com/app/APPID/",
+    "description": "Aventura de horror en un pueblo griego abandonado.",
+    "tags": ["horror", "aventura", "misterio"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "enlisted",
+    "title": "Enlisted",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
+    "url": "https://store.steampowered.com/app/APPID/",
+    "description": "FPS masivo ambientado en conflictos históricos.",
+    "tags": ["shooter", "masivo", "free-to-play"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "fallout-shelter",
+    "title": "Fallout Shelter",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
+    "url": "https://store.steampowered.com/app/APPID/",
+    "description": "Gestiona tu bóveda y cuida a tus moradores.",
+    "tags": ["gestión", "simulación", "free-to-play"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "feed-and-grow-fish",
+    "title": "Feed and Grow: Fish",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
+    "url": "https://store.steampowered.com/app/APPID/",
+    "description": "Empieza como pececillo y devora para crecer.",
+    "tags": ["simulación", "supervivencia", "océano"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "first-descendant",
+    "title": "The First Descendant",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2074920/header.jpg",
+    "url": "https://store.steampowered.com/app/2074920/",
+    "description": "Looter-shooter cooperativo en tercera persona.",
+    "tags": ["cooperativo", "looter", "acción"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "fishing-planet",
+    "title": "Fishing Planet",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/APPID/header.jpg",
+    "url": "https://store.steampowered.com/app/APPID/",
+    "description": "Simulador de pesca realista free-to-play.",
+    "tags": ["simulación", "deportes", "free-to-play"],
+    "platforms": ["PC"]
+  },
+  {
+    "id": "dont-starve-together",
+    "title": "Don't Starve Together",
+    "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/322330/header.jpg",
+    "url": "https://store.steampowered.com/app/322330/",
+    "description": "Sobrevive con amigos en un mundo hostil y estilizado.",
+    "tags": ["supervivencia", "sandbox", "coop"],
+    "platforms": ["PC"]
+  },
 ]

@@ -1222,6 +1222,51 @@
   "description": "Segunda expansión, más grande y con momentos míticos de la saga.",
   "tags": ["FPS", "historia", "clásico"],
   "platforms": ["PC"]
+},
+{
+  "id": "fnaf-help-wanted",
+  "title": "Five Nights at Freddy's: Help Wanted",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/732690/header.jpg",
+  "url": "https://store.steampowered.com/app/732690/FIVE_NIGHTS_AT_FREDDYS_HELP_WANTED/",
+  "description": "Colección de mini-juegos de la serie FNAF reimaginados para VR (también jugable sin VR en PC). Repara animatrónicos, sobrevive de noche y enfrenta sustos clásicos.",
+  "tags": ["horror", "VR", "supervivencia", "minijuegos"],
+  "platforms": ["PC"]
+},
+{
+  "id": "gold-mining-simulator",
+  "title": "Gold Mining Simulator",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/451340/header.jpg",
+  "url": "https://store.steampowered.com/app/451340/Gold_Mining_Simulator/",
+  "description": "Simulador de minería de oro: maneja maquinaria, excava, lava el material y mejora tu equipo para aumentar el rendimiento.",
+  "tags": ["simulación", "conducción", "gestión"],
+  "platforms": ["PC"]
+},
+{
+  "id": "guilty-as-sock",
+  "title": "Guilty as Sock",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/3400930/header.jpg",
+  "url": "https://store.steampowered.com/app/3400930/Guilty_as_Sock/",
+  "description": "Aventura humorística con estética de dibujo animado. Resuelve puzzles absurdos y diálogos sarcásticos en un mundo fuera de lo común.",
+  "tags": ["aventura", "humor", "point-and-click", "puzles"],
+  "platforms": ["PC"]
+},
+{
+  "id": "f-hitler",
+  "title": "FUCK HITLER",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2157110/header.jpg",
+  "url": "https://store.steampowered.com/app/2157110/FUCK_HITLER/",
+  "description": "Arcade de tiro irreverente y directo: destruye oleadas de enemigos en escenarios de estilo retro. Acción rápida con tono satírico.",
+  "tags": ["arcade", "acción", "disparos", "retro"],
+  "platforms": ["PC"]
+},
+{
+  "id": "hl2-vr-episode-two",
+  "title": "Half-Life 2: VR Mod — Episode Two",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2177760/header.jpg",
+  "url": "https://store.steampowered.com/app/2177760/HalfLife_2_VR_Mod__Episode_Two/",
+  "description": "Conversión no oficial para jugar Half-Life 2: Episode Two en realidad virtual. Requiere el juego base en tu biblioteca.",
+  "tags": ["VR", "FPS", "mod", "clásico"],
+  "platforms": ["PC"]
 }
 
 ]

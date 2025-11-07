@@ -1,167 +1,76 @@
-/* /scripts/auth.js
-   NebulaKeys — autenticación con Supabase + guardado de perfil
-   Requiere:
-     - /scripts/config.js (define window.NEBULA_PUBLIC)
-     - @supabase/supabase-js v2 (CDN global window.supabase)
-*/
+// scripts/auth.js
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-(() => {
-  // ======= Config =========
-  const REDIRECT_AFTER_LOGIN = "/dashboard.html";
-  const PROFILE_TABLE = "profiles";
-  const PROFILE_EMAIL_COLUMN = "email";
-  const PROFILE_STEAM_COLUMN = "steam_user";
+const client = window.NEBULA_PUBLIC;
+const supabase = createClient(client.SUPABASE_URL, client.SUPABASE_ANON_KEY);
 
-  // ======= Helpers UI ======
-  const $ = (sel) => document.querySelector(sel);
+const form = document.getElementById('auth-form');
+const emailEl = document.getElementById('email');
+const passEl  = document.getElementById('password');
+const steamEl = document.getElementById('steam_user');
+const hasAccEl = document.getElementById('has_account');
 
-  const toast = (msg, type = "info") => {
-    const el = $("#toast");
-    if (!el) return;
-    el.textContent = msg;
-    el.className =
-      "fixed top-4 right-4 z-50 rounded-xl border px-4 py-3 text-sm shadow-2xl transition " +
-      (type === "error"
-        ? "bg-red-900/85 border-red-500/40 text-red-50"
-        : type === "success"
-        ? "bg-emerald-900/85 border-emerald-500/40 text-emerald-50"
-        : "bg-slate-900/85 border-white/10 text-slate-100");
-    el.style.display = "block";
-    clearTimeout(el._t);
-    el._t = setTimeout(() => (el.style.display = "none"), 4200);
-  };
+async function ensureSession() {
+  const { data: { session } } = await supabase.auth.getSession();
+  return session || null;
+}
 
-  const setLoading = (v) => {
-    const btn = $("#submitBtn");
-    const spn = $("#btnSpinner");
-    if (btn) btn.disabled = v;
-    if (spn) spn.classList.toggle("hidden", !v);
-  };
+function toast(msg) { alert(msg); } // usa tu propio toast si quieres
 
-  // ======= Cliente Supabase (FIX) ======
-  if (!window.supabase) {
-    throw new Error(
-      "Supabase SDK no cargó. Revisa la etiqueta <script src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'>"
-    );
-  }
-  if (!window.NEBULA_PUBLIC?.SUPABASE_URL || !window.NEBULA_PUBLIC?.SUPABASE_ANON_KEY) {
-    throw new Error("Falta configuración de Supabase en window.NEBULA_PUBLIC");
-  }
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = emailEl.value.trim();
+  const password = passEl.value;
+  const steam_user = steamEl.value.trim();
+  const isLogin = hasAccEl.checked;
 
-  // ⚠️ Siempre crear el cliente. NO usar directamente window.supabase como objeto.
-  const supa = window.supabase.createClient(
-    window.NEBULA_PUBLIC.SUPABASE_URL,
-    window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
-  );
-
-  // ======= Validación simple ======
-  const validate = (email, password, steam, isLogin) => {
-    if (!email || !/\S+@\S+\.\S+/.test(email)) return "Email inválido.";
-    if (!password || password.length < 6)
-      return "La contraseña debe tener al menos 6 caracteres.";
-    if (!isLogin && !steam) return "Escribe tu usuario de Steam.";
-    return null;
-  };
-
-  // ======= Guardar/actualizar perfil ======
-  const upsertProfile = async (email, steamUser) => {
-    const { error } = await supa
-      .from(PROFILE_TABLE)
-      .upsert(
-        { [PROFILE_EMAIL_COLUMN]: email, [PROFILE_STEAM_COLUMN]: steamUser },
-        { onConflict: PROFILE_EMAIL_COLUMN }
-      );
-    if (error) throw error;
-  };
-
-  // ======= Handlers =======
-  const handleAuth = async (ev) => {
-    ev.preventDefault();
-    setLoading(true);
-
-    try {
-      const email = $("#email").value.trim();
-      const password = $("#password").value;
-      const steam = $("#steam").value.trim();
-      const isLogin = $("#haveAccount").checked;
-
-      const msg = validate(email, password, steam, isLogin);
-      if (msg) throw new Error(msg);
-
-      if (isLogin) {
-        // ---- Iniciar sesión
-        const { data, error } = await supa.auth.signInWithPassword({
-          email,
-          password,
-        });
-        if (error) throw error;
-
-        // Intento de completar/actualizar perfil con el steam del formulario si lo envió
-        if (steam) {
-          try {
-            await upsertProfile(email, steam);
-          } catch (e) {
-            // No romper el login por esto
-            console.warn("upsert profile (login) warning:", e);
-          }
-        }
-
-        toast("¡Bienvenido de nuevo!", "success");
-        window.location.href = REDIRECT_AFTER_LOGIN;
-        return;
-      }
-
-      // ---- Registro
-      const { data, error } = await supa.auth.signUp({
-        email,
-        password,
-        options: {
-          // Si tienes confirmación por email en Supabase, puedes usar una redirect aquí:
-          // emailRedirectTo: window.location.origin + "/success.html",
-          data: { steam_user: steam }, // metadatos útiles
-        },
-      });
+  try {
+    if (isLogin) {
+      // ---- LOGIN
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
 
-      // Guardamos/actualizamos perfil propio
-      await upsertProfile(email, steam);
+      // sesión garantizada → puedes actualizar
+      const userId = data.user.id;
+      const { error: updErr } = await supabase
+        .from('profiles')
+        .update({ steam_user })
+        .eq('id', userId);
 
-      toast("Cuenta creada. ¡Bienvenid@!", "success");
-      window.location.href = REDIRECT_AFTER_LOGIN;
-    } catch (err) {
-      console.error(err);
-      const msg =
-        err?.message ||
-        err?.error_description ||
-        "No se pudo completar la operación.";
-      toast(msg, "error");
-    } finally {
-      setLoading(false);
+      if (updErr) throw updErr;
+
+      toast('¡Bienvenido! Redirigiendo al panel...');
+      window.location.href = '/dashboard.html';
+      return;
     }
-  };
 
-  // ======= Eventos UI =======
-  const form = $("#authForm");
-  if (form) form.addEventListener("submit", handleAuth);
+    // ---- SIGN UP
+    const { data: signData, error: signErr } = await supabase.auth.signUp({ email, password });
+    if (signErr) throw signErr;
 
-  const togglePassword = $("#togglePassword");
-  if (togglePassword) {
-    togglePassword.addEventListener("click", () => {
-      const inp = $("#password");
-      if (!inp) return;
-      inp.type = inp.type === "password" ? "text" : "password";
-      togglePassword.classList.toggle("opacity-40");
-    });
+    // Si tu proyecto requiere confirmación por email, aquí NO habrá sesión
+    // y cualquier INSERT/UPSERT fallará por RLS. Manejamos ambos casos:
+    const session = await ensureSession();
+    if (!session) {
+      // El trigger handle_new_user() ya insertó la fila en profiles.
+      // Pide confirmación y corta aquí.
+      toast('Te enviamos un correo para confirmar tu cuenta. Verifica tu email y después inicia sesión.');
+      return;
+    }
+
+    // Si tienes auto-confirmación (o ya hay sesión), solo ACTUALIZA steam_user
+    const userId = session.user.id;
+    const { error: updErr } = await supabase
+      .from('profiles')
+      .update({ steam_user })
+      .eq('id', userId);
+
+    if (updErr) throw updErr;
+
+    toast('Cuenta creada. Redirigiendo al panel...');
+    window.location.href = '/dashboard.html';
+  } catch (err) {
+    console.error(err);
+    toast(err.message || 'Error al autenticar');
   }
-
-  // Autoredirección si ya hay sesión
-  (async () => {
-    const {
-      data: { session },
-    } = await supa.auth.getSession();
-    if (session) {
-      // ya autenticado
-      // window.location.href = REDIRECT_AFTER_LOGIN;
-    }
-  })();
-})();
+});

@@ -1996,6 +1996,95 @@
   "description": "Acción y plataformas familiares en el universo de Toy Story.",
   "tags": ["acción", "aventura", "plataformas", "familiar"],
   "platforms": ["PC"]
-}
+},
+[
+  {
+    "id": "trove",
+    "title": "Trove",
+    "cover": "https://cdn.akamai.steamstatic.com/steam/apps/304050/header.jpg",
+    "link": "https://store.steampowered.com/app/304050/Trove/",
+    "tags": ["MMO", "Voxel", "F2P"],
+    "platforms": ["Windows"]
+  },
+  {
+    "id": "ultimate-custom-night",
+    "title": "Ultimate Custom Night",
+    "cover": "https://cdn.akamai.steamstatic.com/steam/apps/871720/header.jpg",
+    "link": "https://store.steampowered.com/app/871720/Ultimate_Custom_Night/",
+    "tags": ["FNAF", "Horror", "Gratis"],
+    "platforms": ["Windows"]
+  },
+  {
+    "id": "undertale",
+    "title": "UNDERTALE",
+    "cover": "https://cdn.akamai.steamstatic.com/steam/apps/391540/header.jpg",
+    "link": "https://store.steampowered.com/app/391540/Undertale/",
+    "tags": ["RPG", "Indie"],
+    "platforms": ["Windows", "macOS", "Linux"]
+  },
+  {
+    "id": "unturned",
+    "title": "Unturned",
+    "cover": "https://cdn.akamai.steamstatic.com/steam/apps/304930/header.jpg",
+    "link": "https://store.steampowered.com/app/304930/Unturned/",
+    "tags": ["Supervivencia", "F2P", "Zombies"],
+    "platforms": ["Windows", "macOS", "Linux"]
+  },
+  {
+    "id": "vrchat",
+    "title": "VRChat",
+    "cover": "https://cdn.akamai.steamstatic.com/steam/apps/438100/header.jpg",
+    "link": "https://store.steampowered.com/app/438100/VRChat/",
+    "tags": ["Social", "VR", "F2P"],
+    "platforms": ["Windows"]
+  },
+  {
+    "id": "war-thunder",
+    "title": "War Thunder",
+    "cover": "https://cdn.akamai.steamstatic.com/steam/apps/236390/header.jpg",
+    "link": "https://store.steampowered.com/app/236390/War_Thunder/",
+    "tags": ["Acción", "Vehículos", "F2P"],
+    "platforms": ["Windows", "macOS", "Linux"]
+  },
+  {
+    "id": "vermintide",
+    "title": "Warhammer: End Times - Vermintide",
+    "cover": "https://cdn.akamai.steamstatic.com/steam/apps/235540/header.jpg",
+    "link": "https://store.steampowered.com/app/235540/Warhammer_End_Times__Vermintide/",
+    "tags": ["Coop", "Acción"],
+    "platforms": ["Windows"]
+  },
+  {
+    "id": "waves",
+    "title": "Waves",
+    "cover": "https://cdn.akamai.steamstatic.com/steam/apps/107600/header.jpg",
+    "link": "https://store.steampowered.com/app/107600/Waves/",
+    "tags": ["Arcade", "Twin-stick"],
+    "platforms": ["Windows"]
+  },
+  {
+    "id": "waves-2-notorious",
+    "title": "Waves 2: Notorious",
+    "cover": "https://cdn.akamai.steamstatic.com/steam/apps/217120/header.jpg",
+    "link": "https://store.steampowered.com/app/217120/Waves_2_Notorious/",
+    "tags": ["Arcade", "EA"],
+    "platforms": ["Windows"]
+  },
+  {
+    "id": "will-glow-the-wisp",
+    "title": "Will Glow the Wisp",
+    "cover": "https://cdn.akamai.steamstatic.com/steam/apps/612020/header.jpg",
+    "link": "https://store.steampowered.com/app/612020/Will_Glow_the_Wisp/",
+    "tags": ["Plataformas", "Indie"],
+    "platforms": ["Windows"]
+  },
+  {
+    "id": "world-of-warships",
+    "title": "World of Warships",
+    "cover": "https://cdn.akamai.steamstatic.com/steam/apps/552990/header.jpg",
+    "link": "https://store.steampowered.com/app/552990/World_of_Warships/",
+    "tags": ["Naval", "F2P", "Multijugador"],
+    "platforms": ["Windows"]
+  }
 
 ]

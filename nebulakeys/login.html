@@ -2,70 +2,166 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>NebulaKeys — Ingresar</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <style>
-    :root { color-scheme: dark; }
-    body{margin:0;background:#0b1020;color:#e9ecf2;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
-    .wrap{max-width:1100px;margin:32px auto;padding:0 16px;display:grid;grid-template-columns:1fr 420px;gap:32px}
-    h1{font-size:44px;line-height:1.1;margin:.4rem 0 1rem}
-    .card{background:#0f162e;border:1px solid #233055;border-radius:14px;padding:22px 22px 26px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
-    .label{display:block;font-size:14px;margin:14px 0 6px;color:#a9b4ce}
-    .input{width:100%;padding:14px 16px;border:1px solid #26355c;border-radius:12px;background:#0b1329;color:#e9ecf2;font-size:15px;outline:none}
-    .input:focus{border-color:#5b7cff;box-shadow:0 0 0 3px rgba(91,124,255,.25)}
-    .row{display:flex;align-items:center;gap:10px;margin-top:12px}
-    .btn{width:100%;padding:16px;border:0;border-radius:12px;background:#575bff;color:white;font-weight:700;font-size:16px;cursor:pointer;margin-top:18px}
-    .btn[disabled]{opacity:.6;cursor:not-allowed}
-    small{color:#c7d1ea}
-    .muted{color:#95a1bd;font-size:14px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:38px;height:38px;border-radius:50%;background:#4b55ff;display:grid;place-items:center;color:white;font-weight:800}
-    @media (max-width: 980px){ .wrap{grid-template-columns:1fr} }
+    :root {
+      --bg: #0b1220;
+      --panel: #121a2b;
+      --text: #e6ebff;
+      --muted:#9fb0d9;
+      --primary:#5b5ef7;
+      --primary-700:#4749d7;
+      --edge:#203255;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial; background:var(--bg); color:var(--text); }
+    .wrap { max-width: 1100px; margin: 40px auto; padding: 0 16px; display:grid; grid-template-columns: 1.2fr 1fr; gap:32px; }
+    h1 { font-size: 40px; line-height: 1.1; margin:.2rem 0 1rem; }
+    p.lead { color:var(--muted); margin-top:0; }
+    .card { background:var(--panel); border:1px solid var(--edge); border-radius: 16px; padding: 22px; }
+    label { display:block; font-weight:600; margin: 14px 0 8px; }
+    input[type="email"], input[type="password"], input[type="text"] {
+      width:100%; padding:14px 14px; border-radius:12px; border:1px solid var(--edge); background:#0f172a; color:var(--text); outline:none;
+    }
+    input::placeholder { color:#6d7fb3; }
+    .row { display:flex; align-items:center; gap:10px; margin:12px 0; color:var(--muted); }
+    .btn {
+      width:100%; padding:14px 16px; background:var(--primary); color:white; font-weight:700; border:0; border-radius:12px; cursor:pointer; margin-top:12px;
+    }
+    .btn:disabled { opacity:.6; cursor:default; }
+    .muted { color:var(--muted); font-size:14px; }
+    .tiny { font-size:12px; color:#9fb0d9; margin-top:6px; }
+    .brand { display:flex; align-items:center; gap:10px; }
+    .logo { width:36px; height:36px; background:#5b5ef7; color:white; display:grid; place-items:center; border-radius:999px; font-weight:800; }
+    @media (max-width: 960px){ .wrap { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <div class="wrap">
     <section>
-      <div class="brand"><div class="logo">NK</div><strong>NebulaKeys</strong></div>
-      <p class="muted" style="margin:18px 0 2px">ACCESO</p>
+      <div class="brand">
+        <div class="logo">NK</div>
+        <div style="font-size:20px; font-weight:800;">NebulaKeys</div>
+      </div>
       <h1>Crea tu cuenta o<br/>inicia sesión</h1>
-      <p class="muted">Manejo seguro con Supabase. Tu usuario de Steam nos permite activar tu suscripción en tu cuenta de Steam.</p>
+      <p class="lead">
+        Seguro con Supabase. Guardaremos tu <strong>usuario de Steam</strong> para activar la suscripción en tu cuenta de Steam.
+      </p>
+      <p class="tiny">* Si el correo ya existe, iniciaremos sesión automáticamente.</p>
     </section>
 
     <section class="card">
-      <form id="loginForm" autocomplete="off" novalidate>
-        <h3 style="margin:4px 0 10px">NebulaKeys — Ingresar</h3>
+      <h2 style="margin:0 0 8px">Ingresar</h2>
+      <p class="muted" style="margin-top:0">Usa tu email y contraseña. El usuario de Steam se guardará en tu perfil.</p>
 
-        <label class="label" for="email">Email</label>
-        <input id="email" class="input" type="email" placeholder="tuCorreo@example.com" required />
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="tucorreo@example.com" autocomplete="email" />
 
-        <label class="label" for="password">Contraseña</label>
-        <input id="password" class="input" type="password" minlength="6" placeholder="••••••" required />
+      <label for="password">Contraseña</label>
+      <input id="password" type="password" placeholder="••••••••" autocomplete="current-password" />
 
-        <label class="label" for="steamUser">Usuario de Steam</label>
-        <input id="steamUser" class="input" type="text" placeholder="TuUsuarioDeSteam" />
+      <label for="steam">Usuario de Steam</label>
+      <input id="steam" type="text" placeholder="TuUsuarioDeSteam" />
 
-        <div class="row">
-          <input id="isLogin" type="checkbox" />
-          <label for="isLogin" class="muted">Ya tengo cuenta (Iniciar sesión)</label>
-        </div>
+      <div class="row">
+        <input id="isLogin" type="checkbox" />
+        <label for="isLogin" style="margin:0; font-weight:600;">Ya tengo cuenta (iniciar sesión)</label>
+      </div>
 
-        <small class="muted">IMPORTANTE: Este usuario se usará para activar la suscripción en tu cuenta de Steam.</small>
-
-        <button id="submitBtn" type="submit" class="btn">Continuar</button>
-        <p class="muted" style="text-align:right;margin:10px 0 0">
-          ¿Listo? <a href="/index.html" style="color:#aeb8ff">Volver al inicio</a>
-        </p>
-      </form>
+      <button id="submitBtn" class="btn">Continuar</button>
+      <div id="msg" class="tiny"></div>
     </section>
   </div>
 
   <!-- Supabase JS v2 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- Tu config con URL y ANON KEY (DEBE ir antes de auth.js) -->
-  <script src="/scripts/config.js"></script>
-  <!-- Lógica de autenticación -->
-  <script defer src="/scripts/auth.js"></script>
+  <script>
+  // 1) CONFIGURA ESTO:
+  const SUPABASE_URL = "https://uhsggttdnajnhpmlzyud.supabase.co";          // ej: https://xxxx.supabase.co
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVoc2dndHRkbmFqbmhwbWx6eXVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2Nzg2MDksImV4cCI6MjA3NjI1NDYwOX0.KMP5Wts7DgJxEPh8W_SayvsqsOJ7NTMI9lqvMiMKPAg"; // clave pública (anon)
+
+  // 2) CLIENT
+  const supa = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // 3) UI refs
+  const $email   = document.getElementById("email");
+  const $pass    = document.getElementById("password");
+  const $steam   = document.getElementById("steam");
+  const $isLogin = document.getElementById("isLogin");
+  const $btn     = document.getElementById("submitBtn");
+  const $msg     = document.getElementById("msg");
+
+  function say(t){ $msg.textContent = t || ""; }
+
+  async function upsertProfile(userId, email, steam){
+    // Guarda/actualiza datos en 'profiles'
+    const { error } = await supa
+      .from("profiles")
+      .upsert(
+        { id: userId, email, steam_user: steam || null, updated_at: new Date().toISOString() },
+        { onConflict: "id" }
+      );
+    if (error) throw error;
+  }
+
+  async function handleSubmit(){
+    try{
+      $btn.disabled = true; say("Procesando…");
+      const email = ($email.value || "").trim();
+      const password = ($pass.value || "").trim();
+      const steam = ($steam.value || "").trim();
+      const onlyLogin = !!$isLogin.checked;
+
+      if(!email || !password){ say("Completa email y contraseña"); $btn.disabled=false; return; }
+
+      // LOGIN
+      if (onlyLogin){
+        const { data, error } = await supa.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        await supa.auth.updateUser({ data: { steam_user: steam || null } }).catch(()=>{});
+        await upsertProfile(data.user.id, data.user.email, steam);
+        location.href = "/dashboard.html"; // redirige
+        return;
+      }
+
+      // SIGNUP + fallback a LOGIN si ya existe
+      const r1 = await supa.auth.signUp({
+        email,
+        password,
+        options: { data: { steam_user: steam || null } }
+      });
+
+      if (r1.error && !/registered/i.test(r1.error.message)) throw r1.error;
+
+      // Si ya estaba registrado → login
+      if (r1.error && /registered/i.test(r1.error.message)){
+        const r2 = await supa.auth.signInWithPassword({ email, password });
+        if (r2.error) throw r2.error;
+        await supa.auth.updateUser({ data: { steam_user: steam || null } }).catch(()=>{});
+        await upsertProfile(r2.data.user.id, r2.data.user.email, steam);
+        location.href = "/dashboard.html";
+        return;
+      }
+
+      // Registro nuevo: si tu proyecto exige confirmación de email no habrá session
+      if (!r1.data.session){
+        say("Te enviamos un correo para confirmar la cuenta. Revisa tu bandeja ✉️");
+        return;
+      }
+
+      await upsertProfile(r1.data.user.id, r1.data.user.email, steam);
+      location.href = "/dashboard.html";
+    }catch(e){
+      console.error(e);
+      say(e.message || "Error");
+    }finally{
+      $btn.disabled = false;
+    }
+  }
+
+  $btn.addEventListener("click", handleSubmit);
+  </script>
 </body>
 </html>

@@ -1825,6 +1825,177 @@
   "description": "Juego de precisión minimalista con niveles desafiantes.",
   "tags": ["plataformas", "precisión", "difícil", "indie"],
   "platforms": ["PC"]
+},
+{
+  "id": "star-wars-jedi-fallen-order",
+  "title": "STAR WARS Jedi: Fallen Order",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1172380/header.jpg",
+  "url": "https://store.steampowered.com/app/1172380/",
+  "description": "Aventura de acción en tercera persona ambientada en STAR WARS.",
+  "tags": ["acción", "aventura", "tercera-persona", "historia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "star-wars-the-old-republic",
+  "title": "STAR WARS: The Old Republic",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1286830/header.jpg",
+  "url": "https://store.steampowered.com/app/1286830/",
+  "description": "MMO free-to-play del universo STAR WARS.",
+  "tags": ["MMO", "RPG", "free-to-play", "cooperativo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "starbound-unstable",
+  "title": "Starbound - Unstable",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/367540/header.jpg",
+  "url": "https://store.steampowered.com/app/367540/",
+  "description": "Build/aventura espacial (rama inestable de Starbound).",
+  "tags": ["sandbox", "aventura", "crafting", "2D"],
+  "platforms": ["PC"]
+},
+{
+  "id": "stardew-valley",
+  "title": "Stardew Valley",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/header.jpg",
+  "url": "https://store.steampowered.com/app/413150/",
+  "description": "Simulación de granja con exploración, pesca y relaciones.",
+  "tags": ["simulación", "granjas", "relajante", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "stray",
+  "title": "Stray",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1332010/header.jpg",
+  "url": "https://store.steampowered.com/app/1332010/",
+  "description": "Exploración felina en una ciudad ciberpunk.",
+  "tags": ["aventura", "exploración", "historia", "gatos"],
+  "platforms": ["PC"]
+},
+{
+  "id": "the-suicide-of-rachel-foster",
+  "title": "The Suicide of Rachel Foster",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/972660/header.jpg",
+  "url": "https://store.steampowered.com/app/972660/",
+  "description": "Thriller narrativo en un hotel aislado.",
+  "tags": ["narrativo", "misterio", "walking-simulator"],
+  "platforms": ["PC"]
+},
+{
+  "id": "sunset-overdrive",
+  "title": "Sunset Overdrive",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/847370/header.jpg",
+  "url": "https://store.steampowered.com/app/847370/",
+  "description": "Mundo abierto frenético con acrobacias y armas locas.",
+  "tags": ["acción", "mundo-abierto", "shooter", "humor"],
+  "platforms": ["PC"]
+},
+{
+  "id": "syberia",
+  "title": "Syberia",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/46500/header.jpg",
+  "url": "https://store.steampowered.com/app/46500/",
+  "description": "Aventura clásica point-and-click de Benoît Sokal.",
+  "tags": ["aventura", "point-and-click", "historia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "syberia-ii",
+  "title": "Syberia II",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/46510/header.jpg",
+  "url": "https://store.steampowered.com/app/46510/",
+  "description": "Secuela directa de la aventura de Kate Walker.",
+  "tags": ["aventura", "point-and-click", "historia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "team-fortress-classic",
+  "title": "Team Fortress Classic",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/20/header.jpg",
+  "url": "https://store.steampowered.com/app/20/",
+  "description": "Clásico shooter multijugador por clases.",
+  "tags": ["shooter", "clásico", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "tell-me-why",
+  "title": "Tell Me Why",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1180660/header.jpg",
+  "url": "https://store.steampowered.com/app/1180660/",
+  "description": "Aventura narrativa por episodios de DONTNOD.",
+  "tags": ["narrativo", "aventura", "decisiones"],
+  "platforms": ["PC"]
+},
+{
+  "id": "thehunter-call-of-the-wild",
+  "title": "theHunter: Call of the Wild",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/518790/header.jpg",
+  "url": "https://store.steampowered.com/app/518790/",
+  "description": "Simulador de caza en entornos naturales masivos.",
+  "tags": ["simulación", "mundo-abierto", "supervivencia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "titan-quest-anniversary-edition",
+  "title": "Titan Quest Anniversary Edition",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/475150/header.jpg",
+  "url": "https://store.steampowered.com/app/475150/",
+  "description": "ARPG clásico con ambientación mitológica.",
+  "tags": ["ARPG", "hack-and-slash", "cooperativo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "rainbow-six-siege",
+  "title": "Tom Clancy's Rainbow Six® Siege",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/359550/header.jpg",
+  "url": "https://store.steampowered.com/app/359550/",
+  "description": "Shooter táctico 5v5 centrado en destrucción y operadores.",
+  "tags": ["shooter", "táctico", "competitivo", "online"],
+  "platforms": ["PC"]
+},
+{
+  "id": "summer-memories",
+  "title": "Summer Memories",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1227890/header.jpg",
+  "url": "https://store.steampowered.com/app/1227890/",
+  "description": "Simulación con elementos de novela visual y gestión del tiempo.",
+  "tags": ["simulación", "novela-visual", "vida", "para-adultos"],
+  "platforms": ["PC"]
+},
+{
+  "id": "supremacy-1914",
+  "title": "Supremacy 1914",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/979920/header.jpg",
+  "url": "https://store.steampowered.com/app/979920/",
+  "description": "Estrategia de gran escala ambientada en la Primera Guerra Mundial.",
+  "tags": ["estrategia", "gran-estrategia", "free-to-play", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "swarm-the-city-zombie-evolved",
+  "title": "Swarm the City: Zombie Evolved",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1597290/header.jpg",
+  "url": "https://store.steampowered.com/app/1597290/",
+  "description": "Controla la horda zombi y conquista ciudades en este RTS.",
+  "tags": ["estrategia", "RTS", "zombis", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "through-abandoned-the-forest",
+  "title": "Through Abandoned: The Forest",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/513340/header.jpg",
+  "url": "https://store.steampowered.com/app/513340/",
+  "description": "Aventura point-and-click/puzzle en un misterioso mundo conectado por puertas.",
+  "tags": ["aventura", "rompecabezas", "point-and-click", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "toy-story-3",
+  "title": "Disney•Pixar Toy Story 3: The Video Game",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/300820/header.jpg",
+  "url": "https://store.steampowered.com/app/300820/",
+  "description": "Acción y plataformas familiares en el universo de Toy Story.",
+  "tags": ["acción", "aventura", "plataformas", "familiar"],
+  "platforms": ["PC"]
 }
 
 ]

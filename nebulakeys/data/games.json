@@ -1636,6 +1636,195 @@
   "description": "Prólogo de supervivencia y crafteo en mundo oceánico: recolecta, construye y explora islas flotantes.",
   "tags": ["supervivencia", "crafteo", "exploración", "sandbox"],
   "platforms": ["PC"]
+},
+{
+  "id": "quiplash",
+  "title": "Quiplash",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/351510/header.jpg",
+  "url": "https://store.steampowered.com/app/351510/Quiplash/",
+  "description": "El party-game de respuestas más salvaje.",
+  "tags": ["fiesta", "multijugador-local", "trivia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "red-dead-redemption-2",
+  "title": "Red Dead Redemption 2",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg",
+  "url": "https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/",
+  "description": "Épica aventura western de mundo abierto por Rockstar.",
+  "tags": ["mundo-abierto", "historia", "acción", "aventura"],
+  "platforms": ["PC"]
+},
+{
+  "id": "ricochet",
+  "title": "Ricochet",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/60/header.jpg",
+  "url": "https://store.steampowered.com/app/60/Ricochet/",
+  "description": "Arena futurista clásico de Valve.",
+  "tags": ["shooter", "arena", "clásico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "risk-global-domination",
+  "title": "RISK: Global Domination",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1128810/header.jpg",
+  "url": "https://store.steampowered.com/app/1128810/RISK_Global_Domination/",
+  "description": "Conquista el mundo en el clásico de estrategia.",
+  "tags": ["mesa", "estrategia", "multijugador"],
+  "platforms": ["PC"]
+},
+{
+  "id": "saints-row-gat-out-of-hell",
+  "title": "Saints Row: Gat out of Hell",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/301910/header.jpg",
+  "url": "https://store.steampowered.com/app/301910/Saints_Row_Gat_out_of_Hell/",
+  "description": "Descenso a los infiernos con poderes demoniacos.",
+  "tags": ["acción", "mundo-abierto", "humor"],
+  "platforms": ["PC"]
+},
+{
+  "id": "saints-row-iv",
+  "title": "Saints Row IV",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/206420/header.jpg",
+  "url": "https://store.steampowered.com/app/206420/Saints_Row_IV/",
+  "description": "Superpoderes presidenciales y caos en mundo abierto.",
+  "tags": ["acción", "mundo-abierto", "humor"],
+  "platforms": ["PC"]
+},
+{
+  "id": "scp-secret-laboratory",
+  "title": "SCP: Secret Laboratory",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/700330/header.jpg",
+  "url": "https://store.steampowered.com/app/700330/SCP_Secret_Laboratory/",
+  "description": "Multijugador asimétrico en las instalaciones SCP.",
+  "tags": ["terror", "multijugador", "asimétrico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "sea-of-thieves",
+  "title": "Sea of Thieves",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1172620/header.jpg",
+  "url": "https://store.steampowered.com/app/1172620/Sea_of_Thieves/",
+  "description": "Aventuras piratas cooperativas en mar abierto.",
+  "tags": ["cooperativo", "mundo-abierto", "aventura"],
+  "platforms": ["PC"]
+},
+{
+  "id": "sega-genesis-classics",
+  "title": "SEGA Mega Drive & Genesis Classics",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/34270/header.jpg",
+  "url": "https://store.steampowered.com/app/34270/SEGA_Mega_Drive__Genesis_Classics/",
+  "description": "Colección de clásicos con soporte de guardados y filtros.",
+  "tags": ["retro", "colección", "plataformas"],
+  "platforms": ["PC"]
+},
+{
+  "id": "the-sims-4",
+  "title": "The Sims™ 4",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1222670/header.jpg",
+  "url": "https://store.steampowered.com/app/1222670/The_Sims_4/",
+  "description": "Crea sims, construye casas y cuenta historias.",
+  "tags": ["simulación", "vida", "construcción"],
+  "platforms": ["PC"]
+},
+{
+  "id": "slender-the-arrival",
+  "title": "Slender: The Arrival",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/252330/header.jpg",
+  "url": "https://store.steampowered.com/app/252330/Slender_The_Arrival/",
+  "description": "Terror en primera persona con Slender Man.",
+  "tags": ["terror", "atmosférico"],
+  "platforms": ["PC"]
+},
+{
+  "id": "slime-rancher",
+  "title": "Slime Rancher",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/433340/header.jpg",
+  "url": "https://store.steampowered.com/app/433340/Slime_Rancher/",
+  "description": "Cultiva y colecciona adorables slimes en un planeta lejano.",
+  "tags": ["sandbox", "granjas", "adorable"],
+  "platforms": ["PC"]
+},
+{
+  "id": "spore",
+  "title": "Spore",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/24720/header.jpg",
+  "url": "https://store.steampowered.com/app/24720/SPORE/",
+  "description": "Evoluciona desde célula hasta civilización espacial.",
+  "tags": ["simulación", "evolución", "creación"],
+  "platforms": ["PC"]
+},
+{
+  "id": "star-wars-droid-repair-bay",
+  "title": "Star Wars: Droid Repair Bay",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/647670/header.jpg",
+  "url": "https://store.steampowered.com/app/647670/Star_Wars_Droid_Repair_Bay/",
+  "description": "Experiencia VR oficial para arreglar droides de la Resistencia.",
+  "tags": ["VR", "corto", "experiencia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "robot-warriors",
+  "title": "Robot Warriors",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/756560/header.jpg",
+  "url": "https://store.steampowered.com/app/756560/Robot_Warriors/",
+  "description": "Acción retro con robots en batallas arcade.",
+  "tags": ["acción", "arcade", "retro"],
+  "platforms": ["PC"]
+},
+{
+  "id": "save-your-mother",
+  "title": "Save Your Mother",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/423740/header.jpg",
+  "url": "https://store.steampowered.com/app/423740/Save_Your_Mother/",
+  "description": "Aventura narrativa/terror con exploración y puzzles.",
+  "tags": ["aventura", "terror", "puzles", "historia"],
+  "platforms": ["PC"]
+},
+{
+  "id": "seen",
+  "title": "Seen",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1069740/header.jpg",
+  "url": "https://store.steampowered.com/app/1069740/Seen/",
+  "description": "Título narrativo/experimental con estética minimalista.",
+  "tags": ["narrativo", "experimental", "indie"],
+  "platforms": ["PC"]
+},
+{
+  "id": "senorita-peluda",
+  "title": "Señorita Peluda",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1566060/header.jpg",
+  "url": "https://store.steampowered.com/app/1566060/Seorita_Peluda/",
+  "description": "Novelita visual para adultos con humor y romance.",
+  "tags": ["novela-visual", "para-adultos", "humor"],
+  "platforms": ["PC"]
+},
+{
+  "id": "skullgirls-2nd-encore",
+  "title": "Skullgirls 2nd Encore",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/245170/header.jpg",
+  "url": "https://store.steampowered.com/app/245170/Skullgirls_2nd_Encore/",
+  "description": "Lucha 2D con arte dibujado a mano y sistema competitivo profundo.",
+  "tags": ["lucha", "2D", "competitivo", "arcade"],
+  "platforms": ["PC"]
+},
+{
+  "id": "smite-2",
+  "title": "SMITE 2",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2437170/header.jpg",
+  "url": "https://store.steampowered.com/app/2437170/SMITE_2/",
+  "description": "MOBA de dioses renovado con mejoras técnicas y jugables.",
+  "tags": ["MOBA", "acción", "multijugador", "competitivo"],
+  "platforms": ["PC"]
+},
+{
+  "id": "square-n-fair",
+  "title": "Square n Fair",
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/575680/header.jpg",
+  "url": "https://store.steampowered.com/app/575680/Square_n_Fair/",
+  "description": "Juego de precisión minimalista con niveles desafiantes.",
+  "tags": ["plataformas", "precisión", "difícil", "indie"],
+  "platforms": ["PC"]
 }
 
 ]

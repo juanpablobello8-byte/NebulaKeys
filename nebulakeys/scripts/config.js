@@ -13,7 +13,9 @@ window.NEBULA_PUBLIC = {
   PRICING_PAGE: "/pricing.html",
   SUCCESS_PAGE: "/success.html",
   CANCEL_PAGE: "/cancel.html",
-
+  // --- Logo
+  BRAND_ASSETS_BASE: "/nebulakeys/assets/plans/",
+  BRAND_LOGO_FILE: "logo.png",
   // --- Planes (solo UI). El cobro real lo define CADA id (price_XXX) ---
   PLANS: {
     weekly: {   // $150 Semanal

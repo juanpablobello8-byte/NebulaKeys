@@ -2,166 +2,195 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
+  <title>Ingresar — NebulaKeys</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NebulaKeys — Ingresar</title>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/logo.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/logo-192.png">
   <style>
-    :root {
-      --bg: #0b1220;
-      --panel: #121a2b;
-      --text: #e6ebff;
-      --muted:#9fb0d9;
-      --primary:#5b5ef7;
-      --primary-700:#4749d7;
-      --edge:#203255;
+    :root{
+      --bg:#0b0f17; --card:#0f1521; --muted:#9ca3af; --text:#e5e7eb; --line:rgba(255,255,255,.06);
+      --accent:#5b5bd6; --accent-2:#6f6fff; --chip:#1b2232; --danger:#ff6b7a;
     }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial; background:var(--bg); color:var(--text); }
-    .wrap { max-width: 1100px; margin: 40px auto; padding: 0 16px; display:grid; grid-template-columns: 1.2fr 1fr; gap:32px; }
-    h1 { font-size: 40px; line-height: 1.1; margin:.2rem 0 1rem; }
-    p.lead { color:var(--muted); margin-top:0; }
-    .card { background:var(--panel); border:1px solid var(--edge); border-radius: 16px; padding: 22px; }
-    label { display:block; font-weight:600; margin: 14px 0 8px; }
-    input[type="email"], input[type="password"], input[type="text"] {
-      width:100%; padding:14px 14px; border-radius:12px; border:1px solid var(--edge); background:#0f172a; color:var(--text); outline:none;
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+    a{color:#9ec1ff}
+    .container{max-width:1200px;margin:0 auto;padding:1rem}
+    .grid{display:grid;gap:2rem;grid-template-columns:1.05fr .95fr}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+    /* Header */
+    .nk-header{position:sticky;top:0;z-index:40;background:#0b0f17;border-bottom:1px solid var(--line)}
+    .nk-header__inner{max-width:1200px;margin:0 auto;padding:.85rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .nk-brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+    .nk-brand__logo{width:28px;height:28px;object-fit:contain}
+    .nk-brand__name{color:#e5e7eb;font-weight:700;letter-spacing:.2px}
+    .nk-nav{display:flex;gap:1rem}
+    .nk-nav a{color:#cbd5e1;text-decoration:none;padding:.4rem .6rem;border-radius:.45rem}
+    .nk-nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+    @media (max-width:720px){.nk-nav{gap:.5rem}.nk-brand__name{display:none}}
+
+    /* Card form */
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.2rem}
+    label{display:block;margin:.6rem 0 .35rem;color:#cbd5e1}
+    input[type="email"],input[type="password"],input[type="text"]{
+      width:100%;background:#0b1220;border:1px solid var(--line);border-radius:.6rem;color:#e5e7eb;padding:.75rem .9rem;outline:none;
     }
-    input::placeholder { color:#6d7fb3; }
-    .row { display:flex; align-items:center; gap:10px; margin:12px 0; color:var(--muted); }
-    .btn {
-      width:100%; padding:14px 16px; background:var(--primary); color:white; font-weight:700; border:0; border-radius:12px; cursor:pointer; margin-top:12px;
-    }
-    .btn:disabled { opacity:.6; cursor:default; }
-    .muted { color:var(--muted); font-size:14px; }
-    .tiny { font-size:12px; color:#9fb0d9; margin-top:6px; }
-    .brand { display:flex; align-items:center; gap:10px; }
-    .logo { width:36px; height:36px; background:#5b5ef7; color:white; display:grid; place-items:center; border-radius:999px; font-weight:800; }
-    @media (max-width: 960px){ .wrap { grid-template-columns: 1fr; } }
+    input:focus{border-color:#304ffe;box-shadow:0 0 0 3px rgba(48,79,254,.15)}
+    .row{display:flex;align-items:center;gap:.5rem}
+    .row label{margin:0}
+    .btn{appearance:none;border:0;border-radius:.7rem;padding:.85rem 1.1rem;font-weight:700;cursor:pointer}
+    .btn-primary{background:var(--accent);color:#fff;width:100%}
+    .btn-primary:hover{background:var(--accent-2)}
+    .muted{color:var(--muted)}
+    .alert{background:#1a2235;border:1px solid var(--line);border-left:4px solid var(--accent);padding:.8rem 1rem;border-radius:.5rem;color:#dbe2ff}
+    .alert.error{border-left-color:var(--danger);color:#ffdce0}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <section>
-      <div class="brand">
-        <div class="logo">NK</div>
-        <div style="font-size:20px; font-weight:800;">NebulaKeys</div>
-      </div>
-      <h1>Crea tu cuenta o<br/>inicia sesión</h1>
-      <p class="lead">
-        Seguro con Supabase. Guardaremos tu <strong>usuario de Steam</strong> para activar la suscripción en tu cuenta de Steam.
-      </p>
-      <p class="tiny">* Si el correo ya existe, iniciaremos sesión automáticamente.</p>
-    </section>
 
-    <section class="card">
-      <h2 style="margin:0 0 8px">Ingresar</h2>
-      <p class="muted" style="margin-top:0">Usa tu email y contraseña. El usuario de Steam se guardará en tu perfil.</p>
+  <!-- ========== NAV / HEADER ========== -->
+  <header class="nk-header">
+    <div class="nk-header__inner">
+      <a class="nk-brand" href="/index.html" aria-label="NebulaKeys — Inicio">
+        <img class="nk-brand__logo" src="/assets/brand/logo.svg" alt="Logotipo NebulaKeys" />
+        <span class="nk-brand__name">NebulaKeys</span>
+      </a>
+      <nav class="nk-nav" aria-label="Navegación principal">
+        <a href="/catalogo.html">Catálogo</a>
+        <a id="navPlans" href="/pricing.html" hidden>Planes</a>
+        <a id="navLogin" href="/login.html">Ingresar</a>
+        <a id="navAccount" href="/dashboard.html" hidden>Mi cuenta</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ========== /NAV ========== -->
 
-      <label for="email">Email</label>
-      <input id="email" type="email" placeholder="tucorreo@example.com" autocomplete="email" />
+  <main class="container">
+    <div class="grid">
+      <section>
+        <h1 style="font-size:2.35rem;margin:.2rem 0 .6rem">Crea tu cuenta o inicia sesión</h1>
+        <p class="muted">Manejo seguro con Supabase. Tu usuario de Steam nos permite activar tu suscripción en tu cuenta de Steam.</p>
+      </section>
 
-      <label for="password">Contraseña</label>
-      <input id="password" type="password" placeholder="••••••••" autocomplete="current-password" />
+      <section class="card">
+        <h2 style="margin-top:0">NebulaKeys — Ingresar</h2>
 
-      <label for="steam">Usuario de Steam</label>
-      <input id="steam" type="text" placeholder="TuUsuarioDeSteam" />
+        <div id="msg" class="alert" style="display:none;margin:.6rem 0 1rem"></div>
 
-      <div class="row">
-        <input id="isLogin" type="checkbox" />
-        <label for="isLogin" style="margin:0; font-weight:600;">Ya tengo cuenta (iniciar sesión)</label>
-      </div>
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="tuCorreo@example.com" autocomplete="email" />
 
-      <button id="submitBtn" class="btn">Continuar</button>
-      <div id="msg" class="tiny"></div>
-    </section>
-  </div>
+        <label for="password">Contraseña</label>
+        <input id="password" type="password" placeholder="********" autocomplete="current-password" />
 
-  <!-- Supabase JS v2 -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-  // 1) CONFIGURA ESTO:
-  const SUPABASE_URL = "https://uhsggttdnajnhpmlzyud.supabase.co";          // ej: https://xxxx.supabase.co
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVoc2dndHRkbmFqbmhwbWx6eXVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2Nzg2MDksImV4cCI6MjA3NjI1NDYwOX0.KMP5Wts7DgJxEPh8W_SayvsqsOJ7NTMI9lqvMiMKPAg"; // clave pública (anon)
+        <label for="steam">Usuario de Steam</label>
+        <input id="steam" type="text" placeholder="TuUsuarioDeSteam" />
 
-  // 2) CLIENT
-  const supa = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        <div class="row" style="margin:.7rem 0 1rem">
+          <input id="hasAccount" type="checkbox" />
+          <label class="muted" for="hasAccount">Ya tengo cuenta (Iniciar sesión)</label>
+        </div>
 
-  // 3) UI refs
-  const $email   = document.getElementById("email");
-  const $pass    = document.getElementById("password");
-  const $steam   = document.getElementById("steam");
-  const $isLogin = document.getElementById("isLogin");
-  const $btn     = document.getElementById("submitBtn");
-  const $msg     = document.getElementById("msg");
+        <button id="submitBtn" class="btn btn-primary">Continuar</button>
 
-  function say(t){ $msg.textContent = t || ""; }
+        <p class="muted" style="margin:.9rem 0 0;font-size:.92rem">
+          Al continuar aceptas nuestros <a href="/terminos.html">Términos y Condiciones</a> y confirmas haber leído la
+          <a href="/privacidad.html">Política de Privacidad</a>.
+        </p>
 
-  async function upsertProfile(userId, email, steam){
-    // Guarda/actualiza datos en 'profiles'
-    const { error } = await supa
-      .from("profiles")
-      .upsert(
-        { id: userId, email, steam_user: steam || null, updated_at: new Date().toISOString() },
-        { onConflict: "id" }
-      );
-    if (error) throw error;
-  }
+        <p style="margin:.8rem 0 0"><a href="/index.html">¿Listo? Volver al inicio</a></p>
+      </section>
+    </div>
+  </main>
 
-  async function handleSubmit(){
-    try{
-      $btn.disabled = true; say("Procesando…");
-      const email = ($email.value || "").trim();
-      const password = ($pass.value || "").trim();
-      const steam = ($steam.value || "").trim();
-      const onlyLogin = !!$isLogin.checked;
+  <!-- ========== FOOTER ========== -->
+  <footer class="nk-footer">
+    <div class="nk-footer__inner">
+      <p>© <span id="ycopy"></span> NebulaKeys. Todos los derechos reservados.</p>
+      <nav class="nk-footer__nav" aria-label="Enlaces legales">
+        <a href="/privacidad.html">Política de Privacidad</a>
+        <a href="/terminos.html">Términos y Condiciones</a>
+        <a href="mailto:soporte@nebulakeys.com">Contacto</a>
+      </nav>
+    </div>
+  </footer>
+  <!-- ========== /FOOTER ========== -->
 
-      if(!email || !password){ say("Completa email y contraseña"); $btn.disabled=false; return; }
+  <!-- Config pública + Supabase -->
+  <script src="/scripts/config.js"></script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+    const cfg = window.NEBULA_PUBLIC || {};
+    const supabase = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
 
-      // LOGIN
-      if (onlyLogin){
-        const { data, error } = await supa.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        await supa.auth.updateUser({ data: { steam_user: steam || null } }).catch(()=>{});
-        await upsertProfile(data.user.id, data.user.email, steam);
-        location.href = "/dashboard.html"; // redirige
-        return;
-      }
+    // Footer year
+    document.getElementById('ycopy').textContent = new Date().getFullYear();
 
-      // SIGNUP + fallback a LOGIN si ya existe
-      const r1 = await supa.auth.signUp({
-        email,
-        password,
-        options: { data: { steam_user: steam || null } }
-      });
-
-      if (r1.error && !/registered/i.test(r1.error.message)) throw r1.error;
-
-      // Si ya estaba registrado → login
-      if (r1.error && /registered/i.test(r1.error.message)){
-        const r2 = await supa.auth.signInWithPassword({ email, password });
-        if (r2.error) throw r2.error;
-        await supa.auth.updateUser({ data: { steam_user: steam || null } }).catch(()=>{});
-        await upsertProfile(r2.data.user.id, r2.data.user.email, steam);
-        location.href = "/dashboard.html";
-        return;
-      }
-
-      // Registro nuevo: si tu proyecto exige confirmación de email no habrá session
-      if (!r1.data.session){
-        say("Te enviamos un correo para confirmar la cuenta. Revisa tu bandeja ✉️");
-        return;
-      }
-
-      await upsertProfile(r1.data.user.id, r1.data.user.email, steam);
-      location.href = "/dashboard.html";
-    }catch(e){
-      console.error(e);
-      say(e.message || "Error");
-    }finally{
-      $btn.disabled = false;
+    // Toggle nav according to session
+    const { data: { session } } = await supabase.auth.getSession();
+    const navPlans   = document.getElementById('navPlans');
+    const navLogin   = document.getElementById('navLogin');
+    const navAccount = document.getElementById('navAccount');
+    if (session) {
+      if (navPlans)   navPlans.hidden   = false;
+      if (navAccount) navAccount.hidden = false;
+      if (navLogin)   navLogin.hidden   = true;
+    } else {
+      if (navPlans)   navPlans.hidden   = true;
+      if (navAccount) navAccount.hidden = true;
+      if (navLogin)   navLogin.hidden   = false;
     }
-  }
 
-  $btn.addEventListener("click", handleSubmit);
+    // Helpers
+    const $ = id => document.getElementById(id);
+    const showMsg = (text, type='info') => {
+      const box = $('msg');
+      box.textContent = text;
+      box.className = 'alert' + (type==='error' ? ' error' : '');
+      box.style.display = 'block';
+    };
+
+    // Submit
+    $('submitBtn').addEventListener('click', async () => {
+      const email = $('email').value.trim();
+      const password = $('password').value.trim();
+      const steam = $('steam').value.trim();
+      const hasAccount = $('hasAccount').checked;
+
+      if (!email || !password) {
+        showMsg('Por favor ingresa email y contraseña.', 'error'); return;
+      }
+      try {
+        if (hasAccount) {
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+          showMsg('Inicio de sesión correcto. Redirigiendo…');
+          setTimeout(()=> location.href = '/dashboard.html', 700);
+        } else {
+          const { data, error } = await supabase.auth.signUp({
+            email, password,
+            options: { data: { steam_user: steam || null } }
+          });
+          if (error) throw error;
+
+          // Intento de garantizar perfil (si la RLS lo permite y hay sesión)
+          try {
+            const { data: sess } = await supabase.auth.getSession();
+            if (sess?.session?.user) {
+              await supabase.from('profiles').upsert({
+                id: sess.session.user.id,
+                email, steam_user: steam || null
+              });
+            }
+          } catch {}
+
+          // Mensaje según configuración de confirmación de correo
+          showMsg('Registro correcto. Revisa tu correo para confirmar la cuenta.');
+        }
+      } catch (e) {
+        showMsg(e?.message || 'Ocurrió un error. Intenta nuevamente.', 'error');
+      }
+    });
   </script>
 </body>
 </html>

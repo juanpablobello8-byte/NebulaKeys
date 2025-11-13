@@ -54,10 +54,17 @@
   <!-- ========== NAV / HEADER ========== -->
   <header class="nk-header">
     <div class="nk-header__inner">
-      <a class="nk-brand" href="/index.html" aria-label="NebulaKeys — Inicio">
-        <img class="nk-brand__logo" src="/assets/brand/logo.svg" alt="Logotipo NebulaKeys" />
-        <span class="nk-brand__name">NebulaKeys</span>
-      </a>
+      <!-- LOGO (usa la ruta /assets/plans/...) -->
+<a href="/login.html" class="flex items-center gap-2">
+  <img
+    src="/assets/plans/logo.png"
+    alt="NebulaKeys"
+    width="28" height="28"
+    class="h-7 w-7 object-contain select-none"
+    loading="eager"
+  />
+  <span class="font-semibold">NebulaKeys</span>
+</a>
       <nav class="nk-nav" aria-label="Navegación principal">
         <a href="/catalogo.html">Catálogo</a>
         <a id="navPlans" href="/pricing.html" hidden>Planes</a>

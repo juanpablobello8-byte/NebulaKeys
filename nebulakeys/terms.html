@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Términos y condiciones — NebulaKeys</title>
+  <link rel="icon" type="image/png" href="/nebulakeys/assets/plans/logo.png"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <style>
+    :root{color-scheme:dark light}
+    body{margin:0;background:#0B1220;color:#E2E8F0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+    a{color:#aab4ff;text-decoration:none} a:hover{color:#fff}
+    .wrap{max-width:920px;margin:0 auto;padding:32px 20px}
+    h1{font-size:28px;margin:24px 0}
+    h2{font-size:20px;margin:20px 0 10px}
+    p,li{color:#B6C2CF;line-height:1.6}
+    header,footer{border-color:rgba(255,255,255,.08)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{height:32px;width:auto}
+  </style>
+</head>
+<body>
+  <header style="border-bottom:1px solid rgba(255,255,255,.08);background:#0B1220">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px">
+    <!-- LOGO (usa la ruta /assets/plans/...) -->
+<a href="/index.html" class="flex items-center gap-2">
+  <img
+    src="/assets/plans/logo.png"
+    alt="NebulaKeys"
+    width="28" height="28"
+    class="h-7 w-7 object-contain select-none"
+    loading="eager"
+  />
+  <span class="font-semibold">NebulaKeys</span>
+</a>
+
+      <nav><a href="/index.html">Volver al inicio</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1>Términos y condiciones</h1>
+    <p>Al usar NebulaKeys aceptas estos términos. Si no estás de acuerdo, por favor no uses el servicio.</p>
+
+    <h2>Servicio</h2>
+    <p>Ofrecemos acceso por membresía a un catálogo de videojuegos. Nos reservamos el derecho de modificar el contenido, planes y precios.</p>
+
+    <h2>Cuentas</h2>
+    <ul>
+      <li>Debes proporcionar información veraz y mantener la seguridad de tu cuenta.</li>
+      <li>Eres responsable de toda actividad realizada con tus credenciales.</li>
+    </ul>
+
+    <h2>Pagos y suscripciones</h2>
+    <ul>
+      <li>Los pagos se procesan a través de Stripe. Aplican renovaciones según el plan elegido.</li>
+      <li>Puedes cancelar en cualquier momento; el acceso se mantiene hasta el fin del período pagado.</li>
+    </ul>
+
+    <h2>Uso aceptable</h2>
+    <ul>
+      <li>Prohibido el abuso del servicio, la redistribución no autorizada y cualquier actividad ilícita.</li>
+      <li>Podemos suspender o terminar cuentas que violen estos términos.</li>
+    </ul>
+
+    <h2>Limitación de responsabilidad</h2>
+    <p>El servicio se ofrece “tal cual” sin garantías. No somos responsables por daños indirectos o pérdida de datos.</p>
+
+    <p>Última actualización: <strong><script>document.write(new Date().toISOString().slice(0,10))</script></strong></p>
+  </main>
+
+  <footer style="border-top:1px solid rgba(255,255,255,.08);background:#0B1220">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px">
+      <small>© <span id="y"></span> NebulaKeys</small>
+      <nav>
+        <a href="/privacy.html">Políticas de privacidad</a>
+      </nav>
+    </div>
+    <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+  </footer>
+</body>
+</html>

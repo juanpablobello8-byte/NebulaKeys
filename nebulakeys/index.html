@@ -1,215 +1,218 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <title>NebulaKeys — Renta videojuegos ilimitados</title>
+<head>
+  <meta charset="utf-8" />
+  <title>NebulaKeys — Renta videojuegos por membresía</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/logo.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/logo-192.png">
 
-    <!-- Tailwind (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Estilos base -->
+  <style>
+    :root{
+      --bg:#0b0f17; --card:#0f1521; --muted:#9ca3af; --text:#e5e7eb; --line:rgba(255,255,255,.06);
+      --accent:#5b5bd6; --accent-2:#6f6fff; --chip:#1b2232;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+    a{color:#9ec1ff}
+    .container{max-width:1200px;margin:0 auto;padding:1rem}
+    h1,h2{margin:.2rem 0 .6rem}
+    h1{font-size:2.25rem}
+    h2{font-size:1.35rem;color:#d7dbe3}
 
-    <!-- Fuente y color base -->
-    <style>
-      :root {
-        color-scheme: dark;
-      }
-      html,
-      body {
-        background: #0b0f1a;
-      }
-    </style>
-  </head>
+    /* Header / Nav */
+    .nk-header{position:sticky;top:0;z-index:40;background:#0b0f17;border-bottom:1px solid var(--line)}
+    .nk-header__inner{max-width:1200px;margin:0 auto;padding:.85rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .nk-brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+    .nk-brand__logo{width:28px;height:28px;object-fit:contain}
+    .nk-brand__name{color:#e5e7eb;font-weight:700;letter-spacing:.2px}
+    .nk-nav{display:flex;gap:1rem}
+    .nk-nav a{color:#cbd5e1;text-decoration:none;padding:.4rem .6rem;border-radius:.45rem}
+    .nk-nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+    @media (max-width:720px){.nk-nav{gap:.5rem}.nk-brand__name{display:none}}
 
-  <body class="text-slate-200">
-    <!-- NAV -->
-    <header
-      class="sticky top-0 z-40 backdrop-blur bg-[#0b0f1a]/60 border-b border-white/5"
-    >
-      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-3">
-          <span
-            class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600 text-white font-bold"
-            >NK</span
-          >
-          <span class="font-semibold text-lg">NebulaKeys</span>
-        </a>
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:center}
+    .hero h1{font-size:2.6rem}
+    .hero p.lead{color:#b9c1cc;margin:.5rem 0 1.25rem}
+    .cta{display:flex;gap:.75rem;flex-wrap:wrap}
+    .btn{appearance:none;border:0;border-radius:.7rem;padding:.8rem 1.1rem;font-weight:600;cursor:pointer}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-primary:hover{background:var(--accent-2)}
+    .btn-ghost{background:transparent;color:#e5e7eb;border:1px solid var(--line)}
+    .btn-ghost:hover{background:rgba(255,255,255,.06)}
 
-        <nav class="flex items-center gap-3">
-          <!-- Este botón solo se mostrará si hay sesión (JS lo gestiona) -->
-          <a
-            id="btnViewPlans"
-            href="/pricing.html"
-            class="hidden rounded-md bg-indigo-600 hover:bg-indigo-500 px-4 py-2 text-sm font-semibold text-white transition"
-            >Ver planes</a
-          >
+    .hero-card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+    .hero-img-wrap{position:relative;border-bottom:1px solid var(--line)}
+    .hero-img{display:block;width:100%;height:320px;object-fit:cover}
+    .chip-top{position:absolute;left:12px;top:12px;background:var(--chip);border:1px solid var(--line);color:#cbd5e1;padding:.3rem .65rem;border-radius:999px;font-size:.8rem;font-weight:700;letter-spacing:.3px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+    .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem;text-align:center}
+    .stat b{display:block;font-size:1.3rem}
 
-          <a
-            href="/login.html"
-            class="rounded-md bg-white/10 hover:bg-white/20 px-4 py-2 text-sm font-semibold text-white transition"
-            >Ingresar</a
-          >
-        </nav>
-      </div>
-    </header>
+    /* Plans */
+    .plans{margin-top:2.25rem}
+    .plans h2{margin-bottom:.25rem}
+    .muted{color:var(--muted)}
+    .grid{display:grid;gap:1rem}
+    @media (min-width:800px){.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+    .plan{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+    .plan img{width:100%;height:160px;object-fit:cover;border-bottom:1px solid var(--line)}
+    .plan .p-body{padding:1rem}
+    .price{font-size:1.6rem;font-weight:800}
+    .mxn{font-size:.95rem;font-weight:600;color:#cbd5e1;margin-left:.2rem}
+    .pill{display:inline-block;background:var(--chip);border:1px solid var(--line);padding:.2rem .55rem;border-radius:999px;font-size:.75rem;margin-bottom:.6rem;color:#cbd5e1}
 
+    /* Footer */
+    .nk-footer{margin-top:3rem;border-top:1px solid var(--line);background:#0b0f17}
+    .nk-footer__inner{max-width:1200px;margin:0 auto;padding:1.25rem 1rem;display:flex;gap:1rem;justify-content:space-between;align-items:center;color:#9ca3af}
+    .nk-footer__nav{display:flex;gap:1rem}
+    .nk-footer__nav a{color:#cbd5e1;text-decoration:none}
+    .nk-footer__nav a:hover{color:#fff}
+    @media (max-width:720px){.hero{grid-template-columns:1fr}.nk-footer__inner{flex-direction:column}}
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAV / HEADER ========== -->
+  <header class="nk-header">
+    <div class="nk-header__inner">
+      <a class="nk-brand" href="/index.html" aria-label="NebulaKeys — Inicio">
+        <img class="nk-brand__logo" src="/assets/brand/logo.svg" alt="Logotipo NebulaKeys" />
+        <span class="nk-brand__name">NebulaKeys</span>
+      </a>
+      <nav class="nk-nav" aria-label="Navegación principal">
+        <a href="/catalogo.html">Catálogo</a>
+        <a id="navPlans" href="/pricing.html" hidden>Planes</a>
+        <a id="navLogin" href="/login.html">Ingresar</a>
+        <a id="navAccount" href="/dashboard.html" hidden>Mi cuenta</a>
+      </nav>
+    </div>
+  </header>
+  <!-- ========== /NAV ========== -->
+
+  <main class="container">
     <!-- HERO -->
-    <section class="relative overflow-hidden">
-      <div class="max-w-7xl mx-auto px-4 py-12 grid lg:grid-cols-2 gap-10">
-        <!-- Columna izquierda -->
-        <div class="flex flex-col justify-center">
-          <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight">
-            Renta videojuegos
-            <span class="text-indigo-400">ilimitados</span>
-            por membresía.
-          </h1>
-
-          <p class="mt-6 text-slate-400">
-            Para suscribirte, inicia sesión primero.
-          </p>
-
-          <div class="mt-6 flex gap-3">
-            <!-- Botón SIEMPRE visible -->
-            <a
-              href="/catalogo.html"
-              class="rounded-md bg-white/10 hover:bg-white/20 px-4 py-2 text-sm font-semibold text-white transition"
-              >Explorar catálogo</a
-            >
-          </div>
+    <section class="hero">
+      <div>
+        <h1>Renta videojuegos <span style="color:#9db4ff">ilimitados</span> por membresía.</h1>
+        <p class="lead">Para suscribirte, inicia sesión primero.</p>
+        <div class="cta">
+          <a id="btnPlans" class="btn btn-primary" href="/pricing.html" hidden>Ver planes</a>
+          <a class="btn btn-ghost" href="/catalogo.html">Explorar catálogo</a>
         </div>
+      </div>
 
-        <!-- Columna derecha (Portada + badge) -->
-        <div class="relative">
-          <!-- Badge arriba de la portada -->
-          <div class="flex justify-end mb-3">
-            <span
-              class="inline-flex items-center gap-2 rounded-full bg-indigo-600/90 px-3 py-1 text-xs font-semibold tracking-wide"
-            >
-              🎮 Próximos juegos
-            </span>
-          </div>
-            <img
-              src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/header.jpg"
-              alt="HELLDIVERS 2"
-              class="w-full h-[360px] object-cover"
-              loading="lazy"
-            />
-          </div>
-
-          <!-- Métricas -->
-          <div class="grid grid-cols-3 gap-4 mt-6">
-            <div
-              class="rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-center"
-            >
-              <div class="text-2xl font-extrabold">120+</div>
-              <div class="text-slate-400 text-sm">juegos</div>
-            </div>
-            <div
-              class="rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-center"
-            >
-              <div class="text-2xl font-extrabold">24h</div>
-              <div class="text-slate-400 text-sm">soporte</div>
-            </div>
-            <div
-              class="rounded-xl border border-white/10 bg-white/5 px-5 py-4 text-center"
-            >
-              <div class="text-2xl font-extrabold">MXN</div>
-              <div class="text-slate-400 text-sm">precios locales</div>
-            </div>
-          </div>
+      <div class="hero-card">
+        <div class="hero-img-wrap">
+          <span class="chip-top">Próximos juegos</span>
+          <img class="hero-img" alt="HELldivers 2" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_85f310dfd531510895e2d319a72b582c388ad4c6.1920x1080.jpg?t=1745849290">
+        </div>
+        <div class="stats">
+          <div class="stat"><b>120+</b><span class="muted">juegos</span></div>
+          <div class="stat"><b>24h</b><span class="muted">soporte</span></div>
+          <div class="stat"><b>MXN</b><span class="muted">precios locales</span></div>
         </div>
       </div>
     </section>
 
-    <!-- PRECIOS -->
-    <section class="py-12">
-      <div class="max-w-7xl mx-auto px-4">
-        <p class="mb-4 text-sm text-slate-400">
-          <span class="font-semibold text-white">Inicia sesión</span> para
-          suscribirte.
-        </p>
+    <!-- PLANS -->
+    <section class="plans">
+      <h2>Inicia sesión para suscribirte</h2>
+      <p class="muted" style="margin-bottom:.9rem">Elige el plan que prefieras. Puedes cambiarlo o cancelarlo cuando quieras.</p>
 
-        <div class="grid md:grid-cols-3 gap-6">
-          <!-- STARTER -->
-          <article
-            class="group rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-5"
-          >
-            <img
-              id="img-starter-plan"
-              src="/assets/plans/Starter%20Pack.png"
-              alt="Starter Pack"
-              class="w-full h-36 object-cover rounded-xl"
-              loading="lazy"
-            />
-            <div class="mt-4 flex items-baseline justify-between">
-              <h3 class="text-lg font-semibold">Starter</h3>
-              <div class="text-2xl font-extrabold">MXN $150</div>
-            </div>
-            <p class="mt-2 text-sm text-slate-400">Para probar el servicio.</p>
-          </article>
+      <div class="grid cols-3">
+        <!-- Starter -->
+        <article class="plan">
+          <img src="/assets/plans/Starter Pack.png" alt="Starter Pack">
+          <div class="p-body">
+            <span class="pill">Starter</span>
+            <div class="price">$150<span class="mxn">MXN/mes</span></div>
+            <ul class="muted" style="margin:.6rem 0 1rem;padding-left:1rem;list-style:disc">
+              <li>Acceso básico a catálogo</li>
+              <li>1 cuenta activa</li>
+            </ul>
+            <a class="btn btn-ghost" href="/pricing.html" id="p1" hidden>Ver detalles</a>
+          </div>
+        </article>
 
-          <!-- PRIORITY -->
-          <article
-            class="group rounded-2xl border border-indigo-500/40 bg-indigo-500/10 hover:bg-indigo-500/15 transition p-5 ring-1 ring-inset ring-indigo-500/20"
-          >
-            <img
-              id="img-priority-plan"
-              src="/assets/plans/Priority%20Pack.png"
-              alt="Priority Pack"
-              class="w-full h-36 object-cover rounded-xl"
-              loading="lazy"
-            />
-            <div class="mt-4 flex items-baseline justify-between">
-              <h3 class="text-lg font-semibold">Priority</h3>
-              <div class="text-2xl font-extrabold">MXN $250</div>
-            </div>
-            <p class="mt-2 text-sm text-slate-300">
-              La mejor relación precio/beneficio.
-            </p>
-          </article>
+        <!-- Priority -->
+        <article class="plan">
+          <img src="/assets/plans/Priority Pack.png" alt="Priority Pack">
+          <div class="p-body">
+            <span class="pill">Priority</span>
+            <div class="price">$250<span class="mxn">MXN/mes</span></div>
+            <ul class="muted" style="margin:.6rem 0 1rem;padding-left:1rem;list-style:disc">
+              <li>Slots prioritarios</li>
+              <li>Hasta 2 cuentas activas</li>
+            </ul>
+            <a class="btn btn-ghost" href="/pricing.html" id="p2" hidden>Ver detalles</a>
+          </div>
+        </article>
 
-          <!-- ULTIMATE -->
-          <article
-            class="group rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-5"
-          >
-            <img
-              id="img-ultimate-plan"
-              src="/assets/plans/Pro%20Pack.png"
-              alt="Ultimate / Pro Pack"
-              class="w-full h-36 object-cover rounded-xl"
-              loading="lazy"
-            />
-            <div class="mt-4 flex items-baseline justify-between">
-              <h3 class="text-lg font-semibold">Ultimate</h3>
-              <div class="text-2xl font-extrabold">MXN $350</div>
-            </div>
-            <p class="mt-2 text-sm text-slate-400">Para los más exigentes.</p>
-          </article>
-        </div>
+        <!-- Ultimate -->
+        <article class="plan">
+          <img src="/assets/plans/Pro Pack.png" alt="Ultimate Pack">
+          <div class="p-body">
+            <span class="pill">Ultimate</span>
+            <div class="price">$350<span class="mxn">MXN/mes</span></div>
+            <ul class="muted" style="margin:.6rem 0 1rem;padding-left:1rem;list-style:disc">
+              <li>Prioridad máxima</li>
+              <li>Hasta 3 cuentas activas</li>
+            </ul>
+            <a class="btn btn-ghost" href="/pricing.html" id="p3" hidden>Ver detalles</a>
+          </div>
+        </article>
       </div>
     </section>
+  </main>
 
-    <!-- FOOTER -->
-    <footer class="py-10 border-t border-white/5">
-      <div class="max-w-7xl mx-auto px-4 text-sm text-slate-500">
-        © <span id="year"></span> NebulaKeys — Todos los derechos reservados.
-      </div>
-    </footer>
+  <!-- ========== FOOTER ========== -->
+  <footer class="nk-footer">
+    <div class="nk-footer__inner">
+      <p>© <span id="ycopy"></span> NebulaKeys. Todos los derechos reservados.</p>
+      <nav class="nk-footer__nav" aria-label="Enlaces legales">
+        <a href="/privacidad.html">Política de Privacidad</a>
+        <a href="/terminos.html">Términos y Condiciones</a>
+        <a href="mailto:soporte@nebulakeys.com">Contacto</a>
+      </nav>
+    </div>
+  </footer>
+  <!-- ========== /FOOTER ========== -->
 
-    <!-- Config pública (Supabase) -->
-    <script src="/scripts/config.js"></script>
-    <!-- SDK Supabase (si no lo tienes ya en otra parte) -->
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-    ></script>
-    <!-- Lógica de home -->
-    <script src="/scripts/home.js"></script>
+  <!-- Config pública + Supabase -->
+  <script src="/scripts/config.js"></script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+    const cfg = window.NEBULA_PUBLIC || {};
+    const supabase = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
 
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-  </body>
+    // Footer año
+    document.getElementById('ycopy').textContent = new Date().getFullYear();
+
+    // Navegación/planes visibles solo con sesión
+    const btnPlans = document.getElementById('btnPlans');
+    const p1 = document.getElementById('p1'); const p2 = document.getElementById('p2'); const p3 = document.getElementById('p3');
+    const navPlans   = document.getElementById('navPlans');
+    const navLogin   = document.getElementById('navLogin');
+    const navAccount = document.getElementById('navAccount');
+
+    const { data: { session } } = await supabase.auth.getSession();
+    const logged = !!session;
+    if (btnPlans) btnPlans.hidden = !logged;
+    [p1,p2,p3].forEach(el => { if (el) el.hidden = !logged; });
+
+    if (logged) {
+      if (navPlans)   navPlans.hidden   = false;
+      if (navAccount) navAccount.hidden = false;
+      if (navLogin)   navLogin.hidden   = true;
+    } else {
+      if (navPlans)   navPlans.hidden   = true;
+      if (navAccount) navAccount.hidden = true;
+      if (navLogin)   navLogin.hidden   = false;
+    }
+  </script>
+</body>
 </html>

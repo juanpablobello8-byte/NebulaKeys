@@ -2,149 +2,243 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Elige tu plan — NebulaKeys</title>
-
-  <!-- Tailwind (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- (Opcional) Tu config pública si usas Supabase para leer el email del usuario -->
-  <!-- Si no usas Supabase, puedes borrar esta línea y el bloque "SUPABASE (opcional)" del script -->
-  <script defer src="/scripts/config.js"></script>
+  <title>Planes — NebulaKeys</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- Favicon / Brand -->
+  <link rel="icon" type="image/svg+xml" href="/assets/brand/logo.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/logo-192.png">
 
   <style>
-    body { background:#0b0f1a; color:#e5e7eb; }
-    .card { background:#0f1626; border:1px solid rgba(255,255,255,.06); }
-    .btn  { display:inline-block; padding:.8rem 1.2rem; border-radius:.7rem; border:1px solid rgba(255,255,255,.12); }
-    .btn:hover { background:rgba(255,255,255,.06); }
-    .btn-primary { background:#5b61ff; border-color:#5b61ff; color:white; }
-    .btn-primary[disabled] { opacity:.6; cursor:not-allowed; }
+    :root{
+      --bg:#0b0f17; --card:#0f1521; --muted:#9ca3af; --text:#e5e7eb; --line:rgba(255,255,255,.06);
+      --accent:#5b5bd6; --accent-2:#6f6fff; --chip:#1b2232;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+    a{color:#9ec1ff}
+    .container{max-width:1200px;margin:0 auto;padding:1rem}
+    h1{margin:.3rem 0 .6rem;font-size:2.2rem}
+    h2{margin:.2rem 0 .45rem;font-size:1.35rem}
+    .muted{color:var(--muted)}
+
+    /* Header / Nav */
+    .nk-header{position:sticky;top:0;z-index:40;background:#0b0f17;border-bottom:1px solid var(--line)}
+    .nk-header__inner{max-width:1200px;margin:0 auto;padding:.85rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .nk-brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+    .nk-brand__logo{width:28px;height:28px;object-fit:contain}
+    .nk-brand__name{color:#e5e7eb;font-weight:700;letter-spacing:.2px}
+    .nk-nav{display:flex;gap:1rem}
+    .nk-nav a{color:#cbd5e1;text-decoration:none;padding:.4rem .6rem;border-radius:.45rem}
+    .nk-nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+    @media (max-width:720px){.nk-nav{gap:.5rem}.nk-brand__name{display:none}}
+
+    /* Grid Plans */
+    .grid{display:grid;gap:1rem}
+    @media (min-width:800px){.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+
+    .plan{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+    .plan img{width:100%;height:180px;object-fit:cover;border-bottom:1px solid var(--line)}
+    .p-body{padding:1rem;display:flex;flex-direction:column;gap:.65rem}
+    .pill{display:inline-block;background:var(--chip);border:1px solid var(--line);padding:.2rem .55rem;border-radius:999px;font-size:.75rem;color:#cbd5e1}
+    .price{font-size:1.75rem;font-weight:800}
+    .mxn{font-size:.95rem;font-weight:600;color:#cbd5e1;margin-left:.2rem}
+    ul.features{margin:.2rem 0 .4rem;padding-left:1rem;list-style:disc}
+    .btn{appearance:none;border:0;border-radius:.7rem;padding:.85rem 1.1rem;font-weight:700;cursor:pointer;text-align:center}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-primary:hover{background:var(--accent-2)}
+    .btn-ghost{background:transparent;color:#e5e7eb;border:1px solid var(--line)}
+    .btn-ghost:hover{background:rgba(255,255,255,.06)}
+    .disabled{opacity:.6;pointer-events:none}
+    .top-note{background:#0d1320;border:1px solid var(--line);border-radius:12px;padding:1rem;margin:0 0 1rem}
+    .alert{background:#1a2235;border:1px solid var(--line);border-left:4px solid var(--accent);padding:.8rem 1rem;border-radius:.5rem;color:#dbe2ff;margin:.9rem 0 0}
+    .alert.error{border-left-color:#ff6b7a;color:#ffdce0}
+
+    /* Footer */
+    .nk-footer{margin-top:2rem;border-top:1px solid var(--line);background:#0b0f17}
+    .nk-footer__inner{max-width:1200px;margin:0 auto;padding:1.25rem 1rem;display:flex;gap:1rem;justify-content:space-between;align-items:center;color:#9ca3af}
+    .nk-footer__nav{display:flex;gap:1rem}
+    .nk-footer__nav a{color:#cbd5e1;text-decoration:none}
+    .nk-footer__nav a:hover{color:#fff}
+    @media (max-width:720px){.nk-footer__inner{flex-direction:column}}
   </style>
 </head>
+<body>
 
-<body class="min-h-screen">
-  <header class="max-w-4xl mx-auto px-4 py-10">
-    <h1 class="text-4xl font-extrabold">Elige tu plan</h1>
-    <p class="text-slate-400 mt-2">Suscripción segura con Stripe. Puedes cancelar cuando quieras.</p>
-  </header>
-
-  <main class="max-w-4xl mx-auto px-4 pb-24 space-y-8">
-
-    <!-- Plan semanal -->
-    <section class="card rounded-2xl p-6">
-      <div class="flex items-center justify-between gap-6 flex-col md:flex-row">
-        <div>
-          <h2 class="text-2xl font-bold">Plan Semanal</h2>
-          <p class="text-slate-400 mt-1">MXN $150 / semana</p>
-        </div>
-        <button
-          class="subscribe btn btn-primary"
-          data-price="price_1SJH1zKwqs0TzO3l23W3RIfE"  <!-- TODO: reemplaza con tu Price ID -->
-        >
-          Suscribirme
-        </button>
-      </div>
-    </section>
-
-    <!-- Plan quincenal -->
-    <section class="card rounded-2xl p-6">
-      <div class="flex items-center justify-between gap-6 flex-col md:flex-row">
-        <div>
-          <h2 class="text-2xl font-bold">Plan Quincenal</h2>
-          <p class="text-slate-400 mt-1">MXN $250 / quincenal</p>
-        </div>
-        <button
-          class="subscribe btn btn-primary"
-          data-price="price_1SJH4eKwqs0TzO3l1ODa7pRx"  <!-- TODO: reemplaza con tu Price ID -->
-        >
-          Suscribirme
-        </button>
-      </div>
-    </section>
-
-    <!-- Plan mensual -->
-    <section class="card rounded-2xl p-6">
-      <div class="flex items-center justify-between gap-6 flex-col md:flex-row">
-        <div>
-          <h2 class="text-2xl font-bold">Plan Mensual</h2>
-          <p class="text-slate-400 mt-1">MXN $350 / mensual</p>
-        </div>
-        <button
-          class="subscribe btn btn-primary"
-          data-price="price_1SJH9FKwqs0TzO3lxTTonf6H"  <!-- TODO: reemplaza con tu Price ID -->
-        >
-          Suscribirme
-        </button>
-      </div>
-    </section>
-
-    <div class="text-center">
-      <a href="/index.html" class="btn">← Volver al lobby</a>
+  <!-- ========== HEADER ========== -->
+  <header class="nk-header">
+    <div class="nk-header__inner">
+      <a class="nk-brand" href="/index.html" aria-label="NebulaKeys — Inicio">
+        <img class="nk-brand__logo" src="/assets/brand/logo.svg" alt="Logotipo NebulaKeys" />
+        <span class="nk-brand__name">NebulaKeys</span>
+      </a>
+      <nav class="nk-nav" aria-label="Navegación principal">
+        <a href="/catalogo.html">Catálogo</a>
+        <a id="navPlans" href="/pricing.html" hidden>Planes</a>
+        <a id="navLogin" href="/login.html">Ingresar</a>
+        <a id="navAccount" href="/dashboard.html" hidden>Mi cuenta</a>
+      </nav>
     </div>
+  </header>
+  <!-- ========== /HEADER ========== -->
+
+  <main class="container">
+    <h1>Planes</h1>
+    <div class="top-note">
+      <b>Inicia sesión para suscribirte.</b> Si aún no tienes cuenta, regístrate con tu correo y usuario de Steam.
+    </div>
+
+    <div id="msg" class="alert" style="display:none"></div>
+
+    <div class="grid cols-3">
+      <!-- Starter -->
+      <article class="plan">
+        <img src="/assets/plans/Starter Pack.png" alt="Starter Pack">
+        <div class="p-body">
+          <span class="pill">Starter</span>
+          <div><span class="price">$150</span><span class="mxn">MXN / mes</span></div>
+          <ul class="features muted">
+            <li>Acceso básico a catálogo</li>
+            <li>1 cuenta activa</li>
+          </ul>
+          <button class="btn btn-primary" data-plan="starter">Suscribirme</button>
+        </div>
+      </article>
+
+      <!-- Priority -->
+      <article class="plan">
+        <img src="/assets/plans/Priority Pack.png" alt="Priority Pack">
+        <div class="p-body">
+          <span class="pill">Priority</span>
+          <div><span class="price">$250</span><span class="mxn">MXN / mes</span></div>
+          <ul class="features muted">
+            <li>Slots prioritarios</li>
+            <li>Hasta 2 cuentas activas</li>
+          </ul>
+          <button class="btn btn-primary" data-plan="priority">Suscribirme</button>
+        </div>
+      </article>
+
+      <!-- Ultimate -->
+      <article class="plan">
+        <img src="/assets/plans/Pro Pack.png" alt="Ultimate Pack">
+        <div class="p-body">
+          <span class="pill">Ultimate</span>
+          <div><span class="price">$350</span><span class="mxn">MXN / mes</span></div>
+          <ul class="features muted">
+            <li>Prioridad máxima</li>
+            <li>Hasta 3 cuentas activas</li>
+          </ul>
+          <button class="btn btn-primary" data-plan="ultimate">Suscribirme</button>
+        </div>
+      </article>
+    </div>
+
+    <p class="muted" style="margin:1rem 0 0">
+      Al suscribirte aceptas nuestros <a href="/terminos.html">Términos y Condiciones</a> y la
+      <a href="/privacidad.html">Política de Privacidad</a>.
+    </p>
   </main>
 
-  <!-- Lógica de checkout -->
+  <!-- ========== FOOTER ========== -->
+  <footer class="nk-footer">
+    <div class="nk-footer__inner">
+      <p>© <span id="ycopy"></span> NebulaKeys. Todos los derechos reservados.</p>
+      <nav class="nk-footer__nav" aria-label="Enlaces legales">
+        <a href="/privacidad.html">Política de Privacidad</a>
+        <a href="/terminos.html">Términos y Condiciones</a>
+        <a href="mailto:soporte@nebulakeys.com">Contacto</a>
+      </nav>
+    </div>
+  </footer>
+  <!-- ========== /FOOTER ========== -->
+
+  <!-- Config pública + Supabase -->
+  <script src="/scripts/config.js"></script>
   <script type="module">
-    // ===== SUPABASE (opcional) =====
-    // Obtiene email/userId si tienes config pública en /scripts/config.js
-    let supabase = null;
-    let currentUserEmail = null;
-    let currentUserId = null;
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+    const cfg = window.NEBULA_PUBLIC || {};
+    const supabase = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
 
-    try {
-      if (window.NEBULA_PUBLIC?.SUPABASE_URL && window.NEBULA_PUBLIC?.SUPABASE_ANON_KEY) {
-        const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
-        supabase = createClient(
-          window.NEBULA_PUBLIC.SUPABASE_URL,
-          window.NEBULA_PUBLIC.SUPABASE_ANON_KEY
-        );
-        const { data } = await supabase.auth.getUser();
-        if (data?.user) {
-          currentUserEmail = data.user.email || null;
-          currentUserId   = data.user.id || null;
-        }
-      }
-    } catch (e) {
-      console.warn('Supabase no está configurado o falló la carga (opcional).', e);
+    // Año footer
+    document.getElementById('ycopy').textContent = new Date().getFullYear();
+
+    // Nav según sesión
+    const { data: { session } } = await supabase.auth.getSession();
+    const navPlans   = document.getElementById('navPlans');
+    const navLogin   = document.getElementById('navLogin');
+    const navAccount = document.getElementById('navAccount');
+    if (session) {
+      if (navPlans)   navPlans.hidden   = false;
+      if (navAccount) navAccount.hidden = false;
+      if (navLogin)   navLogin.hidden   = true;
+    } else {
+      if (navPlans)   navPlans.hidden   = true;
+      if (navAccount) navAccount.hidden = true;
+      if (navLogin)   navLogin.hidden   = false;
     }
-    // ===== FIN SUPABASE =====
 
-    // Suscribir botones
-    const buttons = document.querySelectorAll('.subscribe[data-price]');
+    // Helpers
+    const $msg = document.getElementById('msg');
+    const showMsg = (text, isErr=false) => {
+      $msg.textContent = text;
+      $msg.className = 'alert' + (isErr ? ' error' : '');
+      $msg.style.display = 'block';
+    };
 
-    buttons.forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const priceId = btn.dataset.price?.trim();
-        if (!priceId) return alert('No se encontró el Price ID en el botón.');
+    // Resolver IDs de precios desde config pública
+    const getPriceId = (key) => {
+      const P = cfg.PLANS || {};
+      // Preferir claves nuevas si existieran
+      if (key==='starter'  && (P.starter?.id   || P.weekly?.id))   return P.starter?.id   || P.weekly.id;
+      if (key==='priority' && (P.priority?.id  || P.biweekly?.id)) return P.priority?.id  || P.biweekly.id;
+      if (key==='ultimate' && (P.ultimate?.id  || P.monthly?.id))  return P.ultimate?.id  || P.monthly.id;
+      return null;
+    };
 
-        // Deshabilita el botón mientras se crea la sesión
-        const originalText = btn.textContent;
-        btn.textContent = 'Redirigiendo…';
-        btn.disabled = true;
+    // Botones
+    const buttons = Array.from(document.querySelectorAll('button[data-plan]'));
 
-        try {
-          const r = await fetch('/api/create-checkout-session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              priceId,
-              email: currentUserEmail || undefined,
-              userId: currentUserId || undefined
-            })
-          });
-
-          const data = await r.json();
-          if (!r.ok) throw new Error(data?.error || 'No fue posible iniciar el checkout');
-
-          // Redirige a Stripe
-          location.href = data.url;
-        } catch (err) {
-          alert('Error iniciando checkout: ' + err.message);
-          btn.textContent = originalText;
-          btn.disabled = false;
-        }
+    // Deshabilitar si no hay sesión
+    if (!session) {
+      buttons.forEach(btn => {
+        btn.textContent = 'Iniciar sesión';
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-ghost');
+        btn.addEventListener('click', () => {
+          // conservar retorno
+          location.href = '/login.html?return=/pricing.html';
+        }, { once:true });
       });
-    });
+    } else {
+      // Con sesión -> Stripe Checkout via endpoint
+      const endpoint = cfg.CHECKOUT_ENDPOINT || '/api/create-checkout';
+      buttons.forEach(btn => {
+        btn.addEventListener('click', async () => {
+          try {
+            const planKey = btn.dataset.plan;
+            const priceId = getPriceId(planKey);
+            if (!priceId) {
+              showMsg('No se encontró el ID de precio para este plan. Revisa /scripts/config.js', true);
+              return;
+            }
+            btn.disabled = true; btn.textContent = 'Redirigiendo…';
+            const res = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ priceId })
+            });
+            if (!res.ok) throw new Error('No se pudo crear la sesión de pago.');
+            const data = await res.json();
+            if (data?.url) location.href = data.url;
+            else showMsg('Respuesta inesperada del servidor de pagos.', true);
+          } catch (e) {
+            showMsg(e?.message || 'Error al iniciar el pago.', true);
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      });
+    }
   </script>
 </body>
 </html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Políticas de privacidad — NebulaKeys</title>
+  <link rel="icon" type="image/png" href="/nebulakeys/assets/plans/logo.png"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <style>
+    :root{color-scheme:dark light}
+    body{margin:0;background:#0B1220;color:#E2E8F0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+    a{color:#aab4ff;text-decoration:none} a:hover{color:#fff}
+    .wrap{max-width:920px;margin:0 auto;padding:32px 20px}
+    h1{font-size:28px;margin:24px 0}
+    h2{font-size:20px;margin:20px 0 10px}
+    p,li{color:#B6C2CF;line-height:1.6}
+    header,footer{border-color:rgba(255,255,255,.08)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{height:32px;width:auto}
+  </style>
+</head>
+<body>
+  <header style="border-bottom:1px solid rgba(255,255,255,.08);background:#0B1220">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px">
+<!-- LOGO (usa la ruta /assets/plans/...) -->
+<a href="/index.html" class="flex items-center gap-2">
+  <img
+    src="/assets/plans/logo.png"
+    alt="NebulaKeys"
+    width="28" height="28"
+    class="h-7 w-7 object-contain select-none"
+    loading="eager"
+  />
+  <span class="font-semibold">NebulaKeys</span>
+</a>
+
+      <nav><a href="/index.html">Volver al inicio</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1>Políticas de privacidad</h1>
+    <p>En NebulaKeys respetamos tu privacidad. Este documento explica qué datos recopilamos, por qué y cómo los protegemos.</p>
+
+    <h2>Datos que recopilamos</h2>
+    <ul>
+      <li>Correo electrónico para autenticación y notificaciones.</li>
+      <li>Usuario de Steam para activar la suscripción en tu cuenta.</li>
+      <li>Datos de pago procesados de forma segura por Stripe (nosotros no guardamos tarjetas).</li>
+      <li>Métricas técnicas básicas (logs, IP, agente) para seguridad y prevención de fraude.</li>
+    </ul>
+
+    <h2>Uso de la información</h2>
+    <ul>
+      <li>Proveer el servicio de membresía y acceso al catálogo.</li>
+      <li>Confirmaciones de cuenta, recibos y avisos transaccionales.</li>
+      <li>Mejoras de producto, soporte y seguridad.</li>
+    </ul>
+
+    <h2>Retención y eliminación</h2>
+    <p>Conservamos la información mientras tu cuenta esté activa o según requiera la ley. Puedes solicitar la eliminación de tus datos escribiendo a soporte.</p>
+
+    <h2>Compartición</h2>
+    <p>Compartimos datos mínimos con proveedores esenciales (por ejemplo, Stripe para pagos) bajo acuerdos y medidas de seguridad apropiadas.</p>
+
+    <h2>Tus derechos</h2>
+    <p>Puedes acceder, rectificar o eliminar tus datos, y oponerte a ciertos tratamientos. Contáctanos para ejercer tus derechos.</p>
+
+    <p>Última actualización: <strong><script>document.write(new Date().toISOString().slice(0,10))</script></strong></p>
+  </main>
+
+  <footer style="border-top:1px solid rgba(255,255,255,.08);background:#0B1220">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px">
+      <small>© <span id="y"></span> NebulaKeys</small>
+      <nav>
+        <a href="/terms.html">Términos y condiciones</a>
+      </nav>
+    </div>
+    <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+  </footer>
+</body>
+</html>
